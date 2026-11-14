@@ -10,7 +10,7 @@ A coleta identificada roda no computador do responsável, pelo Agendador de Tare
 
 O programa consulta o portal público, valida a base contra a versão anterior e envia somente dist/data.json. O GitHub Actions executa os testes e publica no Pages. Se a coleta encontrar verificação humana, falha de rede ou perda de dados, a publicação anterior é preservada. O histórico do GitHub mostra publicações; falhas locais ficam no log do computador.
 
-O início do histórico publicado é preservado. As execuções revisitam os últimos 45 dias e aos domingos todo o período coletado. O histórico anterior a novembro de 2026 ainda será ampliado separadamente.
+O início do histórico publicado é preservado. A data inicial solicitada é 01/01/2025; a cobertura efetivamente validada consta de dist/data.json e do próprio site. A carga histórica só é publicada após completar a coleta e a validação. As execuções seguintes revisitam os últimos 45 dias e aos domingos todo o período coletado.
 
 ## Fontes e limites
 
