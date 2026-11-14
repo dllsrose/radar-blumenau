@@ -1,6 +1,19 @@
 import copy, unittest
+from unittest.mock import Mock, patch
+from radar import document_listing, soup
 from radar import classify, repeats, validate, addresses, match_people, public_text
 class RadarTests(unittest.TestCase):
+    def test_transient_empty_listing_is_refetched_without_skipping(self):
+        client=Mock();client.get.side_effect=[soup('<p>Nenhum registro encontrado.</p>'),soup('<p>Nenhum registro encontrado.</p>'),soup('<li class="list-item">registro recuperado</li>')]
+        with patch('radar.time.sleep') as sleep:
+            _,items=document_listing(client,'https://digital.camarablu.sc.gov.br/documentos/page:471')
+        self.assertEqual(len(items),1)
+        self.assertEqual([c.kwargs['fresh'] for c in client.get.call_args_list],[False,True,True])
+        self.assertEqual([c.args[0] for c in sleep.call_args_list],[5,15])
+    def test_persistently_empty_listing_fails_closed(self):
+        client=Mock();client.get.return_value=soup('<p>Nenhum registro encontrado.</p>')
+        with patch('radar.time.sleep'), self.assertRaises(RuntimeError):
+            document_listing(client,'https://digital.camarablu.sc.gov.br/documentos/page:471')
     def doc(self,date='2026-11-01',url='https://digital.camarablu.sc.gov.br/documento/1',text='Fechar buraco na Rua Bahia, próximo ao número 10.'):
         return {'date':date,'url':url,'title':'Indicação 1/2026','authors':'Ana','text':text,'category':'Melhorias nos bairros'}
     def test_repetition_requires_different_dates_and_topic(self):

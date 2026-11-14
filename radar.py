@@ -73,16 +73,23 @@ def match_people(names,persons):
     # Delimitadores da autoria; correspondência exata de nomes ou aliases conhecidos.
     parts=[norm(x.strip()) for x in names.split(',')]
     return [p['id'] for p in persons if any(a in parts for a in p['aliases'])]
+def document_listing(client,url):
+    # O portal às vezes devolve uma página intermediária vazia com HTTP 200.
+    # Não avançar nem tratar isso como fim da lista: aguardar e consultar novamente.
+    for delay in (0,5,15,30,60,60):
+        if delay:
+            print(f'RECONSULTA de página vazia após {delay}s: {url}',flush=True)
+            time.sleep(delay)
+        s=client.get(url,fresh=bool(delay));items=s.select('li.list-item')
+        if items:return s,items
+    raise RuntimeError(f'Página vazia inesperada após reconsultas: {url}')
+
 def collect_documents(client,year,start,end):
     url=f'{BASE}/documentos/tipo:legislativo-2/ano:{year}/ordem:Documento.is_protocolado_data%20DESC%2CDocumento.numero%20DESC'
     seen=set(); out={}; pages=0; total_rows=0; previous=None
     while url:
         if url in seen: raise RuntimeError('Ciclo na paginação de documentos')
-        seen.add(url); s=client.get(url); items=s.select('li.list-item')
-        for attempt in range(3):
-            if items: break
-            time.sleep(3);s=client.get(url,fresh=True);items=s.select('li.list-item')
-        if not items: raise RuntimeError(f'Página vazia inesperada: {url}')
+        seen.add(url); s,items=document_listing(client,url)
         pages+=1; ids=[]; dates=[]
         for li in items:
             a=li.select_one('a[href^="/documento/"]'); title=txt(li.select_one('.title-link'))
