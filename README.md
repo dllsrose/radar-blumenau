@@ -15,13 +15,13 @@ O início do histórico publicado é preservado. A data inicial solicitada é 01
 ## Fontes e limites
 
 Fontes: https://digital.camarablu.sc.gov.br/ e https://camarablu.sc.gov.br/quem-sao/
-Cada registro possui link para a fonte. Cadastro inclui titulares e substitutos da legislatura; não implica ocupação simultânea das cadeiras. Ausência de registro não vira falta. Auditoria por amostragem em dist/audit.json, sem afirmar validação integral do mandato.
+Cada registro possui link para a fonte. Cadastro inclui titulares e substitutos da legislatura; não implica ocupação simultânea das cadeiras. Ausência de registro não vira falta. Reuniões ordinárias e extraordinárias publicadas incluem plenário, comissões e frentes parlamentares; os resumos de presença distinguem esses tipos. Nome publicado sem situação é exibido como “Situação não informada”. Auditoria por amostragem em dist/audit.json, sem afirmar validação integral do mandato.
 
 As categorias e recorrências são heurísticas transparentes. Repetição não prova falta de atendimento. Textos são alegações dos autores. Contatos privados reconhecidos por padrão são ocultados da cópia textual.
 
 ## Executar manualmente
 
-Python 3.12: instalar requirements.txt, executar `python -m unittest -v test_radar.py`, `python radar.py --start 2026-11-01 --baseline dist/data.json` e `python verify_site.py`.
+Python 3.12: instalar requirements.txt, executar `python -m unittest -v test_radar.py`, `python radar.py --start 2025-01-01 --baseline dist/data.json` e `python verify_site.py`.
 Para prévia, executar `node serve.cjs` e abrir http://127.0.0.1:4173.
 
 Os arquivos dist e os fontes estão diretamente versionados. radar-source.zip é apenas o pacote inicial de arquivo, não é mais usado no deploy. Não publicar .cache, .local, logs, credenciais ou arquivos de ambiente.
