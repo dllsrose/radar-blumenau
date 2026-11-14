@@ -1,6 +1,6 @@
 # Radar Blumenau
 
-Observatório cidadão independente: propostas, presença e votos, com fontes oficiais e sem ranking.
+Observatório cidadão independente: propostas, presença e votos, com fontes oficiais e sem notas de desempenho.
 
 Site: https://dllsrose.github.io/radar-blumenau/
 
@@ -15,7 +15,7 @@ O início do histórico publicado é preservado. A data inicial solicitada é 01
 ## Fontes e limites
 
 Fontes: https://digital.camarablu.sc.gov.br/ e https://camarablu.sc.gov.br/quem-sao/
-Cada registro possui link para a fonte. Cadastro inclui titulares e substitutos da legislatura; não implica ocupação simultânea das cadeiras. Ausência de registro não vira falta. Reuniões ordinárias e extraordinárias publicadas incluem plenário, comissões e frentes parlamentares; os resumos de presença distinguem esses tipos. Nome publicado sem situação é exibido como “Situação não informada”. Auditoria por amostragem em dist/audit.json, sem afirmar validação integral do mandato.
+Cada registro possui link para a fonte. Cadastro inclui titulares e substitutos da legislatura; não implica ocupação simultânea das cadeiras. Ausência de registro não vira falta. Reuniões ordinárias e extraordinárias publicadas incluem plenário, comissões e frentes parlamentares; os resumos de presença distinguem esses tipos. Nome publicado sem situação é exibido como “Situação não informada”. Conferência inicial por amostragem preservada em dist/audit.json; o levantamento ampliado está em dist/attendance-audit.json, com cobertura e pendências explícitas.
 
 As categorias e recorrências são heurísticas transparentes. Repetição não prova falta de atendimento. Textos são alegações dos autores. Contatos privados reconhecidos por padrão são ocultados da cópia textual.
 
@@ -29,3 +29,11 @@ Os arquivos dist e os fontes estão diretamente versionados. Não publicar .cach
 Correções: https://github.com/dllsrose/radar-blumenau/issues/new
 
 Resultados nominais explicitamente indisponíveis na Câmara, confirmados após seis consultas, permanecem sinalizados e vinculados à fonte, fora do total de votações publicadas. As revisões semanais os consultam novamente. Um resultado indisponível nunca substitui votos nominais já publicados.
+
+## Conferência documental de presenças
+
+`dist/attendance-audit.json` reúne o inventário completo de atas levantadas nos documentos legislativos de 2025 e 2026 e a comparação com páginas de reunião. É uma fotografia datada: a atualização diária da base principal não representa uma nova auditoria das atas. A interface exibe a data da conferência, a cobertura elegível e os casos pendentes.
+
+A ordenação de ausências usa as atas, separa justificadas das não classificadas e não converte ausência de nome em falta. Licenças, afastamentos, contradições e reuniões com associação ambígua ficam fora do percentual. O denominador é presença + ausência explicitamente registradas; não representa dias de exercício legal nem todas as sessões obrigatórias. Plenário ordinário e extraordinário são comparados separadamente. Comissões e outros tipos aparecem no relatório, sem entrar na ordenação do plenário.
+
+`attendance_audit.py` contém as regras de leitura e cruzamento; `dist/attendance.js`, as regras de contagem e interface. Os testes cobrem afastamentos, nomes omitidos, contradições, composição de comissão, duplicidade e filtros de calendário sem distinção de maiúsculas. Os PDFs originais e seus textos completos ficam apenas no cache local, pois podem conter contatos e motivos pessoais; o relatório público publica estados, nomes, fontes e hashes, sem esses textos.

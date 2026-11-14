@@ -35,3 +35,26 @@ for group in d['repeatedRequests']:
 raw=(r/'dist/data.json').read_text(encoding='utf-8')
 assert '?token=' not in raw,'URLs temporárias não devem ser publicadas'
 print('Site e base conferidos:',json.dumps(d['validation'],ensure_ascii=True))
+
+# A conferência de atas é um relatório documental datado, separado da coleta diária.
+a=json.loads((r/'dist/attendance-audit.json').read_text(encoding='utf-8'))
+assert a['schemaVersion']==1 and a['counts']['inventoried']==len(a['minutes'])
+assert a['counts']['downloaded']==sum(x['downloaded'] for x in a['minutes'])
+assert len({x['url'] for x in a['minutes']})==len(a['minutes'])
+known={x['id'] for x in a['people']}
+allowed={'Presente','Ausência justificada','Ausência citada sem classificação','Licença','Afastamento','Revisão necessária'}
+for minute in a['minutes']:
+    assert minute['url'].startswith('https://digital.camarablu.sc.gov.br/documento/')
+    assert not any(k in minute for k in ('text','pdfFile','textFile','error'))
+    assert len({row['personId'] for row in minute['rows']})==len(minute['rows'])
+    for row in minute['rows']:assert row['personId'] in known and row['status'] in allowed
+    if minute['sessionUrl']:assert minute['sessionUrl'].startswith('https://digital.camarablu.sc.gov.br/sessao/')
+assert len({m['sessionUrl'] for m in a['minutes'] if m['sessionUrl']})==a['counts']['matchedSessions']
+assert len(a['sessionGaps'])==a['counts']['sessionGaps']
+print('Conferência documental de atas validada:',a['counts']['inventoried'],'atas')
+
+for gap in a['sessionGaps']:
+    assert gap['url'].startswith('https://digital.camarablu.sc.gov.br/sessao/')
+    for row in gap['rows']:assert row['personId'] in known
+
+assert a['counts']['matchedSessions']+a['counts']['sessionGaps']==a['counts']['calendarSessions']

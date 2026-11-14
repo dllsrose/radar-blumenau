@@ -141,7 +141,7 @@ def session_links(client,start,end):
             t=txt(a);d=calendar_date(t)
             if not d: continue
             dates.append(d)
-            if start<=d<=end and re.match(r'REUNIÃO (ORDINÁRIA|EXTRAORDINÁRIA)',t): links[urljoin(BASE,a['href'])]={'date':d,'title':t,**({'dateNote':'A data do calendário oficial diverge da data escrita no título. O filtro usa a data do calendário; o título original foi preservado.'} if iso(t)!=d else {})}
+            if start<=d<=end and re.match(r'REUNIÃO (ORDINÁRIA|EXTRAORDINÁRIA)',t,re.I): links[urljoin(BASE,a['href'])]={'date':d,'title':t,**({'dateNote':'A data do calendário oficial diverge da data escrita no título. O filtro usa a data do calendário; o título original foi preservado.'} if iso(t)!=d else {})}
         if not dates: raise RuntimeError('Página de sessões sem datas legíveis')
         nxt=s.select_one('a[rel="next"]')
         if max(dates)<start or not nxt:break
