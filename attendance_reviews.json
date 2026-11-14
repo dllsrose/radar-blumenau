@@ -14,5 +14,1442 @@
     "duplicateOf": "519738",
     "duplicateOfSha256": "08e3115c9d8d1d67ea6202e74039d56f3184f878192f40a172ba1f2f084ce85c",
     "note": "Republicação da mesma ata de 10/04/2025: corpo e lista nominal conferidos; contada uma única vez pelo documento 519738. Diferenças de cabeçalho e assinaturas não criam outra presença."
+  },
+  "536289": {
+    "sha256": "a2257862af8e7c9a0fe7206d757dd1e691fc56e1f2e72b71a186173d11b9c6b8",
+    "date": "2025-10-09",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-de-09-de-outubro-de-2025-8718",
+    "dateEvidence": "Pauta e registros de votação de 09/10/2025: PLC 2437/2025 e 2400/2025, Requerimento de Inclusão 2477/2025 e Requerimento 2454/2025 correspondem ao corpo desta ata.",
+    "note": "Data adotada: 09/10/2025, pela correspondência da pauta e das votações oficiais. A abertura do PDF registra 09/09/2025; essa data original foi preservada separadamente. Não é republicação da ata 61/2025."
+  },
+  "532916": {
+    "sha256": "1b25f72cfc44f3b5e0b9301a4d9a4d93d60d22a8e75c97675dc835bf6cf8b7ee",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-de-09-de-setembro-de-2025-8660",
+    "note": "Reunião de 09/09/2025 confirmada pela pauta: vetos aos PL 9213/2025 e 9231/2025 e redação final do PLC 2417/2025. Distinta da ata 70/2025, cuja pauta corresponde a outubro."
+  },
+  "541874": {
+    "sha256": "c588359dc7b9a5ed69cbb7939e92ce849b43c0ac47adc2ad1cc537ede8c716f3",
+    "rows": [
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "marcelo-barasuol-lanzarin-472",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "541206": {
+    "sha256": "9f8ce043bdc8ba9ae30fd055cd56e83e3ee0adc31221d84dd7b8ad5decef522f",
+    "rows": [
+      {
+        "personId": "jovino-cardoso-neto-471",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "541089": {
+    "sha256": "49a5befaa17fa7065b05578973d4279245bf53fc99fae259cf7b82903931d09a",
+    "rows": [
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. O ano de 2024 na abertura difere do registro oficial de realização em 2025. Data original preservada; não foi inventada associação a página de sessão ausente do calendário.",
+    "date": "2025-11-12",
+    "dateSourceUrl": "https://camarablu.sc.gov.br/detalhe-noticia/15128/camara-de-blumenau-debate-violencia-contra-servidores-publicos-e-propoe-criacao-de-protocolo-municipal-de-protecao/",
+    "dateEvidence": "Notícia oficial publicada em 13/11/2025 confirma realização em 12/11/2025, o mesmo tema e Requerimento 2063/2025."
+  },
+  "540584": {
+    "sha256": "60be906a2afd3508f10ce8d663b9e00b73af12025a8ad1af7919592c07fe9fda",
+    "rows": [
+      {
+        "personId": "egidio-da-rosa-beckhauser-1000668",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "537596": {
+    "sha256": "b4e888f9c2ea27cadd386f1a0133c00535d8753934ec30cbfc1b97d8e06c5f1f",
+    "rows": [
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Ausência justificada"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "536735": {
+    "sha256": "63d7a5fa778aeb0d39ee8a5bb8b3422d2807356e213aac8cebe9f70614fe1e5b",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. O ano de 2024 na abertura difere do registro oficial de realização em 2025. Data original preservada; não foi inventada associação a página de sessão ausente do calendário.",
+    "date": "2025-08-18",
+    "dateSourceUrl": "https://camarablu.sc.gov.br/detalhe-noticia/14963/audiencia-publica-da-camara-propoe-criacao-de-comissao-permanente-sobre-seguranca-nas-escolas/",
+    "dateEvidence": "Notícia oficial publicada em 19/08/2025 confirma realização em 18/08/2025, o mesmo tema, participantes e Requerimento 1709/2025."
+  },
+  "535823": {
+    "sha256": "ac688d03c79be72f44daed71e317f832534f21286ce61990e5c91f5544000a2e",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "535424": {
+    "sha256": "6e038427d6f6e1967fe61e5f1da5673ccc10296f8caac3ca00abfad9aaefd742",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "marcelo-barasuol-lanzarin-472",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "532394": {
+    "sha256": "c7dd3ada5a1c098fc2b5413e924409d4a807b2e436f9e97c75bd906b51629707",
+    "rows": [
+      {
+        "personId": "egidio-da-rosa-beckhauser-1000668",
+        "status": "Presente"
+      },
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      },
+      {
+        "personId": "almir-vieira-454",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-cunha-467",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "jovino-cardoso-neto-471",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "532388": {
+    "sha256": "31e19e78326107b22fa32021a4af315af444208d0b9b0e0c0c54b2d3abab978f",
+    "rows": [
+      {
+        "personId": "egidio-da-rosa-beckhauser-1000668",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "531126": {
+    "sha256": "76caa4338f5cd027242e8a35e80b96fc8e8b8a591456e15fa40e26565aa9aa35",
+    "rows": [
+      {
+        "personId": "diego-nasato-1000941",
+        "status": "Presente"
+      },
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-cunha-467",
+        "status": "Ausência justificada"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Ausência justificada"
+      },
+      {
+        "personId": "marcelo-barasuol-lanzarin-472",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "530702": {
+    "sha256": "ce69011ddc0e14708df266673f1ece04db37da16692c8c330f9ddf3c940c9ca5",
+    "rows": [
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "diego-nasato-1000941",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. O ano de 2024 na abertura difere do registro oficial de realização em 2025. Data original preservada; não foi inventada associação a página de sessão ausente do calendário.",
+    "date": "2025-04-22",
+    "dateSourceUrl": "https://dev.camarablu.sc.gov.br/detalhe-noticia/14726/vereadores-e-autoridades-debatem-o-uso-de-ciclomotores-e-bicicletas-eletricas-em-blumenau/",
+    "dateEvidence": "Notícia oficial publicada em 23/04/2025 confirma realização em 22/04/2025, o mesmo tema, proponente e participantes."
+  },
+  "530413": {
+    "sha256": "737134bb89abe9e2104e40fe5c717621f4669a761e344b1e834025ee8cdf651b",
+    "rows": [
+      {
+        "personId": "ailton-de-souza-ito-451",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "526784": {
+    "sha256": "643ca5cadfcd89055ab9d24c0c7c9ce9654931f049846fe55ec5286ed6b79947",
+    "rows": [
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "marcelo-barasuol-lanzarin-472",
+        "status": "Presente"
+      },
+      {
+        "personId": "ailton-de-souza-ito-451",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "524942": {
+    "sha256": "55216e455664b492fc9e60d7c4eb3931eb900df93ea68ccc71f2d1035631cc89",
+    "rows": [
+      {
+        "personId": "marcelo-barasuol-lanzarin-472",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "526358": {
+    "sha256": "8b9be0cd2e6eebf7f0dd8700aae50872fcff65d89d74e0ca240d233d9c6bff48",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "egidio-da-rosa-beckhauser-1000668",
+        "status": "Presente"
+      },
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-cunha-467",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. O ano de 2024 na abertura difere do registro oficial de realização em 2025. Data original preservada; não foi inventada associação a página de sessão ausente do calendário.",
+    "date": "2025-06-26",
+    "dateSourceUrl": "https://camarablu.sc.gov.br/detalhe-noticia/14849/audiencia-da-causa-animal-discute-castracao-atendimento-veterinario-e-ouve-demandas-de-protetores/",
+    "dateEvidence": "Notícia oficial publicada em 27/06/2025 confirma realização em 26/06/2025, o mesmo tema e participantes."
+  },
+  "521651": {
+    "sha256": "c2e5b252c2261ad8d66b2efb864f2a8ebf13f460f9c321dfcf94f347699a99ef",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-cunha-467",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "jovino-cardoso-neto-471",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "520049": {
+    "sha256": "c51da2c733ec3d5e4698f4f69b6a65a102dc2d67c8b0119050072b7a85d7d7bb",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "ailton-de-souza-ito-451",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "519161": {
+    "sha256": "1c47e0a9ae8e366a927e90f0e1d6b71e1ea99f31c8f116252f1422d205230153",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-cunha-467",
+        "status": "Presente"
+      },
+      {
+        "personId": "marcelo-barasuol-lanzarin-472",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "517120": {
+    "sha256": "fe02baab6c94d4c184f1bf5f0bbb910b3b6aaa4f3fa3876463c62ea2877fa124",
+    "rows": [
+      {
+        "personId": "almir-vieira-454",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "516071": {
+    "sha256": "70810475f8b72a85ffb284b571bc4af80e2472036ca3673098ea8c9edc55cb2b",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-cunha-467",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "567722": {
+    "sha256": "f2eaf40476fb604ce34df53dc6dc8fd53f664f61f5215a716fc04de93d584c86",
+    "rows": [
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "rodrigo-emanuel-marchetti-1001714",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "561062": {
+    "sha256": "4c92cb2882b638d4b3a685ebe6e77318dd973212b68c21d21004e5f3d55c8735",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "560245": {
+    "sha256": "c0a5d2787e5e65caa879b4e481cc3d97006137f8bf2fa841f88a997a69d0fe4b",
+    "rows": [
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "rodrigo-emanuel-marchetti-1001714",
+        "status": "Presente"
+      },
+      {
+        "personId": "joao-valle-neto-1002369",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "558976": {
+    "sha256": "7186e8931ae6d9ce969fd5aa76bc8bc944e034934f4dcbdce5d2125e7ad7e9e2",
+    "rows": [
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "jovino-cardoso-neto-471",
+        "status": "Presente"
+      },
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "558947": {
+    "sha256": "d232c732a4183d768eaead4a2c603d867d673b400925d34f248cf5995d289467",
+    "rows": [
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "ailton-de-souza-ito-451",
+        "status": "Ausência justificada"
+      },
+      {
+        "personId": "bruno-cunha-467",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "557737": {
+    "sha256": "39f7f4496a0d31de76abc8aef351ddd14270c638603ead07efb7ab79bbde7a16",
+    "rows": [
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "joao-valle-neto-1002369",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "556403": {
+    "sha256": "133a7f55ab9c53678ce3572ae2021cdafe704c7229421e432bd7059418fc3a93",
+    "rows": [
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "555364": {
+    "sha256": "428a6e73baaf6853ccce0ba7565cf85c5811e48b3b2242168545f170eb5bb5cc",
+    "rows": [
+      {
+        "personId": "diego-nasato-1000941",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "551184": {
+    "sha256": "20f46e6918da796b9ed749cea10c954d5b9a8d5ba648a55a7ca6c840f0115159",
+    "rows": [
+      {
+        "personId": "ailton-de-souza-ito-451",
+        "status": "Presente"
+      },
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "jovino-cardoso-neto-471",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "550836": {
+    "sha256": "618f7fc2323866e2ed7355ce44bbfdf51da002e512b5907b32af55b37183b8e5",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "547835": {
+    "sha256": "df74054cf8f389c2f4caee828a49d0e9452b829e78ca1ae8288431307b07cf09",
+    "rows": [
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "568501": {
+    "sha256": "789365a93312f76bc178b7da4c5fca7433114c2654ccd240d6f580a21f2555e6",
+    "rows": [
+      {
+        "personId": "diego-nasato-1000941",
+        "status": "Presente"
+      },
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "568306": {
+    "sha256": "98a83aea1671864b7792f10b29028eaef7a7ced36840af5c962132018f52f1c8",
+    "rows": [
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      },
+      {
+        "personId": "egidio-da-rosa-beckhauser-1000668",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. A ata registra chegada posterior de Flávio Linhares; Presente não significa permanência integral."
+  },
+  "567635": {
+    "sha256": "315f632606e0e8c3b5850a3583378a4b26abda32fa5a692c3fd76b428d02db8f",
+    "rows": [
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "egidio-da-rosa-beckhauser-1000668",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "562942": {
+    "sha256": "594b90bb72784a25d673a4fc79972e53b8484f15b0ebcd43e09f357b1fb32925",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      },
+      {
+        "personId": "rodrigo-emanuel-marchetti-1001714",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "563443": {
+    "sha256": "593b11ea910091e5b7db5960f87059560c4eb1ec3cfc8a3a1e1ceed3d456d44f",
+    "rows": [
+      {
+        "personId": "diego-nasato-1000941",
+        "status": "Presente"
+      },
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "537050": {
+    "sha256": "dc72365caa512fd69c33b525f098be06019ed4d37a79e60dd450d90f2453e1ec",
+    "rows": [
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      },
+      {
+        "personId": "diego-nasato-1000941",
+        "status": "Presente"
+      },
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "egidio-da-rosa-beckhauser-1000668",
+        "status": "Ausência justificada"
+      },
+      {
+        "personId": "almir-vieira-454",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "559309": {
+    "sha256": "f9692587813be33b67f0ffc368389aaa0e3c669304760728c97b25b15a27023c",
+    "rows": [
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "diego-nasato-1000941",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "559307": {
+    "sha256": "873aad24a5d7e84f2b008a5accb2e54964b70edd98ca82ec11c2e0f9e044de6c",
+    "rows": [
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      },
+      {
+        "personId": "rodrigo-emanuel-marchetti-1001714",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "559302": {
+    "sha256": "6cab0d5bfaba8fa704dea48ec17c63b401ce5bbacd02ed63998526fd4fe8839e",
+    "rows": [
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "rodrigo-emanuel-marchetti-1001714",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "547320": {
+    "sha256": "2e6e188375788cbf1af6e0665b6551e9b17554b66e070b951efd9bda02b95425",
+    "rows": [
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      },
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "559331": {
+    "sha256": "ea932e936054b680819577557709b2faac74f08d536d77ce8fefc97b6c72eb90",
+    "rows": [
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "joao-valle-neto-1002369",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "559332": {
+    "sha256": "98fe55788b3d07ff8fa9cacfab9a7881b84a1faf37ae992303c0fa295d2eec33",
+    "rows": [
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "joao-valle-neto-1002369",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "559334": {
+    "sha256": "84b67c772919a78d302516e0444cbd44b0bafed89c990f83d89ceca14d908ac2",
+    "rows": [
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "joao-valle-neto-1002369",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "560112": {
+    "sha256": "f5d1a9e275e2b2086c21d3ad0aa1e64fbf10b9c1b87839955e04187f1364f582",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      },
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "diego-nasato-1000941",
+        "status": "Presente"
+      },
+      {
+        "personId": "rodrigo-emanuel-marchetti-1001714",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Diego Nasato compareceu como vereador convidado, sem presumir obrigação de comparecimento à comissão."
+  },
+  "559609": {
+    "sha256": "645dc141b2a5fc4dd3350369c83498bf02c46a83db16d79d7ae2903097900853",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      },
+      {
+        "personId": "rodrigo-emanuel-marchetti-1001714",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. A ata registra chegada posterior de Silmara Miguel; Presente não significa permanência integral."
+  },
+  "559608": {
+    "sha256": "c01249d741578233d992bb0c25bc2fa6d2275c82fbcf06df0ebdc6762d1483f7",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      },
+      {
+        "personId": "rodrigo-emanuel-marchetti-1001714",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "567750": {
+    "sha256": "07f6ca0b95b6b99aa5dd9c2f5c48b31a63062b405da5203660f566a978c4bc19",
+    "rows": [
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+  },
+  "563110": {
+    "sha256": "bf440bec5a5d5b1d067ee72b393629a81c891b9f8da63a38308e128545f548f9",
+    "issue": "O próprio documento contém nomes a confirmar e identificação nominal ambígua; não há lista segura para atribuir presenças ou ausências.",
+    "note": "Pendência do conteúdo da fonte, além da limitação da leitura automática. Nenhum nome foi completado por suposição."
+  },
+  "565371": {
+    "sha256": "bf92d2eb2e40256791cd3a12b8db4f3657184a336e4762bdb1cb62311a1b2ec6",
+    "rows": [
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      },
+      {
+        "personId": "diego-nasato-1000941",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença."
+  },
+  "563711": {
+    "sha256": "1c700243ca17d9e0d3dfcffe840244423370b99a9596f6149abb3bed5ac44f3b",
+    "rows": [
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      },
+      {
+        "personId": "diego-nasato-1000941",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença."
+  },
+  "564751": {
+    "sha256": "829076c751e91fc4aa0fc2888dafa039e22a4aff2ed6e3dc307719546af0e304",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "rodrigo-emanuel-marchetti-1001714",
+        "status": "Presente"
+      },
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença."
+  },
+  "547884": {
+    "sha256": "fdec6c4d77f9d4b1466ba8a766d7a1d22967ea649dc0db24bf3eecf7296ae0be",
+    "rows": [
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "diego-nasato-1000941",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença."
+  },
+  "563710": {
+    "sha256": "362c7f5c1d33fa4fd27244ec0a87d0b55223b446812566434ab4aced9af4e3c6",
+    "rows": [
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "rodrigo-emanuel-marchetti-1001714",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença."
+  },
+  "559637": {
+    "sha256": "0214c31a6d213bceb597618a7dea9df8c718c9a51ca2161756f8fd32c74c55fa",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      },
+      {
+        "personId": "rodrigo-emanuel-marchetti-1001714",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença."
+  },
+  "559595": {
+    "sha256": "957196ac416fe451983c76af992d5733a06fb04e34f623f5b87d48862c1bc301",
+    "rows": [
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "rodrigo-emanuel-marchetti-1001714",
+        "status": "Ausência justificada"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença."
+  },
+  "524526": {
+    "sha256": "bfebdf90ec0658d5e7bb97835d1182acc62c4411ee9a18402119ab175ac3a312",
+    "rows": [
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "diego-nasato-1000941",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Comparecimento confirmado pelas intervenções individualizadas dos três vereadores na reunião."
+  },
+  "508507": {
+    "sha256": "b48b86457503d9824e9fa2b20071508ad637c5fd5d068491e935ed8486f97240",
+    "rows": [
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "ailton-de-souza-ito-451",
+        "status": "Presente"
+      },
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      },
+      {
+        "personId": "almir-vieira-454",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-cunha-467",
+        "status": "Presente"
+      },
+      {
+        "personId": "bruno-winzewski-1002019",
+        "status": "Presente"
+      },
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Presente"
+      },
+      {
+        "personId": "diego-nasato-1000941",
+        "status": "Presente"
+      },
+      {
+        "personId": "egidio-da-rosa-beckhauser-1000668",
+        "status": "Presente"
+      },
+      {
+        "personId": "flavio-jose-linhares-1002017",
+        "status": "Presente"
+      },
+      {
+        "personId": "gilson-de-souza-468",
+        "status": "Presente"
+      },
+      {
+        "personId": "jean-volpato-1002018",
+        "status": "Presente"
+      },
+      {
+        "personId": "jovino-cardoso-neto-471",
+        "status": "Presente"
+      },
+      {
+        "personId": "marcelo-barasuol-lanzarin-472",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      }
+    ],
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Presença dos quinze vereadores confirmada pela chamada nominal, juramento e posse registrados no corpo da ata."
+  },
+  "537502": {
+    "sha256": "ba376cc8e92b0a208269b1eb1abe8bd095f5063df6e1744045307336ffc91f8b",
+    "issue": "O texto lista composição e eleição de cargos, mas não individualiza com clareza a presença de todos os membros. Lista nominal completa permanece pendente.",
+    "note": "Composição de comissão não foi convertida automaticamente em presença."
+  },
+  "561170": {
+    "sha256": "33353072bc5bfdadb4ec57899c367874ff7996a16753ee4e164cedf132979afb",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-de-28-de-julho-de-2026-9108",
+    "note": "Pauta principal conferida: PL 9547/2026 e 9552/2026 em segunda votação, distinta da reunião de redações finais."
+  },
+  "546426": {
+    "sha256": "b05cdb955d557176cd7542ddefda2741087bb90ef1ae7fb6d13a835177b2dafb",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-extraordinaria-da-frente-parlamentar-em-defesa-das-politicas-publicas-em-infraestrutura-e-saneamento-basico-05-02-2026-8869",
+    "note": "Associação pelo nome completo da Frente de Infraestrutura e Saneamento Básico e data, distinguindo-a das outras frentes no mesmo dia."
+  },
+  "546413": {
+    "sha256": "610f16d1a961b800f629a90635639e37b08fa9deed42fd7bb064e3b1ad28cb94",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-extraordinaria-05-02-2026-frente-parlamentar-em-defesa-habitacao-e-regularizacao-fundiaria-8862",
+    "note": "Associação pelo nome completo da Frente da Habitação e Regularização Fundiária e data, distinguindo-a das outras frentes no mesmo dia."
+  },
+  "545366": {
+    "sha256": "631324ea1eef5ec2e2617a97b525d27fb85935cc6e0d7a55a5b5076a29e15375",
+    "date": "2026-02-10",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-10-02-2026-comissao-de-constituicao-legislacao-e-justica-8845",
+    "dateEvidence": "Correspondência da comissão e da pauta: PLC 2494 a 2498/2026, PL 9410 a 9423/2026 e projetos 9327, 9380, 9381 e 9387/2025.",
+    "note": "A abertura traz ano de 2025; data adotada 10/02/2026 pela pauta oficial correspondente. Data original preservada."
+  },
+  "545395": {
+    "sha256": "58b6104c2d8090622e67d2247ce260c75911ac883b88df253fc74cf37c6fe364",
+    "date": "2026-02-10",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-10-02-2026-comissao-de-financas-orcamento-tributacao-e-fiscalizacao-8846",
+    "dateEvidence": "Correspondência da comissão e da pauta: resoluções 654 e 655, PLC 2473 e 2474, PL 9327, 9385 e 9386.",
+    "note": "A abertura traz ano de 2025; data adotada 10/02/2026 pela pauta oficial correspondente. Data original preservada."
+  },
+  "529804": {
+    "sha256": "28228798367ce46ef11ef0343ecbd3a107406acac11168fc7b2ab12545a87744",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-de-24-de-julho-de-2025-8590",
+    "note": "Associação pela pauta principal, que delibera PL 9226 e 9227 e PLC 2416; separada da reunião de redações finais."
+  },
+  "542625": {
+    "sha256": "9b7bd25ce96eac6c75003dc68132cc0f4862195caba18a99fea445fdf6938179",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-extraordinaria-de-16-de-dezembro-de-2025-8832",
+    "note": "Reunião das 11h: pauta principal com votação de projetos e emendas, distinta da reunião das 16h20 dedicada às redações finais."
+  },
+  "542630": {
+    "sha256": "0a7ba40caed49437ea56b259eb73290a2b904929e020dd14e8534fb259090f9b",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-extraordinaria-de-16-de-dezembro-de-2025-rf-8839",
+    "note": "Reunião das 16h20: redações finais dos PLC 2414, 2460, 2463 e demais projetos relacionados na ata; corresponde à votação englobada registrada às 16h20 no portal."
+  },
+  "561173": {
+    "sha256": "aeb3e32683ae520d75e9e40cae179d20ad43fe7c9473f5ca223240353a67597f",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-de-28-de-julho-de-2026-rf-9109",
+    "associationEvidence": "A ata classifica a reunião como extraordinária; o calendário a chama ordinária RF. Correspondência confirmada pelas redações finais dos PL 9547 e 9552/2026 e votação às 11h12. Mantida a classificação da ata.",
+    "note": "A ata classifica a reunião como extraordinária; o calendário a chama ordinária RF. Correspondência confirmada pelas redações finais dos PL 9547 e 9552/2026 e votação às 11h12. Mantida a classificação da ata."
+  },
+  "529806": {
+    "sha256": "dd9e023ca505d0680bb995ec92933855899de063bb9f3abba5c951f49b02d772",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-de-24-de-julho-de-2025-rf-8594",
+    "associationEvidence": "A ata classifica a reunião como extraordinária; o calendário a chama ordinária RF. Correspondência confirmada pelas redações finais dos PL 9226 e 9227 e PLC 2416/2025. Mantida a classificação da ata.",
+    "note": "A ata classifica a reunião como extraordinária; o calendário a chama ordinária RF. Correspondência confirmada pelas redações finais dos PL 9226 e 9227 e PLC 2416/2025. Mantida a classificação da ata."
+  },
+  "546403": {
+    "sha256": "e8bad43c2167d561a322e8d3c034fd4477fff2704000014c0fff51c63c7cbaab",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-extraordinaria-da-comissao-permanente-de-defesa-civil-05-02-2026-8858",
+    "associationEvidence": "O título do documento diz comissão ordinária, mas o corpo identifica reunião extraordinária da Comissão Permanente de Defesa Civil. Associação revisada com a página da mesma comissão e data; não se confunde com a comissão de Transportes que também menciona Defesa Civil.",
+    "note": "O título do documento diz comissão ordinária, mas o corpo identifica reunião extraordinária da Comissão Permanente de Defesa Civil. Associação revisada com a página da mesma comissão e data; não se confunde com a comissão de Transportes que também menciona Defesa Civil."
+  },
+  "536090": {
+    "sha256": "6679bc532b6e8b275544e7371d77450afaf050b6829e070aeb4b5e8736d2e1e8",
+    "date": "2025-10-07",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-de-07-de-outubro-de-2025-8708",
+    "dateEvidence": "Pauta de 07/10/2025: PL 9295 e 9302 em segunda votação e redações finais dos PL 9257, 9260 e 9281 correspondem ao corpo da ata.",
+    "note": "Data adotada 07/10/2025 pela pauta oficial. A abertura escreve setembro; data original preservada para transparência."
+  },
+  "550207": {
+    "sha256": "d1c330245eefc4149a9cb539de3ebb94f5995769f1c8d9c7b78b207e5cfb7a3c",
+    "sourceContradiction": true,
+    "note": "Contradição conferida no texto original: Diego Nasato consta simultaneamente como presente e com ausência justificada na abertura. Mantida Revisão necessária, fora do denominador de presença/ausência."
+  },
+  "554141": {
+    "sha256": "ceaefdc1900c8c676a65f928a6d29bf6b76cf636f1f237afd471aa1abb6374f3",
+    "sourceContradiction": true,
+    "note": "Contradição conferida no texto original: Almir Vieira consta simultaneamente na lista de presentes e em afastamento na abertura. Mantida Revisão necessária, fora do denominador de presença/ausência."
+  },
+  "561675": {
+    "sha256": "ec983c41057f9be44596995ceadd877886056372d6d267ded56522e6bc78705f",
+    "note": "Data e pauta corroboradas por notícia oficial de 30/07/2026 (PL 9230/2025, PL 9549/2026 e Requerimento 1557/2026). Não foi localizada página correspondente no calendário consultado; a comparação nominal com o portal permanece pendente. Fonte: https://camarablu.sc.gov.br/detalhe-noticia/15508/confira-os-projetos-e-proposicoes-aprovados-na-sessao-ordinaria-desta-quinta-feira--30-/"
   }
 }

@@ -1,9 +1,32 @@
 import unittest
-from attendance_audit import date_of,extract,meeting_identity,mark_duplicates,session_kind,committee_key,verified_review
+from attendance_audit import date_of,extract,meeting_identity,mark_duplicates,session_kind,committee_key,verified_review,reviewed_date,reviewed_session
 from radar import session_links
 from unittest.mock import Mock
 from radar import soup
 class AttendanceTests(unittest.TestCase):
+ def test_reviewed_association_requires_same_day_family_and_evidence(self):
+  s={'url':'rf','date':'2026-07-28','title':'Reunião ordinária RF'}
+  r={'sessionUrl':'rf','associationEvidence':'Mesmos projetos em redação final'}
+  self.assertEqual(reviewed_session(r,[],[s],s['date'],'Plenário extraordinário'),s)
+  self.assertIsNone(reviewed_session({'sessionUrl':'rf'},[],[s],s['date'],'Plenário extraordinário'))
+  self.assertIsNone(reviewed_session(r,[],[s],'2026-07-29','Plenário extraordinário'))
+  self.assertIsNone(reviewed_session(r,[],[s],s['date'],'Comissão ordinária'))
+ def test_report_date_review_is_restricted_and_preserves_plenary_guard(self):
+  r={'date':'2025-06-26','dateSourceUrl':'https://camarablu.sc.gov.br/detalhe-noticia/14849/example/','dateEvidence':'Tema e participantes correspondentes'}
+  self.assertEqual(reviewed_date('2024-06-26',r,[],'Audiência pública'),'2025-06-26')
+  self.assertEqual(reviewed_date('2024-06-26',r,[],'Plenário ordinário'),'2024-06-26')
+  self.assertEqual(reviewed_date(None,r,[],'Audiência pública'),None)
+  for bad in [{**r,'date':'2025-02-31'},{**r,'dateSourceUrl':'https://camarablu.sc.gov.br.evil.test/detalhe-noticia/1'},{**r,'dateEvidence':''}]:
+   self.assertEqual(reviewed_date('2024-06-26',bad,[],'Audiência pública'),'2024-06-26')
+ def test_date_review_requires_matching_calendar_and_evidence(self):
+  sessions=[{'url':'official','date':'2025-10-09','title':'Reunião Ordinária'}]
+  review={'date':'2025-10-09','sessionUrl':'official','dateEvidence':'Pauta e votação conferidas'}
+  self.assertEqual(reviewed_date('2025-09-09',review,sessions,'Plenário ordinário'),'2025-10-09')
+  for bad in [{**review,'date':'2025-10-10'},{**review,'sessionUrl':'other'},{**review,'dateEvidence':''}]:
+   self.assertEqual(reviewed_date('2025-09-09',bad,sessions,'Plenário ordinário'),'2025-09-09')
+  self.assertEqual(reviewed_date('2025-09-09',review,sessions,'Solene'),'2025-09-09')
+  expired=verified_review({**review,'sha256':'old'},{'sha256':'new'},{})
+  self.assertEqual(reviewed_date('2025-09-09',expired,sessions,'Plenário ordinário'),'2025-09-09')
  def test_review_expires_if_either_pdf_changes(self):
   review={'sha256':'abc','duplicateOf':'other','duplicateOfSha256':'def'}
   self.assertEqual(verified_review(review,{'sha256':'abc'},{'other':'def'}),review)

@@ -3,6 +3,7 @@ import json,re,sys
 from pathlib import Path
 from datetime import datetime
 from collections import Counter,defaultdict
+from urllib.parse import urlparse
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from radar import norm, stamp
 EXTRA={
@@ -105,6 +106,27 @@ def verified_review(review,source,source_hashes):
     if review.get('duplicateOf') and source_hashes.get(review['duplicateOf'])!=review.get('duplicateOfSha256'):return {}
     return review
 
+def reviewed_date(source_date,review,source_sessions,k):
+    """Correção documental exige data, pauta identificada e tipo compatível."""
+    date=review.get('date')
+    try:datetime.strptime(date or '', '%Y-%m-%d')
+    except ValueError:return source_date
+    matches=[s for s in source_sessions if s['url']==review.get('sessionUrl') and s['date']==date and session_kind(s['title'])==k]
+    source=urlparse(review.get('dateSourceUrl',''))
+    official_report=k=='Audiência pública' and source.scheme=='https' and source.hostname in ('camarablu.sc.gov.br','dev.camarablu.sc.gov.br') and source.path.startswith('/detalhe-noticia/') and bool(source_date)
+    return date if review.get('dateEvidence') and (len(matches)==1 or official_report) else source_date
+
+def reviewed_session(review,candidates,source_sessions,date,k):
+    if not review.get('sessionUrl'):return None
+    choices=candidates
+    if review.get('associationEvidence'):
+        # Título do calendário pode chamar uma reunião de RF de ordinária,
+        # embora a ata a classifique como extraordinária. Nunca cruza famílias.
+        family='Plenário' if k.startswith('Plenário') else 'Comissão' if k.startswith('Comissão') else k
+        choices=[s for s in source_sessions if s['date']==date and session_kind(s['title']).startswith(family)]
+    found=[s for s in choices if s['url']==review['sessionUrl']]
+    return found[0] if len(found)==1 else None
+
 def build(data,downloaded,root):
     out=[];sessions=defaultdict(list)
     review_path=Path(__file__).parent/'attendance_reviews.json'
@@ -124,15 +146,24 @@ def build(data,downloaded,root):
         if a['id']=='530040':
             for row in rows:
                 if row['personId']=='almir-vieira-454':row['status']='Presente'
-        k='Frente parlamentar' if 'frente parlamentar' in norm(text[:350]) else kind(a['title']); candidates=sessions.get((date,k),[])
+        k='Frente parlamentar' if 'frente parlamentar' in norm(text[:350]) else kind(a['title'])
+        review=verified_review(reviews.get(a['id'],{}),a,source_hashes)
+        source_date=date;date=reviewed_date(source_date,review,source_sessions,k)
+        if review.get('rows'):
+            allowed={p['id'] for p in data['people']}
+            reviewed_rows=review['rows']
+            if len({r['personId'] for r in reviewed_rows})==len(reviewed_rows) and all(r['personId'] in allowed and r['status'] in ('Presente','Ausência justificada','Ausência citada sem classificação','Licença','Afastamento','Revisão necessária') for r in reviewed_rows):
+                rows=reviewed_rows;issue=None
+        if review.get('issue'):issue=review['issue']
+        candidates=sessions.get((date,k),[])
         # Sem associação automática entre comissões distintas do mesmo dia.
         if k.startswith('Comissão'):
             ck=committee_key(text[:1000]);candidates=[x for x in candidates if ck and committee_key(x['title'])==ck]
         match=candidates[0] if len(candidates)==1 else None
         review=verified_review(reviews.get(a['id'],{}),a,source_hashes)
         if review.get('sessionUrl'):
-            reviewed=[s for s in candidates if s['url']==review['sessionUrl']]
-            if len(reviewed)==1:match=reviewed[0]
+            revised=reviewed_session(review,candidates,source_sessions,date,k)
+            if revised:match=revised
         comparisons=[]
         if match:
             portal_states=defaultdict(set)
@@ -142,12 +173,16 @@ def build(data,downloaded,root):
             for row in rows:
                 state=portal.get(row['personId'],'Sem registro');equal=row['status']==state
                 compatible=row['status']=='Ausência citada sem classificação' and state in ('Ausente','Ausência justificada')
-                comparisons.append({**row,'portalStatus':state,'result':('Contradição na ata' if a['id'] in ('554140','552007','550814','550374','550038') else 'Revisar leitura') if row['status']=='Revisão necessária' else 'Coincide' if equal else 'Somente na ata' if state=='Sem registro' else 'Situação não informada no portal' if state=='Situação não informada' else 'Ausência coincide; classificação difere' if compatible else 'Divergência'})
+                comparisons.append({**row,'portalStatus':state,'result':('Contradição na ata' if review.get('sourceContradiction') or a['id'] in ('554140','552007','550814','550374','550038') else 'Revisar leitura') if row['status']=='Revisão necessária' else 'Coincide' if equal else 'Somente na ata' if state=='Sem registro' else 'Situação não informada no portal' if state=='Situação não informada' else 'Ausência coincide; classificação difere' if compatible else 'Divergência'})
             named={r['personId'] for r in rows}
             comparisons.extend({'personId':pid,'status':'Sem registro identificado na ata','portalStatus':state,'result':'Somente no portal'} for pid,state in portal.items() if pid not in named)
         record={key:a[key] for key in ('id','url','title','downloaded')}
         record.update(date=date,kind=k,rows=rows,issue=issue,sha256=a.get('sha256'),sessionUrl=match['url'] if match else None,comparison=comparisons,candidateSessions=[x['url'] for x in candidates],inPeriod=bool(date and data['start']<=date<=data['end']),committee=committee_key(text[:1000]) if k.startswith('Comissão') else None)
         record['meetingIdentity']=meeting_identity(text) if k.startswith('Plenário') else None
+        if date!=source_date:
+            record['sourceDate']=source_date
+            record['dateEvidence']=review['dateEvidence']
+            record['dateSourceUrl']=review.get('dateSourceUrl') or review.get('sessionUrl')
         if review.get('note'):record['reviewNote']=review['note']
         if review.get('duplicateOf') and source_hashes.get(review['duplicateOf'])==review.get('duplicateOfSha256'):
             record['duplicateOf']=review['duplicateOf']
@@ -161,6 +196,7 @@ def build(data,downloaded,root):
     result={'schemaVersion':1,'checkedAt':stamp(),'start':data['start'],'end':data['end'],'people':[{k:p[k] for k in ('id','name','url','party')} for p in data['people']],'minutes':out,'sessionGaps':gaps,'counts':{'calendarSessions':len(source_sessions),'inventoried':len(downloaded),'downloaded':sum(a['downloaded'] for a in out),'withDate':sum(bool(a['date']) for a in out),'withNominalReading':sum(bool(a['rows']) for a in out),'matchedSessions':len(matched),'sessionGaps':len(gaps),'comparisonResults':dict(Counter(c['result'] for a in out for c in a['comparison']))},'method':['Levantamento integral do inventário de atas, sem amostragem na seleção. Extração automatizada com revisão dos casos identificados; não é auditoria externa.','Estados reproduzidos da abertura; falta de nome nunca vira ausência. Motivos pessoais não são republicados.','Uma página no calendário não comprova, sozinha, que a reunião ocorreu ou que determinado vereador deveria comparecer.','Uma ausência sem classificação na ata não é declarada injustificada. Licenças e afastamentos são separados.','Ordenação usa apenas atas de plenário com data identificada, lista nominal legível e sem ambiguidade de reunião. Não mede desempenho.','Percentual usa registros nominais de presença e ausência nas atas elegíveis, não sessões de comparecimento obrigatório. Não há reconstrução integral dos períodos legais de exercício.','Comissões, solenidades e audiências têm composição e obrigações diferentes; não entram na comparação do plenário.','A conferência é uma fotografia datada. Novas coletas do portal não significam novas atas conferidas.','Os resultados de comparação são contados por ata e nome; duas atas podem se referir à mesma reunião. A ordenação exclui esses casos ambíguos.','O inventário usa atas protocoladas em 2025 e 2026. Documentos cujo texto aponta reunião fora do período são preservados no relatório e excluídos das contagens.','Pendências podem decorrer do formato ou da extração automática, não necessariamente de erro da Câmara. Casos sem leitura segura ficam pendentes; divergência não determina sozinha qual fonte está correta.'], 'inventorySources':['https://digital.camarablu.sc.gov.br/documentos/tipo:legislativo-2/ano:2025','https://digital.camarablu.sc.gov.br/documentos/tipo:legislativo-2/ano:2026']}
     result['method']=[m for m in result['method'] if not m.startswith('Os resultados de comparação são contados')]
     result['method'].append('Reuniões de plenário no mesmo dia só são separadas quando número e horário de abertura são distintos. Republicações confirmadas contam uma vez; outras ambiguidades permanecem excluídas. Associações revisadas ficam vinculadas ao hash do PDF e são reavaliadas se ele mudar.')
+    result['method'].append('Correções documentais de data preservam a data escrita na ata e indicam a pauta ou notícia oficial que fundamenta a data adotada. Listas revisadas individualmente também dependem da versão do PDF. Comparecimento posterior é sinalizado e não implica permanência integral; convidados em funções externas ao Legislativo não contam como presença parlamentar.')
     return result
 
 def main():
