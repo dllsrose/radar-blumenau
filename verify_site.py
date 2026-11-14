@@ -16,6 +16,7 @@ assert len(session_urls)==len(set(session_urls)), 'Sessões duplicadas'
 for session in d['sessions']:
     assert session['date']==calendar_date(session['title']), 'Data da sessão difere do calendário oficial'
     assert d['start']<=session['date']<=d['end'], 'Sessão fora do período'
+    assert all(a['status'] in ('Presente','Ausente','Ausência justificada','') for a in session['attendance']), 'Estado nominal desconhecido: revisar antes de publicar'
     records=session['attendance']+[row for vote in session['votes'] for row in vote['rows']]
     for record in records:
         assert record.get('personIds'), 'Nome nominal sem vínculo no cadastro: '+record['name']
