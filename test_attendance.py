@@ -1,9 +1,30 @@
 import unittest
-from attendance_audit import date_of,extract
+from attendance_audit import date_of,extract,meeting_identity,mark_duplicates,session_kind,committee_key,verified_review
 from radar import session_links
 from unittest.mock import Mock
 from radar import soup
 class AttendanceTests(unittest.TestCase):
+ def test_review_expires_if_either_pdf_changes(self):
+  review={'sha256':'abc','duplicateOf':'other','duplicateOfSha256':'def'}
+  self.assertEqual(verified_review(review,{'sha256':'abc'},{'other':'def'}),review)
+  self.assertEqual(verified_review(review,{'sha256':'new'},{'other':'def'}),{})
+  self.assertEqual(verified_review(review,{'sha256':'abc'},{'other':'new'}),{})
+ def test_split_hyphen_in_commission_attendance(self):
+  rows,issue=extract('Constatou-\nse a presença de Ana e a ausência justificada de Bia. Conforme indicação, Ana, Bia e Cris compõem a comissão. Após, realizou-se a eleição.',self.people())
+  self.assertIsNone(issue)
+  self.assertEqual({r['personId']:r['status'] for r in rows},{'a':'Presente','b':'Ausência justificada'})
+ def test_distinct_meetings_same_day(self):
+  a={'date':'2025-09-11','kind':'Plenário extraordinário','meetingIdentity':meeting_identity('Ata da 23ª Reunião Extraordinária. Aos 11 dias, às 15 horas e 30 minutos.')}
+  b={'date':'2025-09-11','kind':'Plenário extraordinário','meetingIdentity':meeting_identity('Ata da 24ª Reunião Extraordinária. Aos 11 dias, às 16 horas e 30 minutos.')}
+  mark_duplicates([a,b]);self.assertFalse(a.get('duplicateMeeting'));self.assertFalse(b.get('duplicateMeeting'))
+  b['meetingIdentity']['time']=a['meetingIdentity']['time'];mark_duplicates([a,b]);self.assertTrue(a['duplicateMeeting'])
+ def test_confirmed_republication_counts_one(self):
+  a={'date':'2025-04-10','kind':'Plenário ordinário','id':'a'}
+  b={**a,'id':'b','duplicateOf':'a'}
+  mark_duplicates([a,b]);self.assertFalse(a.get('duplicateMeeting'));self.assertTrue(b['duplicateMeeting'])
+ def test_ethics_council_not_plenary_and_committees_are_distinct(self):
+  self.assertEqual(session_kind('Reunião Extraordinária - Conselho de Ética'),'Conselho de ética')
+  self.assertNotEqual(committee_key('Comissão de análise às emendas à lei orgânica'),committee_key('Comissão de análise às emendas ao regimento interno'))
  def people(self):return [{'id':'a','name':'Ana','aliases':['ana']},{'id':'b','name':'Bia','aliases':['bia']},{'id':'c','name':'Cris','aliases':['cris']}]
  def test_absence_is_not_inferred_from_missing_name(self):
   rows,_=extract('Tendo como Presidente Ana. Ausência justificada Bia. Constatado',self.people())

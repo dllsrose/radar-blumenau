@@ -63,7 +63,7 @@ def pdf_record(item,client,root,refresh=False):
     ident=item['url'].rsplit('-',1)[-1]; pdf=root/'pdf'/f'{ident}.pdf'; txt=root/'text'/f'{ident}.txt'
     # PDFs já obtidos são relidos semanalmente; indisponíveis são tentados diariamente.
     if refresh or not pdf.exists():
-        page=client.get(item['url']); match=re.search(r'PDFObject.embed\("([^\"]+)',str(page))
+        page=client.get(item['url'],fresh=True); match=re.search(r'PDFObject.embed\("([^\"]+)',str(page))
         if not match: raise RuntimeError('Formato de PDF não reconhecido')
         link=match[1]
         if urlsplit(link).hostname!='sc-blumenau-camara.ad.sistemalegislativo.com.br': raise RuntimeError('Host de PDF não autorizado')
@@ -71,7 +71,7 @@ def pdf_record(item,client,root,refresh=False):
             with radar.slots:
                 with radar.gate:
                     time.sleep(max(0,.8-(time.monotonic()-radar.last_request))); radar.last_request=time.monotonic()
-                with urlopen(Request(link,headers={'User-Agent':'RadarBlumenau/1.0 (+https://github.com/dllsrose/radar-blumenau; attendance verification)'}),timeout=60) as response: raw=response.read()
+                with urlopen(Request(link,headers={'User-Agent':'RadarBlumenau/1.0 (+https://github.com/dllsrose/radar-blumenau; attendance verification)','Referer':item['url']}),timeout=60) as response: raw=response.read()
             if not raw.startswith(b'%PDF'): raise RuntimeError('Fonte não retornou PDF')
             # Extrai antes de substituir qualquer arquivo válido.
             import io

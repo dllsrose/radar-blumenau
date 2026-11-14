@@ -1,0 +1,18 @@
+{
+  "533169": {
+    "sha256": "bb63235b046eb16eb128397256382dd0753845a6faa36216edb851c05ec22142",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-extraordinaria-de-11-de-setembro-de-2025-8664",
+    "note": "Associação revisada pela pauta: a primeira reunião delibera projetos e a segunda suas redações finais. Números e horários distintos confirmados nas atas."
+  },
+  "533170": {
+    "sha256": "ee9b144b1315a739c530d17788c8e742bfc6859815b6a04afea4936c8e87ba13",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-extraordinaria-de-11-de-setembro-de-2025-rf-8670",
+    "note": "Associação revisada pela pauta: a primeira reunião delibera projetos e a segunda suas redações finais. Números e horários distintos confirmados nas atas."
+  },
+  "520032": {
+    "sha256": "685e025e4fb6e735f70cb290135e0ab32222e1638d243778db37e797dc22691d",
+    "duplicateOf": "519738",
+    "duplicateOfSha256": "08e3115c9d8d1d67ea6202e74039d56f3184f878192f40a172ba1f2f084ce85c",
+    "note": "Republicação da mesma ata de 10/04/2025: corpo e lista nominal conferidos; contada uma única vez pelo documento 519738. Diferenças de cabeçalho e assinaturas não criam outra presença."
+  }
+}
