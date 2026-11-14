@@ -3,6 +3,15 @@ from unittest.mock import Mock, patch
 from radar import calendar_date, document_listing, soup
 from radar import classify, repeats, validate, addresses, match_people, public_text
 class RadarTests(unittest.TestCase):
+    def test_garbage_containers_are_not_drainage(self):
+        from radar import TOPICS
+        import re
+        for text in ('instalar caixa coletora de lixo', 'instalar caixas coletoras de lixo'):
+            matched=[label for label,pattern in TOPICS if re.search(pattern,text)]
+            self.assertIn('Roçada e limpeza',matched)
+            self.assertNotIn('Bocas de lobo e drenagem',matched)
+        self.assertTrue(re.search(dict(TOPICS)['Bocas de lobo e drenagem'],'limpar caixas coletoras de água'))
+
     def test_same_count_cannot_hide_missing_attendance_identity(self):
         old={'schemaVersion':2,'people':[{}]*15,'documents':[self.doc()],'sessions':[{'url':'s','attendance':[{'name':'Ana','personIds':['a']}],'votes':[]}],'start':'2025-01-01','end':'2026-11-14'}
         new=copy.deepcopy(old);new['sessions'][0]['attendance']=[{'name':'Bia','personIds':['b']}]
