@@ -73,14 +73,14 @@ def match_people(names,persons):
     # Delimitadores da autoria; correspondência exata de nomes ou aliases conhecidos.
     parts=[norm(x.strip()) for x in names.split(',')]
     return [p['id'] for p in persons if any(a in parts for a in p['aliases'])]
-def document_listing(client,url):
+def document_listing(client,url,selector='li.list-item'):
     # O portal às vezes devolve uma página intermediária vazia com HTTP 200.
     # Não avançar nem tratar isso como fim da lista: aguardar e consultar novamente.
     for delay in (0,5,15,30,60,60):
         if delay:
             print(f'RECONSULTA de página vazia após {delay}s: {url}',flush=True)
             time.sleep(delay)
-        s=client.get(url,fresh=bool(delay));items=s.select('li.list-item')
+        s=client.get(url,fresh=bool(delay));items=s.select(selector)
         if items:return s,items
     raise RuntimeError(f'Página vazia inesperada após reconsultas: {url}')
 
@@ -135,8 +135,8 @@ def session_detail(client,item):
         for icon in info.select('.google-icon') if info else []:icon.decompose()
         at.append({'name':txt(p.select_one('.title')),'status':txt(info),'url':urljoin(BASE,p['href'])})
     for a in s.select('a[data-ajax*="/votacao/"]'):
-        vs=client.get(a['data-ajax']);rows=[]
-        for p in vs.select('.item-small-people'):
+        vs,vote_people=document_listing(client,a['data-ajax'],'.item-small-people');rows=[]
+        for p in vote_people:
             info=p.select_one('.info')
             for icon in info.select('.google-icon') if info else []:icon.decompose()
             rows.append({'name':txt(p.select_one('.title')),'vote':txt(info)})

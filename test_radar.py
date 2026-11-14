@@ -3,6 +3,12 @@ from unittest.mock import Mock, patch
 from radar import document_listing, soup
 from radar import classify, repeats, validate, addresses, match_people, public_text
 class RadarTests(unittest.TestCase):
+    def test_temporarily_unavailable_vote_is_retried_not_omitted(self):
+        client=Mock();client.get.side_effect=[soup('Nenhuma votação disponível'),soup('<div class="item-small-people"><span class="title">Ana</span><span class="info">Favorável</span></div>')]
+        with patch('radar.time.sleep'):
+            _,rows=document_listing(client,'https://digital.camarablu.sc.gov.br/sessao/documento/votacao/632698','.item-small-people')
+        self.assertEqual(len(rows),1)
+        self.assertTrue(client.get.call_args.kwargs['fresh'])
     def test_transient_empty_listing_is_refetched_without_skipping(self):
         client=Mock();client.get.side_effect=[soup('<p>Nenhum registro encontrado.</p>'),soup('<p>Nenhum registro encontrado.</p>'),soup('<li class="list-item">registro recuperado</li>')]
         with patch('radar.time.sleep') as sleep:
