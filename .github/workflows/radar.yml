@@ -1,19 +1,8 @@
-name: Coletar, conferir e publicar o Radar
+name: Validar e publicar base coletada localmente
 on:
   push:
     branches: [main]
   workflow_dispatch:
-    inputs:
-      publicar_base_validada:
-        description: Publicar somente a ultima base validada, sem nova coleta
-        type: boolean
-        default: false
-      historico_completo:
-        description: 'Ampliar desde janeiro de 2025 (pode levar horas)'
-        type: boolean
-        default: false
-  schedule:
-    - cron: '17 6 * * *'
 permissions:
   contents: read
   pages: read
@@ -21,55 +10,15 @@ concurrency:
   group: radar-pages
   cancel-in-progress: false
 jobs:
-  collect:
+  validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 330
     steps:
       - uses: actions/checkout@v6
-      - name: Abrir fontes e base validada
-        run: unzip -o radar-source.zip
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
       - run: pip install -r requirements.txt
       - run: python -m unittest -v test_radar.py
-      - name: Buscar ultima base valida
-        run: |
-          python - <<'PY'
-          from urllib.request import urlopen
-          from urllib.error import HTTPError
-          from pathlib import Path
-          import json
-          try:
-              raw=urlopen('https://dllsrose.github.io/radar-blumenau/data.json',timeout=30).read()
-              if json.loads(raw).get('schemaVersion')!=2: raise RuntimeError('Base incompatível')
-              Path('baseline.json').write_bytes(raw)
-          except HTTPError as e:
-              if e.code!=404: raise
-              Path('baseline.json').write_bytes(Path('dist/data.json').read_bytes())
-          PY
-      - name: Atualizar dados oficiais
-        if: ${{ !inputs.publicar_base_validada }}
-        env:
-          FULL_HISTORY: ${{ inputs.historico_completo || 'false' }}
-        run: |
-          python - <<'PY'
-          import json, os, subprocess, sys
-          from pathlib import Path
-          start=json.loads(Path('baseline.json').read_text())['start']
-          if os.environ.get('FULL_HISTORY')=='true': start='2025-01-01'
-          subprocess.run([sys.executable,'radar.py','--start',start,'--baseline','baseline.json'],check=True)
-          PY
-      - name: Publicacao manual transparente da base validada
-        if: ${{ inputs.publicar_base_validada }}
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          Path('dist/data.json').write_bytes(Path('baseline.json').read_bytes())
-          p=Path('dist/index.html')
-          notice='<aside style="padding:16px;background:#fff4d6;color:#5b4400;text-align:center">Base validada de novembro de 2026. A coleta automatica encontrou verificacao antirrobo da Camara; atualizacao pendente. Consulte a cobertura e a data de coleta abaixo.</aside>'
-          p.write_text(p.read_text().replace('<body>','<body>'+notice))
-          PY
       - run: python verify_site.py
       - uses: actions/upload-artifact@v4
         with:
@@ -83,7 +32,7 @@ jobs:
         with:
           path: dist
   deploy:
-    needs: collect
+    needs: validate
     runs-on: ubuntu-latest
     permissions:
       pages: write
@@ -92,6 +41,5 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Publicar somente a base validada
-        id: deployment
+      - id: deployment
         uses: actions/deploy-pages@v4

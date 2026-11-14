@@ -1,0 +1,8 @@
+.cache/
+.local/
+__pycache__/
+*.pyc
+.venv/
+.env
+baseline.json
+outputs/

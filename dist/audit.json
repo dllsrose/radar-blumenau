@@ -1,0 +1,79 @@
+{
+  "checkedAt": "2026-11-13",
+  "scope": "Conferência manual por amostragem de sessões ordinárias. Não valida todo o mandato nem as sessões extraordinárias.",
+  "samples": [
+    {
+      "date": "2026-11-10",
+      "type": "Ordinária",
+      "source": "https://digital.camarablu.sc.gov.br/documento/ata-reuniao-ordinaria-no-79-2026-569564",
+      "session": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-de-10-de-novembro-de-2026-109208",
+      "document": "Ata Reunião Ordinária Nº 79/2026, página 1; PDF de 5 páginas com manifesto de assinaturas",
+      "present": 13,
+      "justified": 2,
+      "justifiedNames": [
+        "Jovino Cardoso Neto",
+        "Rodrigo Marchetti"
+      ],
+      "match": true,
+      "result": "Os 15 estados nominais da página de sessão coincidem com a abertura da ata, após conciliação de nomes completos e nomes parlamentares. Nenhuma divergência encontrada na amostra."
+    },
+    {
+      "date": "2026-11-05",
+      "type": "Ordinária",
+      "source": "https://digital.camarablu.sc.gov.br/documento/ata-reuniao-ordinaria-no-78-2026-568994",
+      "session": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-de-5-de-novembro-de-2026-109203",
+      "document": "Ata Reunião Ordinária Nº 78/2026, página 1; PDF de 4 páginas com manifesto de assinaturas",
+      "present": 12,
+      "justified": 3,
+      "justifiedNames": [
+        "Egídio da Rosa Beckhauser",
+        "Jean Volpato",
+        "Silmara Silva Miguel"
+      ],
+      "match": true,
+      "result": "Os 15 estados nominais da página de sessão coincidem com a abertura da ata, após conciliação de nomes completos e nomes parlamentares. Nenhuma divergência encontrada na amostra."
+    },
+    {
+      "date": "2026-11-12",
+      "type": "Ordinária",
+      "source": "https://digital.camarablu.sc.gov.br/documentos/subtipo:ata-reuniao-ordinaria-21/ano:2026",
+      "session": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-de-12-de-novembro-de-2026-109214",
+      "present": 13,
+      "match": null,
+      "result": "Página da sessão registra 13 presentes. Não há registro nominal de Jovino Cardoso Neto nem Rodrigo Emanuel Marchetti. Na listagem de atas consultada, a mais recente é a Ata79 referente a10/11, protocolada em13/11. Ata de12/11 não foi localizada: comparação independente ainda pendente. Não classificar os dois nomes sem registro como ausentes."
+    }
+  ],
+  "aliasesVerified": [
+    {
+      "displayName": "Rodrigo Marchetti",
+      "fullName": "Rodrigo Emanuel Marchetti",
+      "source": "https://digital.camarablu.sc.gov.br/vereador/rodrigo-emanuel-marchetti-1001714",
+      "evidence": "Mesmo perfil apresenta título Rodrigo Marchetti e nome completo Rodrigo Emanuel Marchetti. Ata79 identifica Rodrigo Marchetti como suplente."
+    },
+    {
+      "displayName": "Flavinho",
+      "fullName": "Flávio José Linhares",
+      "source": "https://digital.camarablu.sc.gov.br/vereador/flavio-jose-linhares-1002017",
+      "evidence": "Mesmo perfil apresenta título Flavinho e nome completo Flávio José Linhares. Nome completo também consta na Ata79."
+    },
+    {
+      "displayName": "Bruno Cunha",
+      "fullName": "Bruno Horwatitsch Cunha",
+      "source": "https://digital.camarablu.sc.gov.br/vereador/bruno-cunha-467",
+      "evidence": "Perfil oficial usa Bruno Cunha; Ata79 e Ata78 usam Bruno Horwatitsch Cunha na lista nominal."
+    }
+  ],
+  "otherAliasesInMinutes": {
+    "Cristiane Loureiro": "Cristiane Marta Loureiro",
+    "Alexandre Matias": "Alexandre Agenor Matias",
+    "Bruno Winzewski": "Bruno Ricardo Winzewski",
+    "Silmara Silva Miguel": "Silmara Ferreira da Silva Miguel (Ata79); Silmara da Silva Miguel (Ata78)"
+  },
+  "limits": [
+    "Atas e páginas são fontes distintas da mesma instituição; não houve auditoria externa independente.",
+    "Votações não foram auditadas neste trabalho.",
+    "A sessão extraordinária de10/11 marca Ausente para Jovino e Rodrigo, enquanto a ordinária marca Ausência justificada. São sessões distintas: a ata ordinária não autoriza sobrescrever a extraordinária.",
+    "Listas de presença na abertura não medem permanência integral na sessão.",
+    "Não publicar razões pessoais de ausência; basta o estado oficial Presente, Ausente ou Ausência justificada."
+  ]
+}
