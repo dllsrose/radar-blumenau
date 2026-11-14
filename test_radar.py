@@ -3,6 +3,20 @@ from unittest.mock import Mock, patch
 from radar import calendar_date, document_listing, soup
 from radar import classify, repeats, validate, addresses, match_people, public_text
 class RadarTests(unittest.TestCase):
+    def test_explicit_unpublished_vote_remains_identified_after_retries(self):
+        client=Mock();client.get.return_value=soup('<p>Nenhuma votação disponível</p>')
+        with patch('radar.time.sleep'):
+            _,rows=document_listing(client,'https://digital.camarablu.sc.gov.br/sessao/documento/votacao/611971','.item-small-people',allow_unavailable_vote=True)
+        self.assertEqual(rows,[])
+        self.assertEqual(client.get.call_count,6)
+        client.get.return_value=soup('<p>Resposta desconhecida</p>')
+        with patch('radar.time.sleep'),self.assertRaises(RuntimeError):
+            document_listing(client,'https://digital.camarablu.sc.gov.br/sessao/documento/votacao/611971','.item-small-people',allow_unavailable_vote=True)
+    def test_missing_vote_rows_cannot_replace_published_votes(self):
+        old={'schemaVersion':2,'people':[{}]*15,'documents':[self.doc()],'sessions':[{'url':'s','attendance':[],'votes':[{'url':'v','rows':[{'name':'Ana'}]}]}],'start':'2025-01-01','end':'2026-11-14'}
+        new=copy.deepcopy(old);new['sessions'][0]['votes'][0]['rows']=[]
+        with self.assertRaises(ValueError):validate(new,old)
+
     def test_calendar_date_overrides_free_title_date(self):
         self.assertEqual(calendar_date('REUNIÃO DA COMISSÃO - 14/05/2025 - 14/05/2026'),'2026-05-14')
         self.assertEqual(calendar_date('REUNIÃO ORDINÁRIA DE 10 DE NOVEMBRO DE 2026 - 10/11/2026'),'2026-11-10')

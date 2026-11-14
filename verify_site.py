@@ -22,7 +22,7 @@ for session in d['sessions']:
         assert record.get('personIds'), 'Nome nominal sem vínculo no cadastro: '+record['name']
         assert all(person_id in ids for person_id in record['personIds'])
     for vote in session['votes']:
-        assert vote['rows'], 'Votação sem registros nominais'
+        assert vote['rows'] or (vote.get('availability')=='unavailable' and vote.get('notice')), 'Votação vazia sem indicação explícita da fonte'
 urls={doc['url'] for doc in d['documents']}
 for group in d['repeatedRequests']:
     assert group['count']==len(set(group['documents']))>=2

@@ -78,7 +78,7 @@ def match_people(names,persons):
     # Delimitadores da autoria; correspondência exata de nomes ou aliases conhecidos.
     parts=[norm(x.strip()) for x in names.split(',')]
     return [p['id'] for p in persons if any(a in parts for a in p['aliases'])]
-def document_listing(client,url,selector='li.list-item'):
+def document_listing(client,url,selector='li.list-item',allow_unavailable_vote=False):
     # O portal às vezes devolve uma página intermediária vazia com HTTP 200.
     # Não avançar nem tratar isso como fim da lista: aguardar e consultar novamente.
     for delay in (0,5,15,30,60,60):
@@ -87,6 +87,9 @@ def document_listing(client,url,selector='li.list-item'):
             time.sleep(delay)
         s=client.get(url,fresh=bool(delay));items=s.select(selector)
         if items:return s,items
+    if allow_unavailable_vote and norm(txt(s))=='nenhuma votacao disponivel':
+        print(f'RESULTADO NOMINAL NÃO PUBLICADO NA FONTE: {url}',flush=True)
+        return s,[]
     raise RuntimeError(f'Página vazia inesperada após reconsultas: {url}')
 
 def collect_documents(client,year,start,end):
@@ -140,15 +143,14 @@ def session_detail(client,item):
         for icon in info.select('.google-icon') if info else []:icon.decompose()
         at.append({'name':txt(p.select_one('.title')),'status':txt(info),'url':urljoin(BASE,p['href'])})
     for a in s.select('a[data-ajax*="/votacao/"]'):
-        vs,vote_people=document_listing(client,a['data-ajax'],'.item-small-people');rows=[]
+        vs,vote_people=document_listing(client,a['data-ajax'],'.item-small-people',allow_unavailable_vote=True);rows=[]
         for p in vote_people:
             info=p.select_one('.info')
             for icon in info.select('.google-icon') if info else []:icon.decompose()
             rows.append({'name':txt(p.select_one('.title')),'vote':txt(info)})
-        if not rows: raise RuntimeError('Registro de votação vazio')
         block=a.find_parent(class_='item-full-accordion'); title=txt(block.select_one('.title')) if block else 'Votação'
         source=block.select_one('a[href^="/documento/"]') if block else None
-        votes.append({'url':a['data-ajax'],'title':title,'documentUrl':urljoin(BASE,source['href']) if source else None,'rows':rows,'text':'\n'.join(x['name']+' — '+x['vote'] for x in rows)})
+        votes.append({'url':a['data-ajax'],'title':title,'availability':'published' if rows else 'unavailable','notice':'' if rows else 'O portal oficial informa “Nenhuma votação disponível”, confirmado após seis consultas. Nenhum voto foi inferido. O resultado será consultado novamente nas revisões do histórico.','documentUrl':urljoin(BASE,source['href']) if source else None,'rows':rows,'text':'\n'.join(x['name']+' — '+x['vote'] for x in rows)})
     return {**record,'url':url,'attendance':at,'votes':votes}
 TOPICS=[('Buracos e pavimentação',r'buraco|pavimenta|calcamento|lajota|asfalt'),('Roçada e limpeza',r'rocada|rocar|limpeza|limpar|capina|recolher lixo'),('Bocas de lobo e drenagem',r'boca de lobo|caixa coletora|caixas coletoras|drenagem|esgoto|tubulacao'),('Rios e ribeirões',r'ribeirao|ribeiro|desassoreamento|\brio\b'),('Iluminação pública',r'iluminacao|luminaria|lampada'),('Sinalização e trânsito',r'sinalizacao|faixa de pedestre|lombada|semaforo|redutor de velocidade'),('Manutenção de vias sem pavimento',r'patrolar|patrolagem|macadam|ensaibr')]
 def addresses(text):
@@ -192,7 +194,11 @@ def validate(data,baseline=None):
         if old_sessions.keys()-current.keys():raise ValueError('Sessões desapareceram')
         for u,s in old_sessions.items():
             if len(current[u]['attendance'])<len(s['attendance']) or len(current[u]['votes'])<len(s['votes']):raise ValueError('Perda de registros nominais; revisão necessária')
-    return {'valid':True,'uniqueProposals':len(urls),'participants':len(data['people']),'sessions':len(data['sessions']),'votes':sum(len(s['votes']) for s in data['sessions'])}
+            current_votes={v['url']:v for v in current[u]['votes']}
+            for old_vote in s['votes']:
+                new_vote=current_votes.get(old_vote['url'])
+                if new_vote is None or {r['name'] for r in old_vote['rows']}-{r['name'] for r in new_vote['rows']}:raise ValueError('Votos nominais desapareceram; preservar publicação anterior')
+    return {'valid':True,'uniqueProposals':len(urls),'participants':len(data['people']),'sessions':len(data['sessions']),'votes':sum(bool(v['rows']) for s in data['sessions'] for v in s['votes']),'unavailableVotes':sum(not v['rows'] for s in data['sessions'] for v in s['votes'])}
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--start',default='2025-01-01');ap.add_argument('--end',default=datetime.now(ZoneInfo('America/Sao_Paulo')).date().isoformat());ap.add_argument('--cache',default='.cache/'+datetime.now(ZoneInfo('America/Sao_Paulo')).date().isoformat());ap.add_argument('--output',default='dist/data.json');ap.add_argument('--baseline');args=ap.parse_args()
     baseline=json.loads(Path(args.baseline).read_text(encoding='utf-8')) if args.baseline and Path(args.baseline).exists() else None

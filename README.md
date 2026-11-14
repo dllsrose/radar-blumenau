@@ -27,3 +27,5 @@ Para prévia, executar `node serve.cjs` e abrir http://127.0.0.1:4173.
 Os arquivos dist e os fontes estão diretamente versionados. radar-source.zip é apenas o pacote inicial de arquivo, não é mais usado no deploy. Não publicar .cache, .local, logs, credenciais ou arquivos de ambiente.
 
 Correções: https://github.com/dllsrose/radar-blumenau/issues/new
+
+Resultados nominais explicitamente indisponíveis na Câmara, confirmados após seis consultas, permanecem sinalizados e vinculados à fonte, fora do total de votações publicadas. As revisões semanais os consultam novamente. Um resultado indisponível nunca substitui votos nominais já publicados.
