@@ -3,6 +3,22 @@ from unittest.mock import Mock, patch
 from radar import calendar_date, document_listing, soup
 from radar import classify, repeats, validate, addresses, match_people, public_text
 class RadarTests(unittest.TestCase):
+    def test_same_count_cannot_hide_missing_attendance_identity(self):
+        old={'schemaVersion':2,'people':[{}]*15,'documents':[self.doc()],'sessions':[{'url':'s','attendance':[{'name':'Ana','personIds':['a']}],'votes':[]}],'start':'2025-01-01','end':'2026-11-14'}
+        new=copy.deepcopy(old);new['sessions'][0]['attendance']=[{'name':'Bia','personIds':['b']}]
+        with self.assertRaises(ValueError):validate(new,old)
+        new['sessions'][0]['attendance']=[{'name':'Ana Silva','personIds':['a']}]
+        validate(new,old)
+
+    def test_commemorative_days_weeks_and_months(self):
+        for text in ('PARA INSTITUIR O "DIA DO PARAENSE".', 'PARA INSTITUIR A SEMANA FARROUPILHA.', 'INSTITUI O FEVEREIRO LAVANDA, COMO MÊS DE CONSCIENTIZAÇÃO.'):
+            self.assertEqual(classify('Projeto de Lei 1/2025',text),'Homenagens')
+        self.assertEqual(classify('Projeto de Lei 2/2025','Institui atendimento das instituições de ensino durante o dia.'),'Propostas de lei')
+    def test_phone_formats_and_year_ranges(self):
+        for phone in ('47 9 9999 1234','47 9 9999-1234','99999-1234','9999-1234','999991234','(47) 99999-1234'):
+            self.assertEqual(public_text('Contato: '+phone),'Contato: [telefone omitido]')
+        self.assertEqual(public_text('Rua Bahia, 1234. CEP 89010-922. Mandato 2025-2028.'),'Rua Bahia, 1234. CEP 89010-922. Mandato 2025-2028.')
+
     def test_explicit_unpublished_vote_remains_identified_after_retries(self):
         client=Mock();client.get.return_value=soup('<p>Nenhuma votação disponível</p>')
         with patch('radar.time.sleep'):

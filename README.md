@@ -24,7 +24,7 @@ As categorias e recorrências são heurísticas transparentes. Repetição não 
 Python 3.12: instalar requirements.txt, executar `python -m unittest -v test_radar.py`, `python radar.py --start 2025-01-01 --baseline dist/data.json` e `python verify_site.py`.
 Para prévia, executar `node serve.cjs` e abrir http://127.0.0.1:4173.
 
-Os arquivos dist e os fontes estão diretamente versionados. radar-source.zip é apenas o pacote inicial de arquivo, não é mais usado no deploy. Não publicar .cache, .local, logs, credenciais ou arquivos de ambiente.
+Os arquivos dist e os fontes estão diretamente versionados. Não publicar .cache, .local, logs, credenciais ou arquivos de ambiente.
 
 Correções: https://github.com/dllsrose/radar-blumenau/issues/new
 

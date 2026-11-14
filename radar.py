@@ -29,10 +29,18 @@ def calendar_date(title):
     return iso(m[1]) if m else None
 
 def public_text(text):
-    text=re.sub(r'(?<!\d)(?:\+?55\s*)?(?:\(\d{2}\)|\b\d{2})\s*\d{4,5}[-\s]?\d{4}(?!\d)','[telefone omitido]',text)
+    # Telefones podem ter DDD, nono dígito separado ou aparecer sem DDD.
+    text=re.sub(r'(?<!\d)(?:\+?55\s*)?(?:\(\d{2}\)|\b\d{2})[\s.-]*(?:9\s+)?\d{4,5}[-\s]?\d{4}(?!\d)','[telefone omitido]',text)
+    def phone_or_years(match):
+        value=match[0]
+        if re.fullmatch(r'(?:19|20)\d{2}\s*-\s*(?:19|20)\d{2}',value):return value
+        return '[telefone omitido]'
+    text=re.sub(r'(?<!\d)(?:9\s*)?\d{4}[-\s]\d{4}(?!\d)',phone_or_years,text)
+    text=re.sub(r'(?<!\d)9\d{8}(?!\d)','[telefone omitido]',text)
     text=re.sub(r'\b\d{3}\.\d{3}\.\d{3}-\d{2}\b','[CPF omitido]',text)
     text=re.sub(r'\b[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}\b',lambda m:m[0] if m[0].lower().endswith('@camarablu.sc.gov.br') else '[e-mail omitido]',text)
     return text
+
 class Client:
     def __init__(self,cache): self.cache=cache; cache.mkdir(parents=True,exist_ok=True); self.pages={}
     def get(self,url,fresh=False):
@@ -57,7 +65,11 @@ class Client:
 def classify(title,text):
     t=norm(title+' '+text)
     honor=r'\b(paraben\w*|congratula\w*|homenag\w*|louvor|pesar|aplausos)\b|titulo de cidad|denomina\w* (?:a |o |de |oficialmente )?(?:rua|via|logradouro|praca)|institui\w*.*(?:dia municipal|semana municipal|data comemorativa)'
-    if re.search(honor,t): return 'Homenagens'
+    commemorative=title.startswith(('Projeto','Proposta de Emenda')) and (
+        re.search(r'\b(?:institui|instituir|cria|criar|inclui|incluir)\s+(?:(?:o|a|um|uma)\s+)?["“”\x27]*(?:dia|semana|mes)\b',t)
+        or (re.search(r'\b(?:institui|instituir|cria|criar)\b',t) and re.search(r'\bmes de (?:conscientizacao|prevencao|combate|homenagem)\b',t))
+    )
+    if re.search(honor,t) or commemorative: return 'Homenagens'
     if title.startswith('Indicação'): return 'Melhorias nos bairros'
     if title.startswith('Requerimento'): return 'Perguntas e cobranças'
     if title.startswith(('Projeto','Proposta de Emenda')): return 'Propostas de lei'
@@ -181,6 +193,9 @@ def repeats(docs):
         if len(ds)<2 or len(set(d['date'] for d in ds))<2:continue
         output.append({'street':next(iter(items.values()))['street'],'topic':theme,'count':len(ds),'dates':sorted(set(d['date'] for d in ds)),'documents':[d['url'] for d in sorted(ds,key=lambda d:d['date'])],'method':'Correspondência automática de logradouro e assunto; não confirma que o problema é o mesmo ou não foi resolvido.'})
     return sorted(output,key=lambda g:(-g['count'],norm(g['street'])))
+def nominal_keys(rows):
+    return {tuple(sorted(row.get('personIds',[]))) or ('name',norm(row.get('name',''))) for row in rows}
+
 def validate(data,baseline=None):
     if len(data['people'])<15 or not data['documents'] or not data['sessions']:raise ValueError('Base vazia ou cadastro incompleto')
     urls=[d['url'] for d in data['documents']]
@@ -194,10 +209,11 @@ def validate(data,baseline=None):
         if old_sessions.keys()-current.keys():raise ValueError('Sessões desapareceram')
         for u,s in old_sessions.items():
             if len(current[u]['attendance'])<len(s['attendance']) or len(current[u]['votes'])<len(s['votes']):raise ValueError('Perda de registros nominais; revisão necessária')
+            if nominal_keys(s['attendance'])-nominal_keys(current[u]['attendance']):raise ValueError('Nomes desapareceram da presença; revisão necessária')
             current_votes={v['url']:v for v in current[u]['votes']}
             for old_vote in s['votes']:
                 new_vote=current_votes.get(old_vote['url'])
-                if new_vote is None or {r['name'] for r in old_vote['rows']}-{r['name'] for r in new_vote['rows']}:raise ValueError('Votos nominais desapareceram; preservar publicação anterior')
+                if new_vote is None or nominal_keys(old_vote['rows'])-nominal_keys(new_vote['rows']):raise ValueError('Votos nominais desapareceram; preservar publicação anterior')
     return {'valid':True,'uniqueProposals':len(urls),'participants':len(data['people']),'sessions':len(data['sessions']),'votes':sum(bool(v['rows']) for s in data['sessions'] for v in s['votes']),'unavailableVotes':sum(not v['rows'] for s in data['sessions'] for v in s['votes'])}
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--start',default='2025-01-01');ap.add_argument('--end',default=datetime.now(ZoneInfo('America/Sao_Paulo')).date().isoformat());ap.add_argument('--cache',default='.cache/'+datetime.now(ZoneInfo('America/Sao_Paulo')).date().isoformat());ap.add_argument('--output',default='dist/data.json');ap.add_argument('--baseline');args=ap.parse_args()
@@ -219,12 +235,15 @@ def main():
     if refresh_start>args.start:
         all_docs.extend(d for d in baseline['documents'] if d['date']<refresh_start)
         sessions.extend(s for s in baseline['sessions'] if s['date']<refresh_start)
-    for d in all_docs:d['authorIds']=match_people(d['authors'],persons)
+    for d in all_docs:
+        d['text']=public_text(d['text']);d['category']=classify(d['title'],d['text']);d['authorIds']=match_people(d['authors'],persons)
     for s in sessions:
         for a in s['attendance']:a['personIds']=match_people(a['name'],persons)
         for v in s['votes']:
             for row in v['rows']:row['personIds']=match_people(row['name'],persons)
     collected=sorted(client.pages.values());data={'schemaVersion':2,'start':args.start,'end':args.end,'collectedAt':max(collected),'collectionStartedAt':min(collected),'people':persons,'documents':sorted({d['url']:d for d in all_docs}.values(),key=lambda d:(d['date'],d['id']),reverse=True),'sessions':sorted(sessions,key=lambda s:(s['date'],s['url']),reverse=True),'documentCoverage':coverage,'sources':{'roster':ROSTER,'institutionalRoster':'https://camarablu.sc.gov.br/quem-sao/'},'updateMode':'Coleta local diária às 03h17 (Brasília); validação e publicação pelo GitHub Actions','limitations':['Não representa todos os atos informais do mandato, nem execução de obras.','Cadastro institucional e digital divergiam na conferência inicial; incluímos todos os participantes publicados para a legislatura.','Categorias e agrupamentos de pedidos são cálculos automáticos, sujeitos a correção.','Ausência de registro não é falta.','Conferência independente de presenças descrita no relatório de auditoria.']}
+    if baseline:data['collectedAt']=max(data['collectedAt'],baseline['collectedAt'])
+    data['processedAt']=stamp()
     data['refreshedFrom']=refresh_start
     data['fullCollectedAt']=data['collectedAt'] if refresh_start==args.start else baseline.get('fullCollectedAt',baseline['collectedAt'])
     data['repeatedRequests']=repeats(data['documents'])
