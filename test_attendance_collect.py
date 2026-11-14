@@ -1,0 +1,40 @@
+import copy, unittest
+from attendance_collect import validate_progress, inventory, calendar
+from radar import soup
+
+class ProgressTests(unittest.TestCase):
+    def setUp(self):
+        self.base={'start':'2025-01-01','end':'2026-11-14','minutes':[{'url':'ata1','downloaded':True,'date':'2025-02-01','rows':[{'personId':'a'}],'sessionUrl':'sessao1'}],'sessionGaps':[{'url':'sessao2'}]}
+    def test_preserves_history_and_accepts_additions(self):
+        new=copy.deepcopy(self.base);new['end']='2026-11-15';new['sessionGaps'].append({'url':'sessao3'})
+        validate_progress(new,self.base)
+    def test_rejects_missing_minutes(self):
+        new=copy.deepcopy(self.base);new['minutes']=[]
+        with self.assertRaises(RuntimeError):validate_progress(new,self.base)
+    def test_rejects_lost_pdf_date_and_reading(self):
+        for key,value in [('downloaded',False),('date',None),('rows',[])]:
+            new=copy.deepcopy(self.base);new['minutes'][0][key]=value
+            with self.subTest(key=key),self.assertRaises(RuntimeError):validate_progress(new,self.base)
+    def test_rejects_disappearing_calendar_and_regression(self):
+        new=copy.deepcopy(self.base);new['sessionGaps']=[]
+        with self.assertRaises(RuntimeError):validate_progress(new,self.base)
+        new=copy.deepcopy(self.base);new['start']='2026-01-01'
+        with self.assertRaises(RuntimeError):validate_progress(new,self.base)
+    def test_inventory_collects_all_types_and_follows_pagination(self):
+        class Client:
+            def get(self,url,fresh=False):
+                if url.endswith('/next'):
+                    return soup('<li class="list-item"><a href="/documento/ata-2" class="title-link">Ata Comissão ordinária</a></li>')
+                return soup('<li class="list-item"><a href="/documento/ata-1" class="title-link">Ata Reunião ordinária</a></li><a rel="next" href="/next">Próxima</a>')
+        self.assertEqual(len(inventory(Client(),'2025-01-01','2025-12-31')),2)
+    def test_calendar_keeps_other_meeting_types(self):
+        class Client:
+            pages={}
+            def get(self,url):
+                self.pages[url]='2026-11-14'
+                if url.endswith('/sessoes'): return soup('<a href="/sessao/1">Audiência pública - 03/02/2025</a>')
+                return soup('<div class="wrap-presencas"><div class="item-full-people"><span class="title">Pessoa</span><div class="info">Presente</div></div></div>')
+        rows=calendar(Client(),'2025-01-01','2026-11-14',[{'id':'a','aliases':['pessoa']}])
+        self.assertEqual(rows[0]['attendance'][0]['personIds'],['a'])
+
+if __name__=='__main__':unittest.main()

@@ -36,7 +36,7 @@ raw=(r/'dist/data.json').read_text(encoding='utf-8')
 assert '?token=' not in raw,'URLs temporárias não devem ser publicadas'
 print('Site e base conferidos:',json.dumps(d['validation'],ensure_ascii=True))
 
-# A conferência de atas é um relatório documental datado, separado da coleta diária.
+# A conferência mantém data e cobertura explícitas, inclusive na rotina diária.
 a=json.loads((r/'dist/attendance-audit.json').read_text(encoding='utf-8'))
 assert a['schemaVersion']==1 and a['counts']['inventoried']==len(a['minutes'])
 assert a['counts']['downloaded']==sum(x['downloaded'] for x in a['minutes'])
