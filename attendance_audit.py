@@ -67,7 +67,7 @@ def committee_key(title):
     if 'emendas' in t:
         if 'lei organica' in t:return 'emendas-lei-organica'
         if 'regimento interno' in t:return 'emendas-regimento'
-    for key in ['esgotamento','mista','telefonia','seguranca nas escolas','hiv','furb','area azul','saude mental','barragem','corpo de bombeiros','sistema pronto','constituicao','financas','educacao','transportes','turismo','defesa civil','cultura']:
+    for key in ['esgotamento','mista','telefonia','seguranca nas escolas','hiv','contran','furb','area azul','saude mental','barragem','corpo de bombeiros','sistema pronto','constituicao','financas','educacao','transportes','turismo','defesa civil','cultura']:
         if key in t:return key
     return None
 
@@ -113,8 +113,11 @@ def reviewed_date(source_date,review,source_sessions,k):
     except ValueError:return source_date
     matches=[s for s in source_sessions if s['url']==review.get('sessionUrl') and s['date']==date and session_kind(s['title'])==k]
     source=urlparse(review.get('dateSourceUrl',''))
+    # Leitura individual documentada, vinculada ao hash por verified_review.
+    # Não amplia o reconhecedor automático de datas por extenso.
+    manual=review.get('dateReviewMode')=='pdf-page-reviewed' and review.get('datePdfPage')==1 and bool(review.get('datePdfText')) and not source_date and not k.startswith('Plenário') and source.scheme=='https' and source.hostname in ('digital.camarablu.sc.gov.br','camarablu.sc.gov.br','dev.camarablu.sc.gov.br')
     official_report=k=='Audiência pública' and source.scheme=='https' and source.hostname in ('camarablu.sc.gov.br','dev.camarablu.sc.gov.br') and source.path.startswith('/detalhe-noticia/') and bool(source_date)
-    return date if review.get('dateEvidence') and (len(matches)==1 or official_report) else source_date
+    return date if review.get('dateEvidence') and (len(matches)==1 or official_report or manual) else source_date
 
 def reviewed_session(review,candidates,source_sessions,date,k):
     if not review.get('sessionUrl'):return None
@@ -148,6 +151,7 @@ def build(data,downloaded,root):
                 if row['personId']=='almir-vieira-454':row['status']='Presente'
         k='Frente parlamentar' if 'frente parlamentar' in norm(text[:350]) else kind(a['title'])
         review=verified_review(reviews.get(a['id'],{}),a,source_hashes)
+        if review.get('dateReviewMode')=='pdf-page-reviewed' and norm(review.get('datePdfText','')) not in norm(' '.join(text.split())):review={}
         source_date=date;date=reviewed_date(source_date,review,source_sessions,k)
         if review.get('rows'):
             allowed={p['id'] for p in data['people']}
@@ -155,12 +159,15 @@ def build(data,downloaded,root):
             if len({r['personId'] for r in reviewed_rows})==len(reviewed_rows) and all(r['personId'] in allowed and r['status'] in ('Presente','Ausência justificada','Ausência citada sem classificação','Licença','Afastamento','Revisão necessária') for r in reviewed_rows):
                 rows=reviewed_rows;issue=None
         if review.get('issue'):issue=review['issue']
+        historical=[]
+        if date and date<data['start'] and review.get('historicalRows'):
+            historical=review['historicalRows']
+            issue=None
         candidates=sessions.get((date,k),[])
         # Sem associação automática entre comissões distintas do mesmo dia.
         if k.startswith('Comissão'):
             ck=committee_key(text[:1000]);candidates=[x for x in candidates if ck and committee_key(x['title'])==ck]
         match=candidates[0] if len(candidates)==1 else None
-        review=verified_review(reviews.get(a['id'],{}),a,source_hashes)
         if review.get('sessionUrl'):
             revised=reviewed_session(review,candidates,source_sessions,date,k)
             if revised:match=revised
@@ -179,10 +186,17 @@ def build(data,downloaded,root):
         record={key:a[key] for key in ('id','url','title','downloaded')}
         record.update(date=date,kind=k,rows=rows,issue=issue,sha256=a.get('sha256'),sessionUrl=match['url'] if match else None,comparison=comparisons,candidateSessions=[x['url'] for x in candidates],inPeriod=bool(date and data['start']<=date<=data['end']),committee=committee_key(text[:1000]) if k.startswith('Comissão') else None)
         record['meetingIdentity']=meeting_identity(text) if k.startswith('Plenário') else None
+        if historical:record['historicalRows']=historical
+        if review.get('nominalReviewState'):record['nominalReviewState']=review['nominalReviewState']
+        if review.get('corroboratingSources'):record['corroboratingSources']=review['corroboratingSources']
         if date!=source_date:
             record['sourceDate']=source_date
             record['dateEvidence']=review['dateEvidence']
             record['dateSourceUrl']=review.get('dateSourceUrl') or review.get('sessionUrl')
+            if review.get('dateReviewMode')=='pdf-page-reviewed':
+                record['sourceDate']=date
+                record['dateReviewMode']='pdf-page-reviewed'
+                record['datePdfPage']=review['datePdfPage']
         if review.get('note'):record['reviewNote']=review['note']
         if review.get('duplicateOf') and source_hashes.get(review['duplicateOf'])==review.get('duplicateOfSha256'):
             record['duplicateOf']=review['duplicateOf']
@@ -197,6 +211,10 @@ def build(data,downloaded,root):
     result['method']=[m for m in result['method'] if not m.startswith('Os resultados de comparação são contados')]
     result['method'].append('Reuniões de plenário no mesmo dia só são separadas quando número e horário de abertura são distintos. Republicações confirmadas contam uma vez; outras ambiguidades permanecem excluídas. Associações revisadas ficam vinculadas ao hash do PDF e são reavaliadas se ele mudar.')
     result['method'].append('Correções documentais de data preservam a data escrita na ata e indicam a pauta ou notícia oficial que fundamenta a data adotada. Listas revisadas individualmente também dependem da versão do PDF. Comparecimento posterior é sinalizado e não implica permanência integral; convidados em funções externas ao Legislativo não contam como presença parlamentar.')
+    result['counts']['withNominalReading']=sum(bool(a['rows'] or a.get('historicalRows')) for a in out)
+    result['counts']['partialNominalReadings']=sum(a.get('nominalReviewState')=='partial' for a in out)
+    result['counts']['unresolvedNominalReadings']=sum(a.get('nominalReviewState')=='unresolved' for a in out)
+    result['method'].append('Datas lidas individualmente no PDF têm página e fonte de apoio identificadas. Listas históricas de 2024 são preservadas fora do período; leituras nominais parciais continuam marcadas como pendentes e não entram em contagens elegíveis.')
     return result
 
 def main():

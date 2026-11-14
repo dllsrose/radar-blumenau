@@ -11,6 +11,10 @@ class ProgressTests(unittest.TestCase):
     def test_rejects_missing_minutes(self):
         new=copy.deepcopy(self.base);new['minutes']=[]
         with self.assertRaises(RuntimeError):validate_progress(new,self.base)
+    def test_rejects_loss_of_historical_nominal_reading(self):
+        old=copy.deepcopy(self.base);old['minutes'][0].update(rows=[],historicalRows=[{'name':'Nome histórico','status':'Presente'}])
+        new=copy.deepcopy(old);new['minutes'][0]['historicalRows']=[]
+        with self.assertRaises(RuntimeError):validate_progress(new,old)
     def test_rejects_lost_pdf_date_and_reading(self):
         for key,value in [('downloaded',False),('date',None),('rows',[])]:
             new=copy.deepcopy(self.base);new['minutes'][0][key]=value

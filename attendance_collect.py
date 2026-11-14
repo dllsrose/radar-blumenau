@@ -90,7 +90,7 @@ def validate_progress(candidate,baseline):
     for url,m in old.items():
         n=new[url]
         if m['downloaded'] and not n['downloaded']: raise RuntimeError('PDF anteriormente obtido ficou indisponível')
-        if m['rows'] and not n['rows']: raise RuntimeError('Lista nominal anteriormente legível foi perdida')
+        if (m['rows'] or m.get('historicalRows')) and not (n['rows'] or n.get('historicalRows')): raise RuntimeError('Lista nominal anteriormente legível foi perdida')
         if m['date'] and not n['date']: raise RuntimeError('Data anteriormente legível foi perdida')
     old_sessions={m['sessionUrl'] for m in baseline['minutes'] if m['sessionUrl']}|{s['url'] for s in baseline['sessionGaps']}
     new_sessions={m['sessionUrl'] for m in candidate['minutes'] if m['sessionUrl']}|{s['url'] for s in candidate['sessionGaps']}

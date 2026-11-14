@@ -767,7 +767,14 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-10-08",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos oito dias do mês de outubro do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-de-acompanhamento-da-prestacao-dos-servicos-de-telefonia-no-municipio-de-blumenau-08-10-26-109153",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-de-acompanhamento-da-prestacao-dos-servicos-de-telefonia-no-municipio-de-blumenau-08-10-26-109153",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "568306": {
     "sha256": "98a83aea1671864b7792f10b29028eaef7a7ced36840af5c962132018f52f1c8",
@@ -789,7 +796,19 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. A ata registra chegada posterior de Flávio Linhares; Presente não significa permanência integral."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. A ata registra chegada posterior de Flávio Linhares; Presente não significa permanência integral. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-10-22",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos vinte e dois dias do mês de outubro do ano de dois mil e vinte e seis",
+    "dateSourceUrl": "https://camarablu.sc.gov.br/detalhe-noticia/15652/comissao-especial-da-camara-recebe-secretario-de-saude-para-discutir-demandas-do-cedap/",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF. Notícia oficial consultada para conferir o evento e o período, conforme observações da revisão.",
+    "corroboratingSources": [
+      {
+        "url": "https://camarablu.sc.gov.br/detalhe-noticia/15652/comissao-especial-da-camara-recebe-secretario-de-saude-para-discutir-demandas-do-cedap/",
+        "label": "Notícia oficial do evento"
+      }
+    ]
   },
   "567635": {
     "sha256": "315f632606e0e8c3b5850a3583378a4b26abda32fa5a692c3fd76b428d02db8f",
@@ -807,7 +826,14 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-10-15",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos quinze dias do mês de outubro do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-de-prevencao-enfrentamento-e-conscientizacao-sobre-o-hiv-a-aids-e-demais-endemias-15-10-2026-109161",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-de-prevencao-enfrentamento-e-conscientizacao-sobre-o-hiv-a-aids-e-demais-endemias-15-10-2026-109161",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "562942": {
     "sha256": "594b90bb72784a25d673a4fc79972e53b8484f15b0ebcd43e09f357b1fb32925",
@@ -833,7 +859,14 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-08-10",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos dez dias do mês de agosto do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-proposicao-de-medidas-relacionadas-a-seguranca-nas-escolas-e-centros-de-educacao-infantil-ceis-do-municipio-10-08-2026-9124",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-proposicao-de-medidas-relacionadas-a-seguranca-nas-escolas-e-centros-de-educacao-infantil-ceis-do-municipio-10-08-2026-9124",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "563443": {
     "sha256": "593b11ea910091e5b7db5960f87059560c4eb1ec3cfc8a3a1e1ceed3d456d44f",
@@ -851,7 +884,19 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-08-25",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos vinte e cinco dias do mês de agosto do ano de dois mil e vinte e seis",
+    "dateSourceUrl": "https://camarablu.sc.gov.br/detalhe-noticia/15556/comissao-de-telefonia-une-forcas-com-procon-para-mapear-areas-sem-sinal-em-blumenau/",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF. Notícia oficial consultada para conferir o evento e o período, conforme observações da revisão.",
+    "corroboratingSources": [
+      {
+        "url": "https://camarablu.sc.gov.br/detalhe-noticia/15556/comissao-de-telefonia-une-forcas-com-procon-para-mapear-areas-sem-sinal-em-blumenau/",
+        "label": "Notícia oficial do evento"
+      }
+    ]
   },
   "537050": {
     "sha256": "dc72365caa512fd69c33b525f098be06019ed4d37a79e60dd450d90f2453e1ec",
@@ -877,7 +922,14 @@
         "status": "Ausência justificada"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2025-10-09",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos nove dias do mês de outubro do ano de dois mil e vinte e cinco",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-de-acompanhamento-das-obras-na-barragem-de-jose-boiteux-09-10-2025-8719",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-de-acompanhamento-das-obras-na-barragem-de-jose-boiteux-09-10-2025-8719",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "559309": {
     "sha256": "f9692587813be33b67f0ffc368389aaa0e3c669304760728c97b25b15a27023c",
@@ -895,7 +947,14 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-06-18",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "No dia 18 de junho de 2026",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-frente-parlamentar-em-defesa-das-politicas-publicas-em-infraestrutura-e-saneamento-basico-no-ambito-do-municipio-de-blumenau-18-06-2026-9051",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-frente-parlamentar-em-defesa-das-politicas-publicas-em-infraestrutura-e-saneamento-basico-no-ambito-do-municipio-de-blumenau-18-06-2026-9051",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "559307": {
     "sha256": "873aad24a5d7e84f2b008a5accb2e54964b70edd98ca82ec11c2e0f9e044de6c",
@@ -917,7 +976,14 @@
         "status": "Ausência justificada"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-04-16",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "No dia 16 de abril de 2026",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-frente-parlamentar-em-defesa-das-politicas-publicas-em-infraestrutura-e-saneamento-basico-no-ambito-do-municipio-de-blumenau-16-04-2026-8955",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-frente-parlamentar-em-defesa-das-politicas-publicas-em-infraestrutura-e-saneamento-basico-no-ambito-do-municipio-de-blumenau-16-04-2026-8955",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "559302": {
     "sha256": "6cab0d5bfaba8fa704dea48ec17c63b401ce5bbacd02ed63998526fd4fe8839e",
@@ -935,7 +1001,14 @@
         "status": "Ausência justificada"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-03-05",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "No dia 05 de março de 2026",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-frente-parlamentar-em-defesa-das-politicas-publicas-em-infraestrutura-e-saneamento-basico-no-ambito-do-municipio-de-blumenau-05-03-2026-8889",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-frente-parlamentar-em-defesa-das-politicas-publicas-em-infraestrutura-e-saneamento-basico-no-ambito-do-municipio-de-blumenau-05-03-2026-8889",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "547320": {
     "sha256": "2e6e188375788cbf1af6e0665b6551e9b17554b66e070b951efd9bda02b95425",
@@ -957,7 +1030,14 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-02-10",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Data: 10 de fevereiro de 2026",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-frente-parlamentar-em-defesa-das-politicas-publicas-de-habitacao-e-regularizacao-fundiaria-do-municipio-de-blumenau-10-02-2026-8848",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-frente-parlamentar-em-defesa-das-politicas-publicas-de-habitacao-e-regularizacao-fundiaria-do-municipio-de-blumenau-10-02-2026-8848",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "559331": {
     "sha256": "ea932e936054b680819577557709b2faac74f08d536d77ce8fefc97b6c72eb90",
@@ -975,7 +1055,14 @@
         "status": "Ausência justificada"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-05-07",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos sete dias do mês de maio do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-acompanhamento-do-sistema-pronto-da-area-da-saude-do-municipio-de-blumenau-07-05-2026-8984",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-acompanhamento-do-sistema-pronto-da-area-da-saude-do-municipio-de-blumenau-07-05-2026-8984",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "559332": {
     "sha256": "98fe55788b3d07ff8fa9cacfab9a7881b84a1faf37ae992303c0fa295d2eec33",
@@ -993,7 +1080,14 @@
         "status": "Ausência justificada"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-05-28",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos vinte e oito dias do mês de maio do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/comissao-legislativa-temporaria-especial-para-discussao-e-acompanhamento-do-sistema-pronto-da-area-da-saude-do-municipio-de-blumenau-28-05-2026-9023",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/comissao-legislativa-temporaria-especial-para-discussao-e-acompanhamento-do-sistema-pronto-da-area-da-saude-do-municipio-de-blumenau-28-05-2026-9023",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "559334": {
     "sha256": "84b67c772919a78d302516e0444cbd44b0bafed89c990f83d89ceca14d908ac2",
@@ -1011,7 +1105,14 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-06-16",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos dezesseis dias do mês de junho do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-acompanhamento-do-sistema-pronto-da-area-da-saude-do-municipio-de-blumenau-16-06-2026-9043",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-acompanhamento-do-sistema-pronto-da-area-da-saude-do-municipio-de-blumenau-16-06-2026-9043",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "560112": {
     "sha256": "f5d1a9e275e2b2086c21d3ad0aa1e64fbf10b9c1b87839955e04187f1364f582",
@@ -1041,7 +1142,14 @@
         "status": "Ausência justificada"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Diego Nasato compareceu como vereador convidado, sem presumir obrigação de comparecimento à comissão."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Diego Nasato compareceu como vereador convidado, sem presumir obrigação de comparecimento à comissão. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-07-09",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos nove dias do mês de julho do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-proposicao-de-medidas-relacionadas-a-seguranca-nas-escolas-e-centros-de-educacao-infantil-ceis-do-municipio-09-07-2026-9087",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-proposicao-de-medidas-relacionadas-a-seguranca-nas-escolas-e-centros-de-educacao-infantil-ceis-do-municipio-09-07-2026-9087",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "559609": {
     "sha256": "645dc141b2a5fc4dd3350369c83498bf02c46a83db16d79d7ae2903097900853",
@@ -1067,7 +1175,14 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. A ata registra chegada posterior de Silmara Miguel; Presente não significa permanência integral."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. A ata registra chegada posterior de Silmara Miguel; Presente não significa permanência integral. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião. O título livre da página menciona 2025, mas a data do calendário é 14/05/2026 e coincide com o PDF.",
+    "date": "2026-05-14",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos catorze dias do mês de maio do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-proposicao-de-medidas-relacionadas-a-seguranca-nas-escolas-e-centros-de-educacao-infantil-ceis-do-municipio-14-05-2025-8995",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-proposicao-de-medidas-relacionadas-a-seguranca-nas-escolas-e-centros-de-educacao-infantil-ceis-do-municipio-14-05-2025-8995",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "559608": {
     "sha256": "c01249d741578233d992bb0c25bc2fa6d2275c82fbcf06df0ebdc6762d1483f7",
@@ -1093,7 +1208,14 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-04-23",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos vinte e três dias do mês de abril do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporara-especial-para-discussao-e-proposicao-de-medidas-relacionadas-a-seguranca-nas-escolas-e-centros-de-educacao-infantil-ceis-23-04-2026-8958",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporara-especial-para-discussao-e-proposicao-de-medidas-relacionadas-a-seguranca-nas-escolas-e-centros-de-educacao-infantil-ceis-23-04-2026-8958",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "567750": {
     "sha256": "07f6ca0b95b6b99aa5dd9c2f5c48b31a63062b405da5203660f566a978c4bc19",
@@ -1107,8 +1229,22 @@
   },
   "563110": {
     "sha256": "bf440bec5a5d5b1d067ee72b393629a81c891b9f8da63a38308e128545f548f9",
-    "issue": "O próprio documento contém nomes a confirmar e identificação nominal ambígua; não há lista segura para atribuir presenças ou ausências.",
-    "note": "Pendência do conteúdo da fonte, além da limitação da leitura automática. Nenhum nome foi completado por suposição."
+    "issue": "A ata contém nome a confirmar, Adriano ou Ademir e Cristiano Loureiro. O portal lista três membros sem informar presença; não foi possível confirmar toda a lista nominal.",
+    "note": "Notícia oficial confirma Diego Nasato conduzindo a reunião de 18/08/2026. A fonte externa é apresentada como apoio, sem substituir silenciosamente os nomes ambíguos do PDF por uma lista de presentes.",
+    "date": "2026-08-18",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos dezoito dias do mês de agosto do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-de-acompanhamento-da-prestacao-dos-servicos-de-telefonia-no-municipio-de-blumenau-18-08-2026-9139",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-de-acompanhamento-da-prestacao-dos-servicos-de-telefonia-no-municipio-de-blumenau-18-08-2026-9139",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar.",
+    "nominalReviewState": "unresolved",
+    "corroboratingSources": [
+      {
+        "url": "https://camarablu.sc.gov.br/detalhe-noticia/15541/comissao-de-telefonia-define-proximos-passos-para-melhorar-cobertura-em-blumenau/",
+        "label": "Notícia oficial da reunião de telefonia"
+      }
+    ]
   },
   "565371": {
     "sha256": "bf92d2eb2e40256791cd3a12b8db4f3657184a336e4762bdb1cb62311a1b2ec6",
@@ -1134,7 +1270,14 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-05-12",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos doze dias do mês de maio do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-acompanhar-e-propor-solucoes-para-a-atual-situacao-do-corpo-de-bombeiros-militar-de-blumenau-12-05-2026-8988",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-acompanhar-e-propor-solucoes-para-a-atual-situacao-do-corpo-de-bombeiros-militar-de-blumenau-12-05-2026-8988",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "563711": {
     "sha256": "1c700243ca17d9e0d3dfcffe840244423370b99a9596f6149abb3bed5ac44f3b",
@@ -1160,7 +1303,14 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-05-12",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos doze dias do mês de maio do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-acompanhar-e-propor-solucoes-para-a-atual-situacao-do-corpo-de-bombeiros-militar-de-blumenau-12-05-2026-8988",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-acompanhar-e-propor-solucoes-para-a-atual-situacao-do-corpo-de-bombeiros-militar-de-blumenau-12-05-2026-8988",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "564751": {
     "sha256": "829076c751e91fc4aa0fc2888dafa039e22a4aff2ed6e3dc307719546af0e304",
@@ -1182,7 +1332,14 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-08-20",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos vinte dias do mês de agosto do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-proposicao-de-medidas-relacionadas-a-seguranca-nas-escolas-e-centros-de-educacao-infantil-ceis-do-municipio-20-08-2026-9141",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-proposicao-de-medidas-relacionadas-a-seguranca-nas-escolas-e-centros-de-educacao-infantil-ceis-do-municipio-20-08-2026-9141",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "547884": {
     "sha256": "fdec6c4d77f9d4b1466ba8a766d7a1d22967ea649dc0db24bf3eecf7296ae0be",
@@ -1200,7 +1357,14 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2025-07-08",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "DATA: 08 de julho de 2025",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/comissao-legislativa-temporaria-especial-de-acompanhamento-da-prestacao-dos-servicos-de-telefonia-08-07-2025-8552",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/comissao-legislativa-temporaria-especial-de-acompanhamento-da-prestacao-dos-servicos-de-telefonia-08-07-2025-8552",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "563710": {
     "sha256": "362c7f5c1d33fa4fd27244ec0a87d0b55223b446812566434ab4aced9af4e3c6",
@@ -1218,7 +1382,14 @@
         "status": "Presente"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-04-30",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos trinta dias do mês de abril do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-acerca-da-resolucao-no-996-23-do-contran-e-seus-efeitos-na-mobilidade-urbana-de-blumenau-30-04-2026-8970",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-acerca-da-resolucao-no-996-23-do-contran-e-seus-efeitos-na-mobilidade-urbana-de-blumenau-30-04-2026-8970",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "559637": {
     "sha256": "0214c31a6d213bceb597618a7dea9df8c718c9a51ca2161756f8fd32c74c55fa",
@@ -1248,7 +1419,14 @@
         "status": "Ausência justificada"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-06-19",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos dezenove dias do mês de junho do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-proposicao-de-medidas-relacionadas-a-seguranca-nas-escolas-e-centros-de-educacao-infantil-ceis-19-06-2026-9052",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-proposicao-de-medidas-relacionadas-a-seguranca-nas-escolas-e-centros-de-educacao-infantil-ceis-19-06-2026-9052",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "559595": {
     "sha256": "957196ac416fe451983c76af992d5733a06fb04e34f623f5b87d48862c1bc301",
@@ -1278,7 +1456,14 @@
         "status": "Ausência justificada"
       }
     ],
-    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença."
+    "note": "Registro nominal conferido individualmente no PDF. Apenas nomes explicitamente vinculados à presença ou ausência foram registrados; convidados em funções externas ao Legislativo e referências genéricas aos demais vereadores não foram convertidos em registros. Revisão válida enquanto o PDF conservar o mesmo hash. Nomes abreviados e variações de grafia conciliados com a identificação completa no mesmo documento; a composição, isoladamente, não foi usada como prova de presença. Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião.",
+    "date": "2026-06-11",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos onze dias do mês de junho do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-proposicao-de-medidas-relacionadas-a-seguranca-nas-escolas-e-centros-de-educacao-infantil-ceis-11-06-2026-9034",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-para-discussao-e-proposicao-de-medidas-relacionadas-a-seguranca-nas-escolas-e-centros-de-educacao-infantil-ceis-11-06-2026-9034",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar."
   },
   "524526": {
     "sha256": "bfebdf90ec0658d5e7bb97835d1182acc62c4411ee9a18402119ab175ac3a312",
@@ -1366,8 +1551,28 @@
   },
   "537502": {
     "sha256": "ba376cc8e92b0a208269b1eb1abe8bd095f5063df6e1744045307336ffc91f8b",
-    "issue": "O texto lista composição e eleição de cargos, mas não individualiza com clareza a presença de todos os membros. Lista nominal completa permanece pendente.",
-    "note": "Composição de comissão não foi convertida automaticamente em presença."
+    "issue": "Leitura parcial: Alexandre Matias conduz a reunião. A presença individual dos outros quatro membros não está discriminada; o portal lista nomes sem estado de presença.",
+    "note": "PDF e notícia oficial confirmam instalação e eleição da comissão em 26/08/2025. A composição e a concordância coletiva não foram tomadas como chamada nominal individual.",
+    "date": "2025-08-26",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos 26 de agosto de 2025",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-de-acompanhamento-das-obras-na-barragem-de-jose-boiteux-26-08-2025-8737",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-de-acompanhamento-das-obras-na-barragem-de-jose-boiteux-26-08-2025-8737",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar.",
+    "rows": [
+      {
+        "personId": "alexandre-matias-452",
+        "status": "Presente"
+      }
+    ],
+    "nominalReviewState": "partial",
+    "corroboratingSources": [
+      {
+        "url": "https://camarablu.sc.gov.br/detalhe-noticia/14989/definida-composicao-da-comissao-da-camara-que-vai-acompanhar-obras-da-barragem-de-jose-boiteux/",
+        "label": "Notícia oficial da instalação"
+      }
+    ]
   },
   "561170": {
     "sha256": "33353072bc5bfdadb4ec57899c367874ff7996a16753ee4e164cedf132979afb",
@@ -1451,5 +1656,109 @@
   "561675": {
     "sha256": "ec983c41057f9be44596995ceadd877886056372d6d267ded56522e6bc78705f",
     "note": "Data e pauta corroboradas por notícia oficial de 30/07/2026 (PL 9230/2025, PL 9549/2026 e Requerimento 1557/2026). Não foi localizada página correspondente no calendário consultado; a comparação nominal com o portal permanece pendente. Fonte: https://camarablu.sc.gov.br/detalhe-noticia/15508/confira-os-projetos-e-proposicoes-aprovados-na-sessao-ordinaria-desta-quinta-feira--30-/"
+  },
+  "509422": {
+    "sha256": "713e5d139dc82843135bedb70e6b760468ee9ae3b17a56b0c068642305596a7d",
+    "date": "2024-12-02",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos 2 dias do mês de dezembro de dois mil e vinte e quatro",
+    "dateSourceUrl": "https://camarablu.sc.gov.br/detalhe-noticia/14560/camara-de-blumenau-comemora-o-dia-da-biblia-em-sessao-solene-e-reune-liderancas-religiosas/",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF. Notícia oficial consultada para conferir o evento e o período, conforme observações da revisão.",
+    "note": "Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião. Lista de abertura conferida no PDF; reunião de 2024, excluída de todas as contagens do período iniciado em janeiro de 2025.",
+    "corroboratingSources": [
+      {
+        "url": "https://camarablu.sc.gov.br/detalhe-noticia/14560/camara-de-blumenau-comemora-o-dia-da-biblia-em-sessao-solene-e-reune-liderancas-religiosas/",
+        "label": "Notícia oficial do evento"
+      }
+    ],
+    "rows": [
+      {
+        "personId": "jovino-cardoso-neto-471",
+        "status": "Presente"
+      },
+      {
+        "personId": "silmara-silva-miguel-1000671",
+        "status": "Presente"
+      }
+    ],
+    "historicalRows": [],
+    "nominalReviewState": "reviewed-outside-period"
+  },
+  "508904": {
+    "sha256": "7ecdc1ee0f5d8a248833f5625297df3d7db8bea503c9037a66b0a0143459caa7",
+    "date": "2024-11-26",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos 26 dias do mês de novembro de dois mil e vinte e quatro",
+    "dateSourceUrl": "https://camarablu.sc.gov.br/detalhe-noticia/14553/camara-de-blumenau-entrega-titulos-de-cidadao-blumenauense-ao-prefeito-mario-hildebrandt-e-ao-advogado-cesar-botelho/",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF. Notícia oficial consultada para conferir o evento e o período, conforme observações da revisão.",
+    "note": "Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião. Lista de abertura conferida no PDF; reunião de 2024, excluída de todas as contagens do período iniciado em janeiro de 2025. Alexandre Matias aparece como vereador licenciado e secretário municipal; não foi contabilizado como presença parlamentar.",
+    "corroboratingSources": [
+      {
+        "url": "https://camarablu.sc.gov.br/detalhe-noticia/14553/camara-de-blumenau-entrega-titulos-de-cidadao-blumenauense-ao-prefeito-mario-hildebrandt-e-ao-advogado-cesar-botelho/",
+        "label": "Notícia oficial do evento"
+      }
+    ],
+    "rows": [
+      {
+        "personId": "almir-vieira-454",
+        "status": "Presente"
+      },
+      {
+        "personId": "marcelo-barasuol-lanzarin-472",
+        "status": "Presente"
+      },
+      {
+        "personId": "jovino-cardoso-neto-471",
+        "status": "Presente"
+      }
+    ],
+    "historicalRows": [
+      {
+        "name": "Maurício Goll",
+        "status": "Presente"
+      },
+      {
+        "name": "Sylvio Zimmermann",
+        "status": "Presente"
+      }
+    ],
+    "nominalReviewState": "reviewed-outside-period"
+  },
+  "508808": {
+    "sha256": "d7122f76ef6619b8e0812caeccb80fe54814fc9410ab34cc91c509296bb8eeb6",
+    "date": "2024-07-10",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos 10 dias do mês de julho de dois mil e vinte e quatro",
+    "dateSourceUrl": "https://camarablu.sc.gov.br/detalhe-noticia/14421/camara-de-blumenau-realiza-sessao-solene-em-homenagem-aos-200-anos-da-imigracao-alema-no-brasil/",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF. Notícia oficial consultada para conferir o evento e o período, conforme observações da revisão.",
+    "note": "Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião. O PDF informa 10/07/2024; a notícia publicada em 11/07/2024 escreve quarta-feira (11), com divergência no dia. Mantida a data do PDF; ambas as fontes confirmam evento de 2024, fora do período. Lista de abertura conferida no PDF; reunião de 2024, excluída de todas as contagens do período iniciado em janeiro de 2025.",
+    "corroboratingSources": [
+      {
+        "url": "https://camarablu.sc.gov.br/detalhe-noticia/14421/camara-de-blumenau-realiza-sessao-solene-em-homenagem-aos-200-anos-da-imigracao-alema-no-brasil/",
+        "label": "Notícia oficial do evento"
+      }
+    ],
+    "rows": [],
+    "historicalRows": [
+      {
+        "name": "Maurício Goll",
+        "status": "Presente"
+      }
+    ],
+    "nominalReviewState": "reviewed-outside-period"
+  },
+  "546918": {
+    "sha256": "11338755174db7c19bbbf09588716a94907932a3b7ff5e0a72ae584cae6c669d",
+    "date": "2026-02-10",
+    "dateReviewMode": "pdf-page-reviewed",
+    "datePdfPage": 1,
+    "datePdfText": "Aos dez dias do mês de fevereiro do ano de dois mil e vinte e seis",
+    "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-permanente-de-defesa-civil-10-02-2026-8847",
+    "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-permanente-de-defesa-civil-10-02-2026-8847",
+    "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar.",
+    "note": "Data conferida individualmente na página 1; a numeração do protocolo não foi usada como data da reunião."
   }
 }

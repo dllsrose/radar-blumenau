@@ -4,6 +4,14 @@ from radar import session_links
 from unittest.mock import Mock
 from radar import soup
 class AttendanceTests(unittest.TestCase):
+ def test_individual_pdf_date_review_requires_documented_page_and_official_support(self):
+  r={'date':'2026-10-22','dateReviewMode':'pdf-page-reviewed','datePdfPage':1,'datePdfText':'Aos vinte e dois dias do mês de outubro','dateEvidence':'Página conferida e evento corroborado','dateSourceUrl':'https://camarablu.sc.gov.br/detalhe-noticia/15652/example/'}
+  self.assertEqual(reviewed_date(None,r,[],'Comissão ordinária'),'2026-10-22')
+  for bad in [{**r,'datePdfPage':0},{**r,'datePdfText':''},{**r,'dateSourceUrl':'https://example.com'},{**r,'date':'2026-02-30'},{**r,'dateEvidence':''}]:
+   self.assertIsNone(reviewed_date(None,bad,[],'Comissão ordinária'))
+  self.assertIsNone(reviewed_date(None,r,[],'Plenário ordinário'))
+  expired=verified_review({**r,'sha256':'reviewed'},{'sha256':'changed'},{})
+  self.assertIsNone(reviewed_date(None,expired,[],'Comissão ordinária'))
  def test_reviewed_association_requires_same_day_family_and_evidence(self):
   s={'url':'rf','date':'2026-07-28','title':'Reunião ordinária RF'}
   r={'sessionUrl':'rf','associationEvidence':'Mesmos projetos em redação final'}

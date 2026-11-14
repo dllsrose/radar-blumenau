@@ -48,6 +48,10 @@ for minute in a['minutes']:
     assert not any(k in minute for k in ('text','pdfFile','textFile','error'))
     assert len({row['personId'] for row in minute['rows']})==len(minute['rows'])
     for row in minute['rows']:assert row['personId'] in known and row['status'] in allowed
+    if minute.get('historicalRows'):
+        assert minute['date']<a['start'] and not minute['inPeriod']
+        assert all(set(row)=={'name','status'} and row['status'] in allowed for row in minute['historicalRows'])
+    if minute.get('nominalReviewState') in ('partial','unresolved'):assert minute['issue']
     if minute['sessionUrl']:assert minute['sessionUrl'].startswith('https://digital.camarablu.sc.gov.br/sessao/')
 assert len({m['sessionUrl'] for m in a['minutes'] if m['sessionUrl']})==a['counts']['matchedSessions']
 assert len(a['sessionGaps'])==a['counts']['sessionGaps']
