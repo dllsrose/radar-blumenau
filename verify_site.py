@@ -11,6 +11,16 @@ ids={p['id'] for p in d['people']}
 for doc in d['documents']:
     assert all(id in ids for id in doc['authorIds'])
     assert doc['url'].startswith('https://digital.camarablu.sc.gov.br/documento/')
+session_urls=[s['url'] for s in d['sessions']]
+assert len(session_urls)==len(set(session_urls)), 'Sessões duplicadas'
+for session in d['sessions']:
+    assert d['start']<=session['date']<=d['end'], 'Sessão fora do período'
+    records=session['attendance']+[row for vote in session['votes'] for row in vote['rows']]
+    for record in records:
+        assert record.get('personIds'), 'Nome nominal sem vínculo no cadastro: '+record['name']
+        assert all(person_id in ids for person_id in record['personIds'])
+    for vote in session['votes']:
+        assert vote['rows'], 'Votação sem registros nominais'
 urls={doc['url'] for doc in d['documents']}
 for group in d['repeatedRequests']:
     assert group['count']==len(set(group['documents']))>=2
