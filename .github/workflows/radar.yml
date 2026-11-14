@@ -4,6 +4,10 @@ on:
     branches: [main]
   workflow_dispatch:
     inputs:
+      publicar_base_validada:
+        description: Publicar somente a ultima base validada, sem nova coleta
+        type: boolean
+        default: false
       historico_completo:
         description: 'Ampliar desde janeiro de 2025 (pode levar horas)'
         type: boolean
@@ -45,6 +49,7 @@ jobs:
               Path('baseline.json').write_bytes(Path('dist/data.json').read_bytes())
           PY
       - name: Atualizar dados oficiais
+        if: ${{ !inputs.publicar_base_validada }}
         env:
           FULL_HISTORY: ${{ inputs.historico_completo || 'false' }}
         run: |
@@ -54,6 +59,16 @@ jobs:
           start=json.loads(Path('baseline.json').read_text())['start']
           if os.environ.get('FULL_HISTORY')=='true': start='2025-01-01'
           subprocess.run([sys.executable,'radar.py','--start',start,'--baseline','baseline.json'],check=True)
+          PY
+      - name: Publicacao manual transparente da base validada
+        if: ${{ inputs.publicar_base_validada }}
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          Path('dist/data.json').write_bytes(Path('baseline.json').read_bytes())
+          p=Path('dist/index.html')
+          notice='<aside style="padding:16px;background:#fff4d6;color:#5b4400;text-align:center">Base validada de novembro de 2026. A coleta automatica encontrou verificacao antirrobo da Camara; atualizacao pendente. Consulte a cobertura e a data de coleta abaixo.</aside>'
+          p.write_text(p.read_text().replace('<body>','<body>'+notice))
           PY
       - run: python verify_site.py
       - uses: actions/upload-artifact@v4
