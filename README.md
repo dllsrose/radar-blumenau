@@ -15,7 +15,7 @@ Observatório cidadão independente do trabalho legislativo de Blumenau. Sem not
 
 `radar.py` percorre as páginas de documentos e sessões oficiais, com no máximo duas conexões e intervalo global mínimo de 0,8 segundo entre inícios de requisições. O cliente se identifica. Bloqueio antirrobô não é contornado.
 
-O GitHub Actions executa diariamente às **03h17 de Brasília** (06h17 UTC). O horário é sujeito a atrasos do GitHub. Também executa em publicação de código e manualmente. A configuração inicial busca desde 01/01/2025. A primeira coleta histórica pode levar horas.
+O GitHub Actions executa diariamente às **03h17 de Brasília** (06h17 UTC). O horário é sujeito a atrasos do GitHub. Também executa em publicação de código e manualmente. A primeira publicação cobre desde 01/11/2026, conforme escolha do responsável. O disparo manual com historico_completo permite ampliar para 01/01/2025 e pode levar horas. A rotina diária preserva o início do histórico já publicado, revisita os últimos 45 dias e faz revisão integral aos domingos.
 
 A saída só substitui a base após percorrer e validar o período. Falhas de rede, paginação vazia ou repetida, voto ilegível, falta de campos obrigatórios, desaparecimento de documentos ou redução de registros nominais bloqueiam a publicação. O job de deploy depende do sucesso da coleta e dos testes; uma falha mantém a versão já publicada. O histórico de execuções é o indicador do estado do robô.
 
@@ -33,7 +33,7 @@ Presença é o estado publicado em cada sessão, sem presumir ausência de quem 
 
 ## Rodar localmente
 
-Python 3.12 e Node.js:
+O pacote radar-source.zip contém os arquivos completos do site, sua base inicial e as fontes. O workflow extrai esse pacote antes de coletar e publicar. Para rodar localmente, extraia o pacote primeiro. Requer Python 3.12 e Node.js:
 
 ```sh
 pip install -r requirements.txt
@@ -47,6 +47,6 @@ Abra http://127.0.0.1:4173. Para retomar uma coleta interrompida no mesmo dia, r
 
 ## Correções e domínio
 
-Use a [solicitação de correção](https://github.com/dllsrose/radar-blumenau/issues/new?template=correcao.yml) com o link oficial e a divergência. Não envie dados privados. Correções são tratadas por revisão da regra, do vínculo de nomes ou da fonte; não alterar um resultado nominal sem evidência.
+Use a [solicitação de correção](https://github.com/dllsrose/radar-blumenau/issues/new) com o link oficial e a divergência. Não envie dados privados. Correções são tratadas por revisão da regra, do vínculo de nomes ou da fonte; não alterar um resultado nominal sem evidência.
 
 O endereço gratuito do GitHub Pages dispensa compra de domínio. Um domínio próprio é opcional e não foi contratado. A configuração HTTPS do domínio padrão permanece ativa.
