@@ -23,6 +23,11 @@ def soup(raw): return BeautifulSoup(raw,'html.parser')
 def iso(s):
     m=re.search(r'\b\d{2}/\d{2}/\d{4}\b',s)
     return datetime.strptime(m[0],'%d/%m/%Y').strftime('%Y-%m-%d') if m else None
+def calendar_date(title):
+    # O último campo da listagem é a data do calendário; o título livre pode conter outra data.
+    m=re.search(r'(\d{2}/\d{2}/\d{4})\s*$',title)
+    return iso(m[1]) if m else None
+
 def public_text(text):
     text=re.sub(r'(?<!\d)(?:\+?55\s*)?(?:\(\d{2}\)|\b\d{2})\s*\d{4,5}[-\s]?\d{4}(?!\d)','[telefone omitido]',text)
     text=re.sub(r'\b\d{3}\.\d{3}\.\d{3}-\d{2}\b','[CPF omitido]',text)
@@ -118,10 +123,10 @@ def session_links(client,start,end):
         if url in seen: raise RuntimeError('Ciclo na paginação de sessões')
         seen.add(url);s=client.get(url);dates=[]
         for a in s.select('a[href^="/sessao/"]'):
-            t=txt(a);d=iso(t)
+            t=txt(a);d=calendar_date(t)
             if not d: continue
             dates.append(d)
-            if start<=d<=end and re.match(r'REUNIÃO (ORDINÁRIA|EXTRAORDINÁRIA)',t): links[urljoin(BASE,a['href'])]={'date':d,'title':t}
+            if start<=d<=end and re.match(r'REUNIÃO (ORDINÁRIA|EXTRAORDINÁRIA)',t): links[urljoin(BASE,a['href'])]={'date':d,'title':t,**({'dateNote':'A data do calendário oficial diverge da data escrita no título. O filtro usa a data do calendário; o título original foi preservado.'} if iso(t)!=d else {})}
         if not dates: raise RuntimeError('Página de sessões sem datas legíveis')
         nxt=s.select_one('a[rel="next"]')
         if max(dates)<start or not nxt:break

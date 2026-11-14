@@ -1,8 +1,12 @@
 import copy, unittest
 from unittest.mock import Mock, patch
-from radar import document_listing, soup
+from radar import calendar_date, document_listing, soup
 from radar import classify, repeats, validate, addresses, match_people, public_text
 class RadarTests(unittest.TestCase):
+    def test_calendar_date_overrides_free_title_date(self):
+        self.assertEqual(calendar_date('REUNIÃO DA COMISSÃO - 14/05/2025 - 14/05/2026'),'2026-05-14')
+        self.assertEqual(calendar_date('REUNIÃO ORDINÁRIA DE 10 DE NOVEMBRO DE 2026 - 10/11/2026'),'2026-11-10')
+
     def test_temporarily_unavailable_vote_is_retried_not_omitted(self):
         client=Mock();client.get.side_effect=[soup('Nenhuma votação disponível'),soup('<div class="item-small-people"><span class="title">Ana</span><span class="info">Favorável</span></div>')]
         with patch('radar.time.sleep'):

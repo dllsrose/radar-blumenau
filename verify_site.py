@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from radar import validate
+from radar import validate, calendar_date
 r=Path(__file__).parent
 d=json.loads((r/'dist/data.json').read_text(encoding='utf-8'))
 validate(d)
@@ -14,6 +14,7 @@ for doc in d['documents']:
 session_urls=[s['url'] for s in d['sessions']]
 assert len(session_urls)==len(set(session_urls)), 'Sessões duplicadas'
 for session in d['sessions']:
+    assert session['date']==calendar_date(session['title']), 'Data da sessão difere do calendário oficial'
     assert d['start']<=session['date']<=d['end'], 'Sessão fora do período'
     records=session['attendance']+[row for vote in session['votes'] for row in vote['rows']]
     for record in records:
