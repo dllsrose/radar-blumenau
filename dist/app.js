@@ -2,7 +2,11 @@
 
 /* ============================================================
    Radar Blumenau — interface principal
-   Lê dist/data.json (schemaVersion 2) e dist/audit.json.
+   Abre com dist/lite/inicio.json (pequeno) e busca o resto por
+   partes: propostas, sessões, ruas e o texto completo em blocos.
+   Os arquivos de dist/lite são gerados por build_lite.py a partir
+   de dist/data.json (schemaVersion 2). Se dist/lite não existir,
+   o site carrega dist/data.json inteiro, como antes.
    A conferência de atas fica em attendance.js.
    ============================================================ */
 
@@ -26,6 +30,19 @@ let data, audit;
 let filtered = [], periodDocs = [], periodSessions = [];
 let page = 1, repeatLimit = 8, sessionLimit = 12;
 let currentView = 'inicio';
+
+// Carga por partes: quantas propostas já têm o texto completo e se terminou.
+let textLoaded = 0, textDone = false, loadFailed = false;
+let textFinished, textBroken;
+const textReady = new Promise((resolve, reject) => { textFinished = resolve; textBroken = reject; });
+textReady.catch(() => {});
+const LOADING = '<p class="empty">Carregando…</p>';
+// Só troca o conteúdo se ele mudou, para não fechar o que a pessoa abriu.
+function setHtml(element, html) {
+  if (element._html === html) return false;
+  element._html = html; element.innerHTML = html;
+  return true;
+}
 
 const range = () => `${fmt(activeFrom)} a ${fmt(activeTo)}`;
 const inPeriod = d => d >= activeFrom && d <= activeTo;
@@ -94,39 +111,57 @@ function updatePeriod() {
   }
   $('#period-error').textContent = '';
   activeFrom = from; activeTo = to;
-  periodDocs = data.documents.filter(d => inPeriod(d.date));
-  periodSessions = data.sessions.filter(s => inPeriod(s.date));
   sessionLimit = 12;
-
-  const votes = periodSessions.reduce((n, s) => n + s.votes.filter(v => v.rows.length).length, 0);
-  const stats = [
-    [data.people.length, 'participantes cadastrados', data.sources.roster],
-    [periodDocs.length, 'propostas no período', 'https://digital.camarablu.sc.gov.br/documentos/tipo:legislativo-2'],
-    [periodSessions.length, 'reuniões na base principal', 'https://digital.camarablu.sc.gov.br/sessoes'],
-    [votes, 'registros de votação', 'https://digital.camarablu.sc.gov.br/sessoes']
-  ];
-  $('#stats').innerHTML = stats.map(([n, t, u]) => `
-    <div class="stat">
-      <strong><a href="${esc(u)}" target="_blank" rel="noopener" aria-label="Fonte oficial: ${esc(t)}">${number(n)}</a></strong>
-      <span>${t}</span>
-      ${source(u)}
-    </div>`).join('');
-  $('#session-period').textContent = range();
-
-  renderPeople(); renderSessions(); filter(); renderRepeats();
+  refresh();
   if (typeof window.renderAttendanceAudit === 'function') window.renderAttendanceAudit();
 }
 
+// Redesenha tudo com o que já chegou. Chamada a cada troca de período e a cada parte carregada.
+function refresh(keepPage) {
+  periodDocs = (data.documents || []).filter(d => inPeriod(d.date));
+  periodSessions = (data.sessions || []).filter(s => inPeriod(s.date));
+
+  // Enquanto uma parte não chegou, o total do período inteiro vem pronto de inicio.json.
+  const whole = activeFrom === data.start && activeTo === data.end && data.stats;
+  const votes = data.sessions ? periodSessions.reduce((n, s) => n + s.votes.filter(v => v.rows.length).length, 0) : (whole ? data.stats.votes : null);
+  const stats = [
+    [data.people.length, 'participantes cadastrados', data.sources.roster],
+    [data.documents ? periodDocs.length : (whole ? data.stats.documents : null), 'propostas no período', 'https://digital.camarablu.sc.gov.br/documentos/tipo:legislativo-2'],
+    [data.sessions ? periodSessions.length : (whole ? data.stats.sessions : null), 'reuniões na base principal', 'https://digital.camarablu.sc.gov.br/sessoes'],
+    [votes, 'registros de votação', 'https://digital.camarablu.sc.gov.br/sessoes']
+  ];
+  setHtml($('#stats'), stats.map(([n, t, u]) => `
+    <div class="stat">
+      <strong><a href="${esc(u)}" target="_blank" rel="noopener" aria-label="Fonte oficial: ${esc(t)}">${n === null ? '…' : number(n)}</a></strong>
+      <span>${t}</span>
+      ${source(u)}
+    </div>`).join(''));
+  $('#session-period').textContent = range();
+
+  renderPeople(); renderSessions(); filter(keepPage); renderRepeats();
+}
+
 /* ---------- Propostas ---------- */
-function filter() {
+function filter(keepPage) {
   if (!data) return;
   const q = norm($('#search').value.trim()), id = $('#author').value, cat = $('#category').value;
   filtered = periodDocs.filter(d => (!q || d.search.includes(q)) && (!id || d.authorIds.includes(id)) && (!cat || d.category === cat));
-  page = 1;
+  if (keepPage !== true) page = 1;
   renderDocs();
 }
 
 function documentCard(d) {
+  if (d.text === null) return `
+    <article class="card doc">
+      <div class="doc-top">
+        <span class="tag" data-cat="${esc(d.category)}">${esc(d.category)}</span>
+        <span class="doc-date">Protocolo <strong>${fmt(d.date)}</strong></span>
+      </div>
+      <h3>${esc(d.title)}</h3>
+      <p class="note">Carregando o texto…</p>
+      <p class="meta">Autoria: ${esc(d.authors)}</p>
+      <div class="doc-actions">${source(d.url, 'Ver proposta oficial ↗')}</div>
+    </article>`;
   const short = d.text.length > 245 ? d.text.slice(0, 245) + '…' : d.text;
   return `
     <article class="card doc">
@@ -152,9 +187,23 @@ function documentCard(d) {
 function renderDocs() {
   const max = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   page = Math.min(page, max);
-  $('#result-count').textContent = `${number(filtered.length)} ${filtered.length === 1 ? 'proposta' : 'propostas'} · ${range()}`;
-  $('#documents').innerHTML = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map(documentCard).join('')
-    || '<div class="empty"><strong>Nenhum registro nesta busca.</strong><p>Tente outra grafia ou remova filtros. Isso não significa ausência de trabalho fora da base coletada.</p></div>';
+  if (loadFailed) {
+    $('#result-count').textContent = 'Não foi possível carregar toda a base. Nenhum total foi inferido. Recarregue a página.';
+  } else if (!data.documents) {
+    $('#result-count').textContent = 'Carregando propostas…';
+    setHtml($('#documents'), LOADING);
+    return;
+  } else {
+    // A busca por palavra só fica completa quando todo o texto chegou.
+    const searching = !textDone && $('#search').value.trim();
+    const total = data.documents.length || 1;
+    $('#result-count').textContent = `${number(filtered.length)} ${filtered.length === 1 ? 'proposta' : 'propostas'} · ${range()}`
+      + (searching ? ` · buscando no texto completo (${Math.floor(100 * textLoaded / total)}%)…` : '');
+  }
+  const empty = !textDone && !loadFailed && $('#search').value.trim()
+    ? '<p class="empty">Buscando no texto completo…</p>'
+    : '<div class="empty"><strong>Nenhum registro nesta busca.</strong><p>Tente outra grafia ou remova filtros. Isso não significa ausência de trabalho fora da base coletada.</p></div>';
+  setHtml($('#documents'), filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map(documentCard).join('') || empty);
   $('#page').textContent = `${number(page)} de ${number(max)}`;
   $('#prev').disabled = page === 1;
   $('#next').disabled = page === max;
@@ -188,26 +237,31 @@ function sessionContent(s) {
 }
 
 function renderSessions() {
+  if (!data.sessions) {
+    $('#session-count').textContent = loadFailed ? 'Não foi possível carregar as reuniões. Recarregue a página.' : 'Carregando reuniões…';
+    setHtml($('#sessions'), loadFailed ? '' : LOADING);
+    return;
+  }
   const q = norm($('#session-search').value.trim()), kind = $('#session-kind').value;
   const list = periodSessions.filter(s => (!kind || sessionKind(s) === kind) && (!q || norm(s.title).includes(q)));
   $('#session-count').textContent = `${number(list.length)} ${list.length === 1 ? 'reunião' : 'reuniões'} · ${range()}`;
-  $('#sessions').innerHTML = list.slice(0, sessionLimit).map(s => `
+  const more = list.length > sessionLimit
+    ? `<button id="more-sessions" class="button button-ghost" type="button">Mostrar mais sessões (${list.length - sessionLimit} restantes) ↓</button>` : '';
+  const changed = setHtml($('#sessions'), (list.slice(0, sessionLimit).map(s => `
     <details class="card session">
       <summary>
         <span class="session-title">${esc(s.title)}</span>
         <span class="chips"><span class="chip">${sessionKind(s)}</span><span class="chip">${s.attendance.length} registros nominais</span></span>
       </summary>
       <div class="session-content"></div>
-    </details>`).join('') || '<p class="empty">Nenhuma sessão coletada para este intervalo ou busca.</p>';
+    </details>`).join('') || '<p class="empty">Nenhuma sessão coletada para este intervalo ou busca.</p>') + more);
+  if (!changed) return;
+  if (more) $('#more-sessions').onclick = () => { sessionLimit += 12; renderSessions(); };
   document.querySelectorAll('#sessions .session').forEach((element, index) => {
     element.addEventListener('toggle', () => {
       element.querySelector('.session-content').innerHTML = element.open ? sessionContent(list[index]) : '';
     });
   });
-  if (list.length > sessionLimit) {
-    $('#sessions').insertAdjacentHTML('beforeend', `<button id="more-sessions" class="button button-ghost" type="button">Mostrar mais sessões (${list.length - sessionLimit} restantes) ↓</button>`);
-    $('#more-sessions').onclick = () => { sessionLimit += 12; renderSessions(); };
-  }
 }
 
 /* ---------- Vereadores ---------- */
@@ -220,19 +274,29 @@ document.addEventListener('error', e => {
 }, true);
 
 function renderPeople() {
-  $('#people').innerHTML = data.people.map(p => `
+  const whole = activeFrom === data.start && activeTo === data.end && data.stats;
+  const count = p => data.documents ? number(ownDocs(p).length) : (whole ? number(data.stats.byAuthor[p.id] || 0) : '…');
+  setHtml($('#people'), data.people.map(p => `
     <a class="card person" href="#vereadores/${encodeURIComponent(p.id)}" aria-label="Ver perfil de ${esc(p.name)}">
       ${photoTag(p, '')}
       <div class="person-body">
         <h3>${esc(p.name)}</h3>
         <small>${esc(p.party)} · cadastro da legislatura</small>
-        <span class="person-count"><strong>${number(ownDocs(p).length)}</strong> propostas no período</span>
+        <span class="person-count"><strong>${count(p)}</strong> propostas no período</span>
       </div>
       <span class="person-arrow" aria-hidden="true">→</span>
-    </a>`).join('');
+    </a>`).join(''));
 }
 
+let profileId = '';
 function profile(id) {
+  profileId = id;
+  if (!data.documents || !data.sessions) {
+    // O perfil depende das propostas e das reuniões; é redesenhado quando chegarem.
+    $('#profile-content').innerHTML = loadFailed ? '<p role="alert">Não foi possível carregar a base. Recarregue a página.</p>' : LOADING;
+    if (!$('#profile').open) $('#profile').showModal();
+    return;
+  }
   const p = data.people.find(p => p.id === id), docs = ownDocs(p), records = attendanceFor(p);
   const count = records.reduce((o, {s, a}) => { const key = sessionKind(s) + ' · ' + attendanceStatus(a); o[key] = (o[key] || 0) + 1; return o; }, {});
   const votes = periodSessions.flatMap(s => s.votes.flatMap(v => v.rows.filter(r => r.personIds.includes(id)).map(r => ({s, v, r}))));
@@ -287,12 +351,21 @@ function profile(id) {
 /* ---------- Minha rua (pedidos recorrentes) ---------- */
 function renderRepeats() {
   if (!data) return;
+  if (!data.repeatedRequests || !data.documents) {
+    $('#repeat-count').textContent = loadFailed ? 'Não foi possível carregar os pedidos. Recarregue a página.' : 'Carregando pedidos…';
+    setHtml($('#repeat-results'), loadFailed ? '' : LOADING);
+    $('#repeat-more').hidden = true;
+    return;
+  }
+  // Cada grupo traz as propostas pelo endereço (data.json) ou pela posição (dist/lite).
   const q = norm($('#repeat-search').value.trim()), allowed = new Map(periodDocs.map(d => [d.url, d]));
+  const pick = ref => typeof ref === 'number' ? data.documents[ref] : allowed.get(ref);
   const groups = data.repeatedRequests
-    .map(g => ({...g, docs: g.documents.filter(u => allowed.has(u)).map(u => allowed.get(u))}))
+    .map(g => ({...g, docs: g.documents.map(pick).filter(d => d && inPeriod(d.date))}))
     .filter(g => g.docs.length >= 2 && new Set(g.docs.map(d => d.date)).size >= 2 && (!q || norm(g.street + ' ' + g.topic).includes(q)));
+  const excerpt = d => d.text === null ? 'Carregando o texto…' : d.text.slice(0, 260) + (d.text.length > 260 ? '…' : '');
   $('#repeat-count').textContent = `${number(groups.length)} grupos no período selecionado · contagens calculadas`;
-  $('#repeat-results').innerHTML = groups.slice(0, repeatLimit).map(g => `
+  setHtml($('#repeat-results'), groups.slice(0, repeatLimit).map(g => `
     <details class="card repeat">
       <summary>
         <span><strong>${esc(g.street)}</strong><small>${esc(g.topic)}</small></span>
@@ -303,9 +376,9 @@ function renderRepeats() {
         <div class="row">
           <strong>${fmt(d.date)}</strong> · ${esc(d.authors)}<br>
           ${esc(d.title)} · ${source(d.url, 'Ler pedido ↗')}
-          <p>${esc(d.text.slice(0, 260))}${d.text.length > 260 ? '…' : ''}</p>
+          <p>${esc(excerpt(d))}</p>
         </div>`).join('')}
-    </details>`).join('') || '<p class="empty">Nenhum grupo encontrado. Nem todo logradouro ou assunto é reconhecido automaticamente.</p>';
+    </details>`).join('') || '<p class="empty">Nenhum grupo encontrado. Nem todo logradouro ou assunto é reconhecido automaticamente.</p>');
   $('#repeat-more').hidden = groups.length <= repeatLimit;
 }
 
@@ -329,15 +402,29 @@ function download(content, type, name) {
   setTimeout(() => URL.revokeObjectURL(u), 1000);
 }
 
-function exportJson() {
-  if (!data) return;
+// A exportação espera o texto completo chegar, para nunca sair pela metade.
+async function whenComplete(button) {
+  if (!data) return false;
+  const original = button.textContent;
+  try {
+    if (!textDone) button.textContent = 'Preparando…';
+    await textReady;
+    return true;
+  } catch {
+    alert('Não foi possível carregar toda a base. Recarregue a página e tente de novo.');
+    return false;
+  } finally { button.textContent = original; }
+}
+
+async function exportJson() {
+  if (!await whenComplete($('#export'))) return;
   const clean = filtered.map(({search, ...d}) => d);
   const payload = {periodo: {inicio: activeFrom, fim: activeTo}, coleta: data.collectedAt, criterio: 'Resultados filtrados; grupos calculados automaticamente; fontes em cada registro', registros: clean};
   download(JSON.stringify(payload, null, 2), 'application/json;charset=utf-8', 'radar-blumenau-busca.json');
 }
 
-function exportCsv() {
-  if (!data) return;
+async function exportCsv() {
+  if (!await whenComplete($('#export-csv'))) return;
   // Ponto e vírgula e BOM: abre direto no Excel em português.
   const cell = v => '"' + String(v ?? '').replace(/"/g, '""').replace(/\r?\n/g, ' ') + '"';
   const head = ['Data do protocolo', 'Título', 'Categoria (calculada)', 'Autoria', 'Texto', 'Situação', 'Fonte oficial'];
@@ -354,12 +441,64 @@ async function loadFile(name) {
   return r.json();
 }
 
+const searchable = d => norm((d.text || '') + ' ' + d.title + ' ' + d.authors);
+
+// Busca o restante da base depois que a primeira tela já apareceu.
+async function loadParts() {
+  // O carimbo da coleta no endereço evita misturar partes de coletas diferentes.
+  const stamp = '?c=' + encodeURIComponent(data.collectedAt);
+  const part = name => loadFile('lite/' + name + stamp);
+  const fail = e => {
+    if (loadFailed) return;
+    loadFailed = true; textBroken(e);
+    refresh(true);
+    console.error(e);
+  };
+  try {
+    const sessions = part('sessoes.json').then(s => {
+      data.sessions = s; refresh(true);
+      if ($('#profile').open && profileId) profile(profileId);
+    });
+    const streets = part('ruas.json').then(r => { data.repeatedRequests = r; renderRepeats(); });
+    sessions.catch(fail); streets.catch(fail);
+
+    const c = await part('propostas.json');
+    data.documents = c.id.map((id, i) => {
+      const d = {id, title: c.title[i], date: c.date[i], category: c.category[i], authors: c.authors[i], authorIds: c.authorIds[i],
+        meta: c.meta[i], url: (c.url[i].startsWith('http') ? '' : c.urlPrefix) + c.url[i], text: null};
+      d.search = searchable(d);
+      return d;
+    });
+    refresh(true);
+    if ($('#profile').open && profileId) profile(profileId);
+
+    for (let n = 0; n < data.textChunks; n++) {
+      const texts = await part(`texto-${n}.json`);
+      texts.forEach((text, i) => { const d = data.documents[n * data.chunkSize + i]; d.text = text; d.search = searchable(d); });
+      textLoaded += texts.length;
+      if (textLoaded >= data.documents.length) textDone = true;
+      filter(true); renderRepeats();
+    }
+    if (textLoaded !== data.documents.length) throw new Error('Texto das propostas incompleto');
+    textFinished();
+    await Promise.all([sessions, streets]);
+  } catch (e) { fail(e); }
+}
+
 async function init() {
   try {
-    [data, audit] = await Promise.all([loadFile('data.json'), loadFile('audit.json')]);
-    if (data.schemaVersion !== 2) throw new Error('Base incompatível');
+    let head = null;
+    try { head = await loadFile('lite/inicio.json'); if (head.schemaVersion !== 2 || !head.lite) head = null; } catch { head = null; }
+    audit = await loadFile('audit.json');
+    if (head) data = head;
+    else {
+      // Sem os arquivos leves: carrega a base inteira de uma vez.
+      data = await loadFile('data.json');
+      if (data.schemaVersion !== 2) throw new Error('Base incompatível');
+      data.documents.forEach(d => { d.search = searchable(d); });
+      data.stats = null; textLoaded = data.documents.length; textDone = true; textFinished();
+    }
     data.people.sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
-    data.documents.forEach(d => { d.search = norm(d.text + ' ' + d.title + ' ' + d.authors); });
 
     $('#from').min = $('#to').min = data.start;
     $('#from').max = $('#to').max = data.end;
@@ -367,7 +506,7 @@ async function init() {
     $('#hero-period').textContent = `${fmt(data.start)} a ${fmt(data.end)}`;
 
     $('#coverage-copy').innerHTML = `<strong>Cobertura: ${fmt(data.start)} a ${fmt(data.end)}.</strong> Propostas por protocolo e reuniões ordinárias e extraordinárias publicadas, incluindo plenário, comissões e frentes parlamentares. O levantamento ampliado de presenças está na conferência das atas. A informação ausente não vira falta. <a href="#presencas">Veja a conferência e os limites →</a>`;
-    const unavailable = data.sessions.reduce((n, s) => n + s.votes.filter(v => !v.rows.length).length, 0);
+    const unavailable = data.stats ? data.stats.unavailableVotes : data.sessions.reduce((n, s) => n + s.votes.filter(v => !v.rows.length).length, 0);
     if (unavailable) $('#coverage-copy').insertAdjacentHTML('beforeend', ` <strong>${number(unavailable)} ${unavailable === 1 ? 'matéria sem resultado nominal disponível na fonte, sinalizada' : 'matérias sem resultado nominal disponível na fonte, sinalizadas'} nas reuniões.</strong>`);
 
     $('#author').innerHTML = '<option value="">Todos os autores</option>' + data.people.map(p => `<option value="${esc(p.id)}">${esc(p.name)}</option>`).join('');
@@ -379,6 +518,7 @@ async function init() {
     const age = Date.now() - new Date(data.collectedAt).getTime();
     if (age > 48 * 3600000) $('#coverage-copy').insertAdjacentHTML('beforeend', ' <strong>Atenção: a última coleta tem mais de 48 horas. Consulte o histórico de atualização.</strong>');
     route();
+    if (head) loadParts();
   } catch (e) {
     $('#stats').innerHTML = '<p role="alert">Não foi possível carregar a base. Nenhum total foi inferido. Recarregue a página ou consulte a fonte oficial.</p>';
     console.error(e);

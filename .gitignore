@@ -6,3 +6,4 @@ __pycache__/
 .env
 baseline.json
 outputs/
+dist/lite/
