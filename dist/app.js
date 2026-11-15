@@ -82,6 +82,10 @@ function route() {
       $('#category').value = params.get('cat') || '';
       filter();
     }
+    if (view === 'inicio' && (params.get('semana') || '') !== newsWeek) {
+      newsWeek = params.get('semana') || ''; renderNews();
+      if (newsWeek) setTimeout(() => $('.news').scrollIntoView(), 0);
+    }
     if (view === 'ruas' && params.has('q')) { $('#repeat-search').value = params.get('q'); repeatLimit = 8; renderRepeats(); }
     if (view === 'vereadores' && arg && data.people.some(p => p.id === arg)) profile(arg);
     else if ($('#profile').open) $('#profile').close();
@@ -99,6 +103,7 @@ function syncHash() {
     if ($('#category').value) p.set('cat', $('#category').value);
     if (bairroFilter) p.set('bairro', bairroFilter);
   }
+  if (currentView === 'inicio' && newsWeek) p.set('semana', newsWeek);
   if (currentView === 'ruas' && $('#repeat-search').value.trim()) p.set('q', $('#repeat-search').value.trim());
   if (activeFrom !== data.start || activeTo !== data.end) { p.set('de', activeFrom); p.set('ate', activeTo); }
   const query = p.toString();
@@ -152,11 +157,35 @@ function refresh(keepPage) {
 }
 
 /* ---------- Novidades (últimos 7 dias cobertos pela coleta) ---------- */
+// Semana escolhida no histórico: '' = últimos 7 dias; senão, a segunda-feira da semana fechada.
+let newsWeek = '';
+const addDays = (iso, n) => { const d = new Date(iso + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+
+// Segundas-feiras das semanas já fechadas (segunda a domingo) dentro da cobertura, da mais recente à mais antiga.
+function closedWeeks() {
+  const dow = (new Date(data.end + 'T12:00:00Z').getUTCDay() + 6) % 7; // 0 = segunda
+  const list = [];
+  for (let monday = addDays(data.end, dow === 6 ? -6 : -dow - 7); addDays(monday, 6) >= data.start; monday = addDays(monday, -7)) list.push(monday);
+  return list;
+}
+
+function setWeek(value) { newsWeek = value; renderNews(); syncHash(); }
+
 function renderNews() {
-  const first = new Date(data.end + 'T12:00:00Z');
-  first.setUTCDate(first.getUTCDate() - 6);
-  const end = data.end, start = [first.toISOString().slice(0, 10), data.start].sort()[1];
-  $('#news-range').textContent = `De ${fmt(start)} a ${fmt(end)}: os sete dias mais recentes cobertos pela coleta.`;
+  const weeks = closedWeeks();
+  if (!weeks.includes(newsWeek)) newsWeek = '';
+  const end = newsWeek ? addDays(newsWeek, 6) : data.end, start = [newsWeek || addDays(data.end, -6), data.start].sort()[1];
+  const select = $('#week-select');
+  if (select.options.length !== weeks.length + 1) {
+    setHtml(select, '<option value="">Últimos 7 dias</option>' + weeks.map(m => `<option value="${m}">Semana de ${fmt([m, data.start].sort()[1])} a ${fmt(addDays(m, 6))}</option>`).join(''));
+  }
+  select.value = newsWeek;
+  $('#week-prev').disabled = select.selectedIndex >= select.options.length - 1;
+  $('#week-next').disabled = select.selectedIndex <= 0;
+  $('#news-title').textContent = newsWeek ? 'O que entrou nesta semana' : 'O que entrou nos últimos 7 dias';
+  $('#news-range').textContent = newsWeek
+    ? `De ${fmt(start)} a ${fmt(end)}, de segunda a domingo. Números da base atual: podem mudar se a Câmara corrigir ou incluir registros depois.`
+    : `De ${fmt(start)} a ${fmt(end)}: os sete dias mais recentes cobertos pela coleta.`;
   if (!data.documents || !data.sessions) {
     setHtml($('#news'), loadFailed ? '<p role="alert">Não foi possível carregar as novidades. Recarregue a página.</p>' : LOADING);
     return;
@@ -180,7 +209,7 @@ function renderNews() {
         <small>${number(votes)} ${votes === 1 ? 'votação com registro nominal' : 'votações com registro nominal'}</small><em>Ver reuniões →</em>
       </a>
     </div>
-    ${latest.length ? `<h3>Últimas propostas protocoladas</h3>${latest.map(d => `
+    ${latest.length ? `<h3>${newsWeek ? 'Últimas propostas protocoladas na semana' : 'Últimas propostas protocoladas'}</h3>${latest.map(d => `
       <div class="row"><strong>${fmt(d.date)}</strong> · ${esc(d.title)} · ${esc(d.authors)}<br>${source(d.url, 'Ver proposta oficial ↗')}</div>`).join('')}` : ''}
     <p class="note">Contagens pela data de protocolo e pela data da reunião. Semana sem registro não significa falta de trabalho: pode ser recesso ou publicação ainda não feita pela Câmara.</p>
     <div class="share">
@@ -193,7 +222,7 @@ function renderNews() {
       <details><summary>Ver o texto</summary><pre id="share-text"></pre></details>
     </div>`);
   week = {
-    start, end, docs: docs.length, sessions: sessions.length, votes,
+    monday: newsWeek, start, end, docs: docs.length, sessions: sessions.length, votes,
     categories: Object.entries(byCategory).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([c, n]) => `${c}: ${number(n)}`).join(' · ')
   };
   $('#share-text').textContent = weekText();
@@ -209,13 +238,13 @@ function weekText() {
   return [
     `RadarBlumenau · semana de ${fmt(w.start)} a ${fmt(w.end)}`,
     '',
-    'Na Câmara de Blumenau, nestes 7 dias:',
+    w.monday ? 'Na Câmara de Blumenau, nesta semana:' : 'Na Câmara de Blumenau, nestes 7 dias:',
     `• ${plural(w.docs, 'proposta protocolada', 'propostas protocoladas')}${w.categories ? ` (${w.categories})` : ''}`,
     `• ${plural(w.sessions, 'reunião registrada', 'reuniões registradas')}`,
     `• ${plural(w.votes, 'votação com registro nominal', 'votações com registro nominal')}`,
     '',
     'Veja tudo, com link para a fonte oficial:',
-    siteUrl(),
+    siteUrl() + (w.monday ? `#inicio?semana=${w.monday}` : ''),
     '',
     'Observatório cidadão independente, feito com os registros públicos da Câmara.'
   ].join('\n');
@@ -699,6 +728,10 @@ async function init() {
 
 /* ---------- Eventos ---------- */
 window.addEventListener('hashchange', route);
+
+$('#week-select').addEventListener('change', e => setWeek(e.target.value));
+$('#week-prev').addEventListener('click', () => { const s = $('#week-select'); setWeek(s.options[s.selectedIndex + 1].value); });
+$('#week-next').addEventListener('click', () => { const s = $('#week-select'); setWeek(s.options[s.selectedIndex - 1].value); });
 
 $('#home-search-form').addEventListener('submit', e => {
   e.preventDefault();

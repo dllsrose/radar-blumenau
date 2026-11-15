@@ -344,3 +344,9 @@ dialog .fold { border-top: 1px solid var(--line); padding-top: 12px; }
 .share details { margin-top: 12px; }
 .share summary { cursor: pointer; color: var(--red); font-size: var(--text-small); font-weight: 650; }
 .share pre { margin: 10px 0 0; padding: 14px; border: 1px solid var(--line); border-radius: var(--radius-small); background: #fff; font: inherit; font-size: var(--text-small); white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* Histórico de semanas */
+.week-nav { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px 0 8px; }
+.week-nav select { flex: 1 1 220px; min-height: 44px; }
+.week-nav button:disabled { opacity: .45; cursor: default; }
+@media (max-width: 640px) { .week-nav select { order: -1; flex-basis: 100%; } .week-nav button { flex: 1; } }

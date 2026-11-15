@@ -18,7 +18,7 @@
   <title>Radar Blumenau · De olho na nossa cidade</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23c8102e'/%3E%3Ccircle cx='32' cy='32' r='19' fill='none' stroke='%23fff' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='8' fill='%23f5b800'/%3E%3C/svg%3E">
   <!-- Ao mudar style.css, app.js ou attendance.js, troque o número depois de ?v= para o navegador não usar a versão antiga guardada. -->
-  <link rel="stylesheet" href="style.css?v=20261115f">
+  <link rel="stylesheet" href="style.css?v=20261115g">
 </head>
 <body data-view="inicio">
 
@@ -88,6 +88,11 @@
     <section class="news" aria-labelledby="news-title">
       <p class="eyebrow">Novidades</p>
       <h2 id="news-title">O que entrou nos últimos 7 dias</h2>
+      <div class="week-nav">
+        <button type="button" class="button button-ghost" id="week-prev" disabled>← Semana anterior</button>
+        <select id="week-select" aria-label="Escolher a semana"><option value="">Últimos 7 dias</option></select>
+        <button type="button" class="button button-ghost" id="week-next" disabled>Semana seguinte →</button>
+      </div>
       <p class="note" id="news-range">Carregando…</p>
       <div id="news"></div>
     </section>
@@ -359,8 +364,8 @@
   <div id="attendance-person-content"></div>
 </dialog>
 
-<script src="bairros.js?v=20261115f"></script>
-<script src="app.js?v=20261115f"></script>
-<script src="attendance.js?v=20261115f"></script>
+<script src="bairros.js?v=20261115g"></script>
+<script src="app.js?v=20261115g"></script>
+<script src="attendance.js?v=20261115g"></script>
 </body>
 </html>
