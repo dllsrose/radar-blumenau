@@ -1,0 +1,24 @@
+name: Vigia da coleta diária
+# Falha (e o GitHub avisa por e-mail) quando a base publicada tem mais de 48 horas.
+# A coleta roda no computador local; este vigia só olha o que está no site.
+on:
+  schedule:
+    - cron: '0 12 * * *'  # 09h00 de Brasília
+  workflow_dispatch:
+permissions: {}
+jobs:
+  vigia:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conferir a idade da última coleta publicada
+        run: |
+          curl -fsS "https://dllsrose.github.io/radar-blumenau/lite/inicio.json?t=$(date +%s)" -o inicio.json
+          python3 - <<'EOF'
+          import json, sys
+          from datetime import datetime, timezone
+          d = json.load(open('inicio.json', encoding='utf-8'))
+          horas = (datetime.now(timezone.utc) - datetime.fromisoformat(d['collectedAt'])).total_seconds() / 3600
+          print(f"Última coleta publicada: {d['collectedAt']} ({horas:.0f} horas atrás). Cobertura até {d['end']}.")
+          if horas > 48:
+              sys.exit(f"A coleta do Radar Blumenau está parada há {horas:.0f} horas. Veja os registros em radar-automation no computador da coleta.")
+          EOF
