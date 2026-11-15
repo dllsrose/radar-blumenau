@@ -10,7 +10,7 @@ A coleta identificada roda no computador do responsável, pelo Agendador de Tare
 
 O programa consulta o portal público, valida a base contra a versão anterior e envia dist/data.json e dist/attendance-audit.json juntos. O GitHub Actions executa os testes e publica no Pages. Se a coleta encontrar verificação humana, falha de rede ou perda de dados, a publicação anterior é preservada. O histórico do GitHub mostra publicações; falhas locais ficam no log do computador.
 
-O início do histórico publicado é preservado. A data inicial solicitada é 01/01/2025; a cobertura efetivamente validada consta de dist/data.json e do próprio site. A carga histórica só é publicada após completar a coleta e a validação. As execuções seguintes revisitam os últimos 45 dias e aos domingos todo o período coletado.
+O início do histórico publicado é preservado. A data inicial solicitada é 01/01/2025; a cobertura efetivamente validada consta de dist/data.json e do próprio site. A carga histórica só é publicada após completar a coleta e a validação. As execuções seguintes revisitam os últimos 45 dias e, a cada dia, uma parte do histórico anterior (um ano de propostas em dia fixo e um sétimo das reuniões antigas), de modo que todo o período coletado é reconferido a cada semana. `radar.py --full` reconfere tudo de uma vez.
 
 ## Fontes e limites
 

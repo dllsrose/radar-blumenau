@@ -18,7 +18,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -r requirements.txt
-      - run: python -m unittest -v test_radar.py test_attendance.py test_attendance_collect.py test_build_lite.py
+      - run: python -m unittest -v test_radar.py test_attendance.py test_attendance_collect.py test_build_lite.py test_refresh_plan.py
       - run: node test_attendance_ui.cjs
       - run: node test_bairros.cjs
       - run: python verify_site.py

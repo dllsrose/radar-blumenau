@@ -215,37 +215,62 @@ def validate(data,baseline=None):
                 new_vote=current_votes.get(old_vote['url'])
                 if new_vote is None or nominal_keys(old_vote['rows'])-nominal_keys(new_vote['rows']):raise ValueError('Votos nominais desapareceram; preservar publicação anterior')
     return {'valid':True,'uniqueProposals':len(urls),'participants':len(data['people']),'sessions':len(data['sessions']),'votes':sum(bool(v['rows']) for s in data['sessions'] for v in s['votes']),'unavailableVotes':sum(not v['rows'] for s in data['sessions'] for v in s['votes'])}
+def weekday_today(): return datetime.now(ZoneInfo('America/Sao_Paulo')).weekday()
+def history_group(url):
+    # Grupo fixo (0 a 6) de cada reunião antiga: decide em que dia da semana ela é reconferida.
+    return int(hashlib.sha256(url.encode()).hexdigest(),16)%7
+def refresh_plan(start,end,weekday,incremental):
+    """Devolve (início do período recente, anos de propostas a reconferir por inteiro, grupos de reuniões antigas).
+
+    Toda execução revisita os últimos 45 dias. O histórico anterior é reconferido em partes ao longo
+    da semana, em vez de tudo no domingo: cada ano de propostas num dia fixo (ano % 7) e as reuniões
+    antigas em sete grupos estáveis, um por dia. Em sete dias seguidos o histórico inteiro é revisto.
+    Sem base anterior compatível (ou com --full) tudo é coletado de uma vez."""
+    years=range(int(start[:4]),int(end[:4])+1)
+    if not incremental: return start,set(years),set(range(7))
+    recent=max(start,(datetime.fromisoformat(end)-timedelta(days=45)).date().isoformat())
+    return recent,{y for y in years if y%7==weekday},{weekday}
 def main():
-    ap=argparse.ArgumentParser();ap.add_argument('--start',default='2025-01-01');ap.add_argument('--end',default=datetime.now(ZoneInfo('America/Sao_Paulo')).date().isoformat());ap.add_argument('--cache',default='.cache/'+datetime.now(ZoneInfo('America/Sao_Paulo')).date().isoformat());ap.add_argument('--output',default='dist/data.json');ap.add_argument('--baseline');args=ap.parse_args()
+    ap=argparse.ArgumentParser();ap.add_argument('--full',action='store_true',help='reconferir todo o histórico de uma vez');ap.add_argument('--start',default='2025-01-01');ap.add_argument('--end',default=datetime.now(ZoneInfo('America/Sao_Paulo')).date().isoformat());ap.add_argument('--cache',default='.cache/'+datetime.now(ZoneInfo('America/Sao_Paulo')).date().isoformat());ap.add_argument('--output',default='dist/data.json');ap.add_argument('--baseline');args=ap.parse_args()
     baseline=json.loads(Path(args.baseline).read_text(encoding='utf-8')) if args.baseline and Path(args.baseline).exists() else None
-    refresh_start=args.start
-    if baseline and baseline.get('schemaVersion')==2 and baseline['start']==args.start and baseline['end']<=args.end and datetime.now(ZoneInfo('America/Sao_Paulo')).weekday()!=6:
-        refresh_start=max(args.start,(datetime.fromisoformat(args.end)-timedelta(days=45)).date().isoformat())
+    incremental=bool(baseline and baseline.get('schemaVersion')==2 and baseline['start']==args.start and baseline['end']<=args.end and not args.full)
+    refresh_start,full_years,groups_due=refresh_plan(args.start,args.end,weekday_today(),incremental)
+    years=range(int(args.start[:4]),int(args.end[:4])+1)
+    print(f'PLANO: recentes desde {refresh_start}; anos de propostas reconferidos por inteiro {sorted(full_years)}; grupos de reuniões antigas {sorted(groups_due)}',flush=True)
     client=Client(ROOT/args.cache); persons=people(client);all_docs=[];coverage=[]
     # Dois anos são coletados em paralelo, limitados a duas conexões ao portal.
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-        tasks=[pool.submit(collect_documents,client,y,refresh_start,args.end) for y in range(int(refresh_start[:4]),int(args.end[:4])+1)]
+        tasks=[pool.submit(collect_documents,client,y,args.start if y in full_years else refresh_start,args.end) for y in years if y in full_years or y>=int(refresh_start[:4])]
         for task in concurrent.futures.as_completed(tasks):
             docs,report=task.result();all_docs+=docs;coverage.append(report)
-    links=session_links(client,refresh_start,args.end); sessions=[]
+    # A listagem de reuniões é sempre percorrida inteira (são poucas páginas); o detalhe e os votos só de quem está no plano do dia.
+    old_sessions={s['url']:s for s in baseline['sessions']} if incremental else {}
+    links={u:r for u,r in session_links(client,args.start,args.end).items() if r['date']>=refresh_start or u not in old_sessions or history_group(u) in groups_due}; sessions=[]
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
         futures=[pool.submit(session_detail,client,item) for item in links.items()]
         for f in concurrent.futures.as_completed(futures):
             sessions.append(f.result());print(f'SESSÕES {len(sessions)}/{len(links)}',flush=True)
-    if refresh_start>args.start:
-        all_docs.extend(d for d in baseline['documents'] if d['date']<refresh_start)
-        sessions.extend(s for s in baseline['sessions'] if s['date']<refresh_start)
+    if incremental:
+        # O que não está no plano de hoje vem da base anterior e é reconferido no seu dia da semana.
+        all_docs.extend(d for d in baseline['documents'] if d['date']<refresh_start and int(d['date'][:4]) not in full_years)
+        sessions.extend(s for u,s in old_sessions.items() if u not in links and s['date']<refresh_start and history_group(u) not in groups_due)
     for d in all_docs:
         d['text']=public_text(d['text']);d['category']=classify(d['title'],d['text']);d['authorIds']=match_people(d['authors'],persons)
     for s in sessions:
         for a in s['attendance']:a['personIds']=match_people(a['name'],persons)
         for v in s['votes']:
             for row in v['rows']:row['personIds']=match_people(row['name'],persons)
-    collected=sorted(client.pages.values());data={'schemaVersion':2,'start':args.start,'end':args.end,'collectedAt':max(collected),'collectionStartedAt':min(collected),'people':persons,'documents':sorted({d['url']:d for d in all_docs}.values(),key=lambda d:(d['date'],d['id']),reverse=True),'sessions':sorted(sessions,key=lambda s:(s['date'],s['url']),reverse=True),'documentCoverage':coverage,'sources':{'roster':ROSTER,'institutionalRoster':'https://camarablu.sc.gov.br/quem-sao/'},'updateMode':'Coleta local diária às 03h17 (Brasília); validação e publicação pelo GitHub Actions','limitations':['Não representa todos os atos informais do mandato, nem execução de obras.','Cadastro institucional e digital divergiam na conferência inicial; incluímos todos os participantes publicados para a legislatura.','Categorias e agrupamentos de pedidos são cálculos automáticos, sujeitos a correção.','Ausência de registro não é falta.','Conferência independente de presenças descrita no relatório de auditoria.']}
+    collected=sorted(client.pages.values());data={'schemaVersion':2,'start':args.start,'end':args.end,'collectedAt':max(collected),'collectionStartedAt':min(collected),'people':persons,'documents':sorted({d['url']:d for d in all_docs}.values(),key=lambda d:(d['date'],d['id']),reverse=True),'sessions':sorted(sessions,key=lambda s:(s['date'],s['url']),reverse=True),'documentCoverage':coverage,'sources':{'roster':ROSTER,'institutionalRoster':'https://camarablu.sc.gov.br/quem-sao/'},'updateMode':'Coleta local diária às 03h17 (Brasília), com os últimos 45 dias e uma parte do histórico por dia, de modo que tudo é reconferido a cada semana; validação e publicação pelo GitHub Actions','limitations':['Não representa todos os atos informais do mandato, nem execução de obras.','Cadastro institucional e digital divergiam na conferência inicial; incluímos todos os participantes publicados para a legislatura.','Categorias e agrupamentos de pedidos são cálculos automáticos, sujeitos a correção.','Ausência de registro não é falta.','Conferência independente de presenças descrita no relatório de auditoria.']}
     if baseline:data['collectedAt']=max(data['collectedAt'],baseline['collectedAt'])
     data['processedAt']=stamp()
     data['refreshedFrom']=refresh_start
-    data['fullCollectedAt']=data['collectedAt'] if refresh_start==args.start else baseline.get('fullCollectedAt',baseline['collectedAt'])
+    # Data da última reconferência de cada parte do histórico; a base inteira foi revista desde a mais antiga delas.
+    previous_full=baseline.get('fullCollectedAt',baseline['collectedAt']) if incremental else data['collectedAt']
+    checks=baseline.get('historyChecks',{}) if incremental else {}
+    data['historyChecks']={
+        'documents':{str(y):data['collectedAt'] if y in full_years else checks.get('documents',{}).get(str(y),previous_full) for y in years},
+        'sessions':{str(g):data['collectedAt'] if g in groups_due else checks.get('sessions',{}).get(str(g),previous_full) for g in range(7)}}
+    data['fullCollectedAt']=min([*data['historyChecks']['documents'].values(),*data['historyChecks']['sessions'].values()])
     data['repeatedRequests']=repeats(data['documents'])
     data['validation']=validate(data,baseline);atomic(ROOT/args.output,data);print('BASE VALIDADA '+json.dumps(data['validation']),flush=True)
 if __name__=='__main__':main()
