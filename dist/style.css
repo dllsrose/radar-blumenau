@@ -309,3 +309,29 @@ dialog .fold { border-top: 1px solid var(--line); padding-top: 12px; }
   html { scroll-behavior: auto; }
   * { transition: none !important; }
 }
+
+/* ---------- Novidades (início) ---------- */
+.news { margin: 30px 0 6px; }
+.news h2 { margin: 0 0 4px; }
+.news h3 { margin: 20px 0 4px; font-size: 17px; }
+.news-grid { display: grid; gap: 12px; margin-top: 12px; }
+.news-card { display: block; text-decoration: none; color: var(--ink); transition: border-color .15s, box-shadow .15s; }
+.news-card:hover { border-color: var(--red); box-shadow: var(--shadow); }
+.news-card strong { display: block; font-size: 34px; line-height: 1.1; letter-spacing: -.02em; }
+.news-card span { display: block; font-weight: 600; }
+.news-card small { display: block; margin-top: 6px; font-size: var(--text-small); color: var(--muted); }
+.news-card em { display: block; margin-top: 10px; font-style: normal; font-weight: 700; color: var(--red); }
+
+/* ---------- Bairros ---------- */
+.bairro-grid { display: grid; gap: 12px; }
+.bairro h3 { margin: 0 0 4px; font-size: 19px; }
+.bairro-n { margin: 0 0 6px; }
+.bairro-n strong { font-size: 24px; color: var(--red); margin-right: 2px; }
+.bairro .meta { margin: 0 0 10px; }
+
+@media (min-width: 640px) {
+  .news-grid, .bairro-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 900px) {
+  .bairro-grid { grid-template-columns: repeat(3, 1fr); }
+}

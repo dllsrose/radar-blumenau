@@ -21,7 +21,7 @@ const source = (url, label = 'Fonte oficial ↗') =>
 
 /* ---------- Estado ---------- */
 const PAGE_SIZE = 10;
-const VIEWS = ['inicio', 'propostas', 'ruas', 'vereadores', 'presencas', 'sessoes', 'metodo'];
+const VIEWS = ['inicio', 'propostas', 'bairros', 'ruas', 'vereadores', 'presencas', 'sessoes', 'metodo'];
 // Endereços antigos continuam funcionando.
 const LEGACY = {recorrentes: 'ruas', 'presencas-conferidas': 'presencas', auditoria: 'presencas'};
 
@@ -30,6 +30,7 @@ let data, audit;
 let filtered = [], periodDocs = [], periodSessions = [];
 let page = 1, repeatLimit = 8, sessionLimit = 12;
 let currentView = 'inicio';
+let bairroFilter = ''; // bairro escolhido na aba Bairros (vazio = todos)
 
 // Carga por partes: quantas propostas já têm o texto completo e se terminou.
 let textLoaded = 0, textDone = false, loadFailed = false;
@@ -73,7 +74,9 @@ function route() {
     const de = params.get('de'), ate = params.get('ate');
     if (de && ate && (de !== activeFrom || ate !== activeTo)) { $('#from').value = de; $('#to').value = ate; updatePeriod(); }
 
-    if (view === 'propostas' && [...params.keys()].some(k => ['q', 'autor', 'cat'].includes(k))) {
+    if (view === 'propostas' && [...params.keys()].some(k => ['q', 'autor', 'cat', 'bairro'].includes(k))) {
+      const b = params.get('bairro') || '';
+      bairroFilter = BAIRROS.includes(b) ? b : '';
       $('#search').value = params.get('q') || '';
       $('#author').value = params.get('autor') || '';
       $('#category').value = params.get('cat') || '';
@@ -94,6 +97,7 @@ function syncHash() {
     if ($('#search').value.trim()) p.set('q', $('#search').value.trim());
     if ($('#author').value) p.set('autor', $('#author').value);
     if ($('#category').value) p.set('cat', $('#category').value);
+    if (bairroFilter) p.set('bairro', bairroFilter);
   }
   if (currentView === 'ruas' && $('#repeat-search').value.trim()) p.set('q', $('#repeat-search').value.trim());
   if (activeFrom !== data.start || activeTo !== data.end) { p.set('de', activeFrom); p.set('ate', activeTo); }
@@ -138,14 +142,88 @@ function refresh(keepPage) {
     </div>`).join(''));
   $('#session-period').textContent = range();
 
-  renderPeople(); renderSessions(); filter(keepPage); renderRepeats();
+  renderPeople(); renderSessions(); filter(keepPage); renderRepeats(); renderBairros(); renderNews();
+}
+
+/* ---------- Novidades (últimos 7 dias cobertos pela coleta) ---------- */
+function renderNews() {
+  const first = new Date(data.end + 'T12:00:00Z');
+  first.setUTCDate(first.getUTCDate() - 6);
+  const end = data.end, start = [first.toISOString().slice(0, 10), data.start].sort()[1];
+  $('#news-range').textContent = `De ${fmt(start)} a ${fmt(end)}: os sete dias mais recentes cobertos pela coleta.`;
+  if (!data.documents || !data.sessions) {
+    setHtml($('#news'), loadFailed ? '<p role="alert">Não foi possível carregar as novidades. Recarregue a página.</p>' : LOADING);
+    return;
+  }
+  const recent = d => d >= start && d <= end;
+  const docs = data.documents.filter(d => recent(d.date)), sessions = data.sessions.filter(s => recent(s.date));
+  const byCategory = {};
+  docs.forEach(d => { byCategory[d.category] = (byCategory[d.category] || 0) + 1; });
+  const categories = Object.entries(byCategory).sort((a, b) => b[1] - a[1]).map(([c, n]) => `${number(n)} ${esc(c)}`).join(' · ');
+  const votes = sessions.reduce((n, s) => n + s.votes.filter(v => v.rows.length).length, 0);
+  const period = `?de=${start}&ate=${end}`;
+  const latest = docs.slice().sort((a, b) => b.date.localeCompare(a.date)).slice(0, 3);
+  setHtml($('#news'), `
+    <div class="news-grid">
+      <a class="card news-card" href="#propostas${period}">
+        <strong>${number(docs.length)}</strong><span>${docs.length === 1 ? 'proposta protocolada' : 'propostas protocoladas'}</span>
+        <small>${categories || 'Nenhuma proposta com protocolo nesses dias.'}</small><em>Ver propostas →</em>
+      </a>
+      <a class="card news-card" href="#sessoes${period}">
+        <strong>${number(sessions.length)}</strong><span>${sessions.length === 1 ? 'reunião na base' : 'reuniões na base'}</span>
+        <small>${number(votes)} ${votes === 1 ? 'votação com registro nominal' : 'votações com registro nominal'}</small><em>Ver reuniões →</em>
+      </a>
+    </div>
+    ${latest.length ? `<h3>Últimas propostas protocoladas</h3>${latest.map(d => `
+      <div class="row"><strong>${fmt(d.date)}</strong> · ${esc(d.title)} · ${esc(d.authors)}<br>${source(d.url, 'Ver proposta oficial ↗')}</div>`).join('')}` : ''}
+    <p class="note">Contagens pela data de protocolo e pela data da reunião. Semana sem registro não significa falta de trabalho: pode ser recesso ou publicação ainda não feita pela Câmara.</p>`);
+}
+
+/* ---------- Bairros ---------- */
+function renderBairros() {
+  if (!textDone) {
+    $('#bairro-count').textContent = loadFailed ? 'Não foi possível carregar o texto das propostas. Recarregue a página.' : 'Lendo o texto das propostas…';
+    setHtml($('#bairro-results'), loadFailed ? '' : LOADING);
+    return;
+  }
+  const names = new Map(data.people.map(p => [p.id, p.name]));
+  const groups = new Map(BAIRROS.map(b => [b, {total: 0, authors: {}}]));
+  let cited = 0;
+  for (const d of periodDocs) {
+    if (!d.bairros.length) continue;
+    cited++;
+    for (const b of d.bairros) {
+      const g = groups.get(b);
+      g.total++;
+      d.authorIds.forEach(id => { g.authors[id] = (g.authors[id] || 0) + 1; });
+    }
+  }
+  $('#bairro-count').textContent = `${number(cited)} de ${number(periodDocs.length)} propostas citam ao menos um bairro pelo nome · ${range()}`;
+  setHtml($('#bairro-results'), [...groups].sort((a, b) => b[1].total - a[1].total || a[0].localeCompare(b[0], 'pt-BR')).map(([b, g]) => {
+    const top = Object.entries(g.authors).sort((x, y) => y[1] - x[1]).slice(0, 3).map(([id, n]) => `${esc(names.get(id) || id)} (${number(n)})`).join(', ');
+    return `
+      <article class="card bairro">
+        <h3>${esc(b)}</h3>
+        <p class="bairro-n"><strong>${number(g.total)}</strong> ${g.total === 1 ? 'proposta cita' : 'propostas citam'} o bairro</p>
+        ${g.total ? `<p class="meta">Autoria mais frequente nestas propostas: ${top || 'sem vereador identificado'}</p>
+        <a class="source" href="#propostas?bairro=${encodeURIComponent(b)}">Ver as propostas →</a>`
+        : '<p class="meta">Nenhuma proposta do período cita este bairro pelo nome. Isso não significa que não houve pedidos para a região.</p>'}
+      </article>`;
+  }).join(''));
 }
 
 /* ---------- Propostas ---------- */
 function filter(keepPage) {
   if (!data) return;
   const q = norm($('#search').value.trim()), id = $('#author').value, cat = $('#category').value;
-  filtered = periodDocs.filter(d => (!q || d.search.includes(q)) && (!id || d.authorIds.includes(id)) && (!cat || d.category === cat));
+  filtered = periodDocs.filter(d => (!q || d.search.includes(q)) && (!id || d.authorIds.includes(id)) && (!cat || d.category === cat)
+    && (!bairroFilter || d.bairros.includes(bairroFilter)));
+  const note = $('#bairro-filter');
+  note.hidden = !bairroFilter;
+  if (bairroFilter) {
+    setHtml(note, `Mostrando só propostas cujo texto cita o bairro <strong>${esc(bairroFilter)}</strong>. <button class="link-button" id="bairro-clear" type="button">Remover este filtro</button>`);
+    $('#bairro-clear').onclick = () => { bairroFilter = ''; filter(); syncHash(); };
+  }
   if (keepPage !== true) page = 1;
   renderDocs();
 }
@@ -195,12 +273,12 @@ function renderDocs() {
     return;
   } else {
     // A busca por palavra só fica completa quando todo o texto chegou.
-    const searching = !textDone && $('#search').value.trim();
+    const searching = !textDone && ($('#search').value.trim() || bairroFilter);
     const total = data.documents.length || 1;
     $('#result-count').textContent = `${number(filtered.length)} ${filtered.length === 1 ? 'proposta' : 'propostas'} · ${range()}`
       + (searching ? ` · buscando no texto completo (${Math.floor(100 * textLoaded / total)}%)…` : '');
   }
-  const empty = !textDone && !loadFailed && $('#search').value.trim()
+  const empty = !textDone && !loadFailed && ($('#search').value.trim() || bairroFilter)
     ? '<p class="empty">Buscando no texto completo…</p>'
     : '<div class="empty"><strong>Nenhum registro nesta busca.</strong><p>Tente outra grafia ou remova filtros. Isso não significa ausência de trabalho fora da base coletada.</p></div>';
   setHtml($('#documents'), filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE).map(documentCard).join('') || empty);
@@ -418,7 +496,7 @@ async function whenComplete(button) {
 
 async function exportJson() {
   if (!await whenComplete($('#export'))) return;
-  const clean = filtered.map(({search, ...d}) => d);
+  const clean = filtered.map(({search, bairros, ...d}) => d);
   const payload = {periodo: {inicio: activeFrom, fim: activeTo}, coleta: data.collectedAt, criterio: 'Resultados filtrados; grupos calculados automaticamente; fontes em cada registro', registros: clean};
   download(JSON.stringify(payload, null, 2), 'application/json;charset=utf-8', 'radar-blumenau-busca.json');
 }
@@ -465,7 +543,7 @@ async function loadParts() {
     const c = await part('propostas.json');
     data.documents = c.id.map((id, i) => {
       const d = {id, title: c.title[i], date: c.date[i], category: c.category[i], authors: c.authors[i], authorIds: c.authorIds[i],
-        meta: c.meta[i], url: (c.url[i].startsWith('http') ? '' : c.urlPrefix) + c.url[i], text: null};
+        meta: c.meta[i], url: (c.url[i].startsWith('http') ? '' : c.urlPrefix) + c.url[i], text: null, bairros: []};
       d.search = searchable(d);
       return d;
     });
@@ -474,10 +552,10 @@ async function loadParts() {
 
     for (let n = 0; n < data.textChunks; n++) {
       const texts = await part(`texto-${n}.json`);
-      texts.forEach((text, i) => { const d = data.documents[n * data.chunkSize + i]; d.text = text; d.search = searchable(d); });
+      texts.forEach((text, i) => { const d = data.documents[n * data.chunkSize + i]; d.text = text; d.search = searchable(d); d.bairros = bairrosCitados(text); });
       textLoaded += texts.length;
       if (textLoaded >= data.documents.length) textDone = true;
-      filter(true); renderRepeats();
+      filter(true); renderRepeats(); renderBairros();
     }
     if (textLoaded !== data.documents.length) throw new Error('Texto das propostas incompleto');
     textFinished();
@@ -495,7 +573,7 @@ async function init() {
       // Sem os arquivos leves: carrega a base inteira de uma vez.
       data = await loadFile('data.json');
       if (data.schemaVersion !== 2) throw new Error('Base incompatível');
-      data.documents.forEach(d => { d.search = searchable(d); });
+      data.documents.forEach(d => { d.search = searchable(d); d.bairros = bairrosCitados(d.text); });
       data.stats = null; textLoaded = data.documents.length; textDone = true; textFinished();
     }
     data.people.sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
@@ -537,7 +615,7 @@ $('#home-search-form').addEventListener('submit', e => {
 $('#search').addEventListener('input', () => { filter(); syncHash(); });
 $('#author').addEventListener('change', () => { filter(); syncHash(); });
 $('#category').addEventListener('change', () => { filter(); syncHash(); });
-$('#clear').onclick = () => { $('#search').value = ''; $('#author').value = ''; $('#category').value = ''; filter(); syncHash(); };
+$('#clear').onclick = () => { bairroFilter = ''; $('#search').value = ''; $('#author').value = ''; $('#category').value = ''; filter(); syncHash(); };
 $('#prev').onclick = () => { page--; renderDocs(); $('#propostas').scrollIntoView(); };
 $('#next').onclick = () => { page++; renderDocs(); $('#propostas').scrollIntoView(); };
 $('#export').onclick = exportJson;

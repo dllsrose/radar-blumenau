@@ -9,10 +9,16 @@
   <meta property="og:title" content="Radar Blumenau · De olho na nossa cidade">
   <meta property="og:description" content="O que os vereadores de Blumenau propõem, quando participam e como votam. Só dados oficiais, com link para a fonte.">
   <meta property="og:locale" content="pt_BR">
+  <meta property="og:url" content="https://dllsrose.github.io/radar-blumenau/">
+  <meta property="og:image" content="https://dllsrose.github.io/radar-blumenau/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="RadarBlumenau: de olho na nossa cidade">
+  <meta name="twitter:card" content="summary_large_image">
   <title>Radar Blumenau · De olho na nossa cidade</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23c8102e'/%3E%3Ccircle cx='32' cy='32' r='19' fill='none' stroke='%23fff' stroke-width='5'/%3E%3Ccircle cx='32' cy='32' r='8' fill='%23f5b800'/%3E%3C/svg%3E">
   <!-- Ao mudar style.css, app.js ou attendance.js, troque o número depois de ?v= para o navegador não usar a versão antiga guardada. -->
-  <link rel="stylesheet" href="style.css?v=20261115b">
+  <link rel="stylesheet" href="style.css?v=20261115c">
 </head>
 <body data-view="inicio">
 
@@ -27,6 +33,7 @@
     </a>
     <nav class="nav-desktop" aria-label="Principal">
       <a href="#propostas" data-nav="propostas">Propostas</a>
+      <a href="#bairros" data-nav="bairros">Bairros</a>
       <a href="#ruas" data-nav="ruas">Minha rua</a>
       <a href="#vereadores" data-nav="vereadores">Vereadores</a>
       <a href="#presencas" data-nav="presencas">Presenças</a>
@@ -38,6 +45,7 @@
       <div class="menu-sheet">
         <a href="#inicio">Início</a>
         <a href="#propostas">Propostas</a>
+        <a href="#bairros">Bairros</a>
         <a href="#ruas">Minha rua</a>
         <a href="#vereadores">Vereadores</a>
         <a href="#presencas">Presenças</a>
@@ -76,8 +84,17 @@
     <section class="stats" aria-label="Resumo da base" id="stats"><p>Carregando dados oficiais…</p></section>
     <p class="note totals-note">Resumo da base principal de propostas e votos. Totais calculados a partir dos registros coletados, não são indicadores de desempenho. Os links levam às listagens oficiais; os registros individuais estão nas seções do site.</p>
 
+    <!-- Novidades: os últimos 7 dias cobertos pela coleta -->
+    <section class="news" aria-labelledby="news-title">
+      <p class="eyebrow">Novidades</p>
+      <h2 id="news-title">O que entrou nos últimos 7 dias</h2>
+      <p class="note" id="news-range">Carregando…</p>
+      <div id="news"></div>
+    </section>
+
     <div class="shortcuts">
       <a class="shortcut" href="#propostas"><strong>Propostas</strong><span>Leia o que foi pedido, cobrado ou homenageado, com link para o texto oficial.</span></a>
+      <a class="shortcut" href="#bairros"><strong>Bairros</strong><span>Quantas propostas citam cada bairro e quem as apresentou.</span></a>
       <a class="shortcut" href="#ruas"><strong>Minha rua</strong><span>Veja quando o mesmo assunto voltou para a mesma rua, com datas e autores.</span></a>
       <a class="shortcut" href="#vereadores"><strong>Vereadores</strong><span>Perfil de cada participante: propostas, presenças e votos.</span></a>
       <a class="shortcut" href="#presencas"><strong>Presenças</strong><span>Presenças e ausências registradas nas atas, com cada fonte.</span></a>
@@ -115,6 +132,7 @@
           <option>Outros</option>
         </select></label>
     </div>
+    <p id="bairro-filter" class="note" hidden></p>
     <div class="results-meta">
       <span id="result-count" role="status" aria-live="polite"></span>
       <span class="results-actions">
@@ -130,6 +148,21 @@
       <span id="page"></span>
       <button id="next" type="button">Próxima →</button>
     </div>
+  </section>
+
+  <!-- ===== Bairros ===== -->
+  <section class="view" data-view="bairros" id="bairros" hidden>
+    <div class="view-head">
+      <div>
+        <p class="eyebrow">Perto de você</p>
+        <h2>O que foi proposto para cada bairro?</h2>
+      </div>
+      <span class="chip">Contagem automática</span>
+    </div>
+    <p class="lead">Propostas cujo texto oficial cita o bairro pelo nome, no período escolhido.</p>
+    <aside class="callout"><p><strong>É uma contagem de menções, não um ranking de atenção.</strong> Só entram textos que escrevem “bairro” seguido do nome. Propostas que citam apenas a rua, ou que usam outra grafia, ficam de fora. Um texto pode citar mais de um bairro.</p></aside>
+    <p id="bairro-count" role="status" class="note"></p>
+    <div id="bairro-results" class="bairro-grid"></div>
   </section>
 
   <!-- ===== Minha rua (pedidos recorrentes) ===== -->
@@ -326,7 +359,8 @@
   <div id="attendance-person-content"></div>
 </dialog>
 
-<script src="app.js?v=20261115b"></script>
-<script src="attendance.js?v=20261115b"></script>
+<script src="bairros.js?v=20261115c"></script>
+<script src="app.js?v=20261115c"></script>
+<script src="attendance.js?v=20261115c"></script>
 </body>
 </html>
