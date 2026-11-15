@@ -59,19 +59,33 @@ def calendar(client,start,end,people):
     print('CALENDÁRIO DE PRESENÇAS',len(rows),'páginas',flush=True)
     return rows
 
+def fetch_pdf(link,referer):
+    # O servidor de PDFs às vezes deixa de responder: aguarda e tenta de novo antes de desistir.
+    # Resposta HTTP de erro (403, 404…) não é repetida aqui; segue a regra de quem chamou.
+    for attempt in range(4):
+        try:
+            with radar.slots:
+                with radar.gate:
+                    time.sleep(max(0,.8-(time.monotonic()-radar.last_request))); radar.last_request=time.monotonic()
+                with urlopen(Request(link,headers={'User-Agent':'RadarBlumenau/1.0 (+https://github.com/dllsrose/radar-blumenau; attendance verification)','Referer':referer}),timeout=60) as response: return response.read()
+        except HTTPError: raise
+        except OSError:
+            if attempt==3: raise
+            print(f'NOVA TENTATIVA de PDF após falha de conexão ({attempt+1}/3): {link}',flush=True)
+            time.sleep(2**attempt*5)
+
 def pdf_record(item,client,root,refresh=False):
     ident=item['url'].rsplit('-',1)[-1]; pdf=root/'pdf'/f'{ident}.pdf'; txt=root/'text'/f'{ident}.txt'
     # PDFs já obtidos são relidos semanalmente; indisponíveis são tentados diariamente.
-    if refresh or not pdf.exists():
+    # Se a rotina recomeça no mesmo dia, o que já foi relido hoje não é baixado outra vez.
+    reread_today=pdf.exists() and datetime.fromtimestamp(pdf.stat().st_mtime).date()==datetime.now().date()
+    if (refresh and not reread_today) or not pdf.exists():
         page=client.get(item['url'],fresh=True); match=re.search(r'PDFObject.embed\("([^\"]+)',str(page))
         if not match: raise RuntimeError('Formato de PDF não reconhecido')
         link=match[1]
         if urlsplit(link).hostname!='sc-blumenau-camara.ad.sistemalegislativo.com.br': raise RuntimeError('Host de PDF não autorizado')
         try:
-            with radar.slots:
-                with radar.gate:
-                    time.sleep(max(0,.8-(time.monotonic()-radar.last_request))); radar.last_request=time.monotonic()
-                with urlopen(Request(link,headers={'User-Agent':'RadarBlumenau/1.0 (+https://github.com/dllsrose/radar-blumenau; attendance verification)','Referer':item['url']}),timeout=60) as response: raw=response.read()
+            raw=fetch_pdf(link,item['url'])
             if not raw.startswith(b'%PDF'): raise RuntimeError('Fonte não retornou PDF')
             # Extrai antes de substituir qualquer arquivo válido.
             import io

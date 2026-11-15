@@ -41,4 +41,33 @@ class ProgressTests(unittest.TestCase):
         rows=calendar(Client(),'2025-01-01','2026-11-14',[{'id':'a','aliases':['pessoa']}])
         self.assertEqual(rows[0]['attendance'][0]['personIds'],['a'])
 
+class PdfDownloadTests(unittest.TestCase):
+    """Queda de conexão no servidor de PDFs é repetida; erro HTTP e falha persistente continuam interrompendo."""
+    class Response:
+        def __enter__(self): return self
+        def __exit__(self,*a): return False
+        def read(self): return b'%PDF-1.4'
+
+    def run_fetch(self,effects):
+        from unittest.mock import patch
+        import attendance_collect
+        with patch.object(attendance_collect,'urlopen',side_effect=effects) as opened, patch.object(attendance_collect.time,'sleep'), patch('builtins.print'):
+            try: return attendance_collect.fetch_pdf('https://sc-blumenau-camara.ad.sistemalegislativo.com.br/x.pdf','ata'),opened.call_count
+            except Exception as exc: return exc,opened.call_count
+
+    def test_connection_drop_is_retried(self):
+        from urllib.error import URLError
+        result,calls=self.run_fetch([URLError('sem resposta'),TimeoutError(),self.Response()])
+        self.assertEqual((result,calls),(b'%PDF-1.4',3))
+
+    def test_persistent_connection_failure_still_stops(self):
+        from urllib.error import URLError
+        result,calls=self.run_fetch([URLError('sem resposta')]*4)
+        self.assertIsInstance(result,URLError); self.assertEqual(calls,4)
+
+    def test_http_error_is_not_retried(self):
+        from urllib.error import HTTPError
+        result,calls=self.run_fetch([HTTPError('u',404,'Not Found',None,None)])
+        self.assertIsInstance(result,HTTPError); self.assertEqual(calls,1)
+
 if __name__=='__main__':unittest.main()
