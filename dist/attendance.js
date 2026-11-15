@@ -1,3 +1,4 @@
+/* Radar Blumenau — conferência de presenças nas atas (lê dist/attendance-audit.json). */
 const AUDIT_ABSENCE=['Ausência justificada','Ausência citada sem classificação'];
 function attendanceTotals(audit,from,to,kind){
   const minutes=audit.minutes.filter(a=>a.date&&a.date>=from&&a.date<=to&&a.kind===kind);
@@ -25,7 +26,21 @@ window.renderAttendanceAudit=function(){
  const result=attendanceTotals(attendanceAudit,from,to,kind);
  const list=result.totals.sort((a,b)=>sort==='name'?a.name.localeCompare(b.name,'pt-BR'):(sort==='rate'?(b.rate??-1)-(a.rate??-1):b[sort]-a[sort])||a.name.localeCompare(b.name,'pt-BR'));
  aq('#attendance-coverage').textContent=`${af(from)} a ${af(to)} · ${result.eligible.length} documentos com identificação nominal (inclui complementações e leituras parciais) elegível de ${result.minutes.length} atas desse tipo no recorte. Contagens pela ata, inclusive quando a lista do portal diverge. Conferência disponível de ${af(attendanceAudit.start)} a ${af(attendanceAudit.end)}.${to>attendanceAudit.end||from<attendanceAudit.start?' Parte do intervalo selecionado está fora desta conferência datada.':''}`;
- aq('#attendance-table').innerHTML=`<table><thead><tr><th>Vereador · ver fontes</th><th>Ausências citadas</th><th>Justificadas</th><th>Sem classificação na ata</th><th>Presenças</th><th>Licenças</th><th>Afastamentos</th><th>A revisar</th><th>Registros para o percentual</th><th>% de ausências</th></tr></thead><tbody>${list.map(p=>`<tr><th><button type="button" class="text-button" data-attendance-person="${ae(p.id)}">${ae(p.name)}</button></th><td><strong>${p.absences}</strong></td><td>${p.justified}</td><td>${p.unclassified}</td><td>${p.present}</td><td>${p.license}</td><td>${p.leave}</td><td>${p.conflict}</td><td>${p.denominator}</td><td>${p.rate===null?'—':p.rate.toLocaleString('pt-BR',{maximumFractionDigits:1})+'%'}</td></tr>`).join('')}</tbody></table>`;
+ // Um cartão por vereador, com os mesmos nove números da antiga tabela.
+ const num=(label,value,strong)=>`<div><dt>${label}</dt><dd>${strong?`<strong>${value}</strong>`:value}</dd></div>`;
+ aq('#attendance-table').innerHTML=list.map(p=>{
+  const rate=p.rate===null?'—':p.rate.toLocaleString('pt-BR',{maximumFractionDigits:1})+'%';
+  const bar=p.denominator?`<div class="bar" role="img" aria-label="${p.present} presenças, ${p.justified} ausências justificadas e ${p.unclassified} ausências sem classificação na ata"><span class="bar-present" style="flex:${p.present}"></span><span class="bar-justified" style="flex:${p.justified}"></span><span class="bar-unclassified" style="flex:${p.unclassified}"></span></div>`:'<p class="note">Sem registros nominais elegíveis neste recorte.</p>';
+  return `<article class="card rank-card">
+   <div class="rank-head">
+    <button type="button" class="rank-name" data-attendance-person="${ae(p.id)}">${ae(p.name)} <span>ver fontes →</span></button>
+    <span class="rank-rate"><strong>${rate}</strong><small>de ausências nos registros</small></span>
+   </div>
+   ${bar}
+   <dl class="rank-nums">
+    ${num('Ausências citadas',p.absences,true)}${num('Justificadas',p.justified)}${num('Sem classificação na ata',p.unclassified)}${num('Presenças',p.present)}${num('Licenças',p.license)}${num('Afastamentos',p.leave)}${num('A revisar',p.conflict)}${num('Registros para o percentual',p.denominator)}
+   </dl>
+  </article>`;}).join('');
  aq('#attendance-table').querySelectorAll('[data-attendance-person]').forEach(b=>b.onclick=()=>showAttendancePerson(list.find(p=>p.id===b.dataset.attendancePerson),kind));
  renderMinutes();
 };
