@@ -176,8 +176,96 @@ function renderNews() {
     </div>
     ${latest.length ? `<h3>Últimas propostas protocoladas</h3>${latest.map(d => `
       <div class="row"><strong>${fmt(d.date)}</strong> · ${esc(d.title)} · ${esc(d.authors)}<br>${source(d.url, 'Ver proposta oficial ↗')}</div>`).join('')}` : ''}
-    <p class="note">Contagens pela data de protocolo e pela data da reunião. Semana sem registro não significa falta de trabalho: pode ser recesso ou publicação ainda não feita pela Câmara.</p>`);
+    <p class="note">Contagens pela data de protocolo e pela data da reunião. Semana sem registro não significa falta de trabalho: pode ser recesso ou publicação ainda não feita pela Câmara.</p>
+    <div class="share">
+      <h3>Compartilhe o resumo da semana</h3>
+      <p class="note">Texto e imagem prontos para postar, feitos com os números acima.</p>
+      <div class="share-actions">
+        <button type="button" class="button" data-share="texto">Copiar texto</button>
+        <button type="button" class="button button-ghost" data-share="imagem">Baixar imagem</button>
+      </div>
+      <details><summary>Ver o texto</summary><pre id="share-text"></pre></details>
+    </div>`);
+  week = {
+    start, end, docs: docs.length, sessions: sessions.length, votes,
+    categories: Object.entries(byCategory).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([c, n]) => `${c}: ${number(n)}`).join(' · ')
+  };
+  $('#share-text').textContent = weekText();
 }
+
+/* ---------- Resumo da semana para postar (texto e imagem) ---------- */
+let week = null;
+const siteUrl = () => location.origin + location.pathname;
+const plural = (n, one, many) => `${number(n)} ${n === 1 ? one : many}`;
+
+function weekText() {
+  const w = week;
+  return [
+    `RadarBlumenau · semana de ${fmt(w.start)} a ${fmt(w.end)}`,
+    '',
+    'Na Câmara de Blumenau, nestes 7 dias:',
+    `• ${plural(w.docs, 'proposta protocolada', 'propostas protocoladas')}${w.categories ? ` (${w.categories})` : ''}`,
+    `• ${plural(w.sessions, 'reunião registrada', 'reuniões registradas')}`,
+    `• ${plural(w.votes, 'votação com registro nominal', 'votações com registro nominal')}`,
+    '',
+    'Veja tudo, com link para a fonte oficial:',
+    siteUrl(),
+    '',
+    'Observatório cidadão independente, feito com os registros públicos da Câmara.'
+  ].join('\n');
+}
+
+function weekImage() {
+  const w = week, c = document.createElement('canvas');
+  c.width = c.height = 1080;
+  const g = c.getContext('2d'), font = (weight, size) => `${weight} ${size}px system-ui, "Segoe UI", Roboto, Arial, sans-serif`;
+  g.fillStyle = '#fff'; g.fillRect(0, 0, 1080, 1080);
+  g.fillStyle = '#c8102e'; g.fillRect(0, 0, 1080, 200);
+  g.strokeStyle = '#fff'; g.lineWidth = 10; g.beginPath(); g.arc(118, 100, 38, 0, Math.PI * 2); g.stroke();
+  g.fillStyle = '#f5b800'; g.beginPath(); g.arc(118, 100, 16, 0, Math.PI * 2); g.fill();
+  g.fillStyle = '#fff'; g.textBaseline = 'middle'; g.font = font(400, 58); g.fillText('Radar', 184, 102);
+  const radar = g.measureText('Radar').width; g.font = font(800, 58); g.fillText('Blumenau', 184 + radar, 102);
+  g.textBaseline = 'alphabetic';
+  g.fillStyle = '#1f1b1a'; g.font = font(800, 62); g.fillText('A semana na Câmara', 80, 310);
+  g.fillStyle = '#625c59'; g.font = font(500, 34); g.fillText(`${fmt(w.start)} a ${fmt(w.end)}`, 80, 364);
+  g.fillStyle = '#f5b800'; g.fillRect(80, 392, 120, 10);
+  const rows = [
+    [w.docs, w.docs === 1 ? 'proposta protocolada' : 'propostas protocoladas', w.categories],
+    [w.sessions, w.sessions === 1 ? 'reunião registrada' : 'reuniões registradas', ''],
+    [w.votes, w.votes === 1 ? 'votação com registro nominal' : 'votações com registro nominal', '']
+  ];
+  rows.forEach(([n, label, detail], i) => {
+    const y = [530, 730, 890][i];
+    g.fillStyle = '#c8102e'; g.font = font(800, 112); g.fillText(number(n), 80, y);
+    const x = 80 + g.measureText(number(n)).width + 32;
+    g.fillStyle = '#1f1b1a'; g.font = font(700, 42); g.fillText(label, x, y - 22);
+    if (detail) {
+      let size = 30; g.font = font(500, size);
+      while (g.measureText(detail).width > 920 && size > 20) g.font = font(500, --size);
+      g.fillStyle = '#625c59'; g.fillText(detail, 80, y + 52);
+    }
+  });
+  g.fillStyle = '#e8e2dc'; g.fillRect(80, 968, 920, 2);
+  g.fillStyle = '#c8102e'; g.font = font(800, 32); g.fillText(siteUrl().replace(/^https?:\/\//, '').replace(/\/$/, ''), 80, 1016);
+  g.fillStyle = '#625c59'; g.font = font(500, 24); g.fillText('Fonte: registros públicos da Câmara de Blumenau', 80, 1052);
+  return c;
+}
+
+document.addEventListener('click', async e => {
+  const button = e.target.closest('[data-share]');
+  if (!button || !week) return;
+  const label = button.textContent, done = text => { button.textContent = text; setTimeout(() => { button.textContent = label; }, 2500); };
+  if (button.dataset.share === 'texto') {
+    try { await navigator.clipboard.writeText(weekText()); done('Texto copiado ✓'); }
+    catch { $('#share-text').closest('details').open = true; done('Selecione e copie o texto abaixo'); }
+  } else {
+    weekImage().toBlob(blob => {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob); a.download = `radar-blumenau-semana-${week.end}.png`;
+      a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 5000); done('Imagem baixada ✓');
+    }, 'image/png');
+  }
+});
 
 /* ---------- Bairros ---------- */
 function renderBairros() {
