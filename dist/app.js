@@ -128,10 +128,16 @@ function refresh(keepPage) {
   // Enquanto uma parte não chegou, o total do período inteiro vem pronto de inicio.json.
   const whole = activeFrom === data.start && activeTo === data.end && data.stats;
   const votes = data.sessions ? periodSessions.reduce((n, s) => n + s.votes.filter(v => v.rows.length).length, 0) : (whole ? data.stats.votes : null);
+  // O total de reuniões soma plenário, comissões e frentes: o cartão diz quantas são de cada tipo.
+  const kinds = data.sessions ? periodSessions.reduce((o, s) => { const k = sessionKind(s); o[k] = (o[k] || 0) + 1; return o; }, {}) : null;
+  const sessionLabel = kinds && periodSessions.length
+    ? 'reuniões: ' + [['Plenário', 'de plenário'], ['Comissões', 'de comissões'], ['Frentes parlamentares', 'de frentes parlamentares']]
+      .filter(([k]) => kinds[k]).map(([k, t]) => `${number(kinds[k])} ${t}`).join(', ')
+    : 'reuniões na base principal';
   const stats = [
     [data.people.length, 'participantes cadastrados', data.sources.roster],
     [data.documents ? periodDocs.length : (whole ? data.stats.documents : null), 'propostas no período', 'https://digital.camarablu.sc.gov.br/documentos/tipo:legislativo-2'],
-    [data.sessions ? periodSessions.length : (whole ? data.stats.sessions : null), 'reuniões na base principal', 'https://digital.camarablu.sc.gov.br/sessoes'],
+    [data.sessions ? periodSessions.length : (whole ? data.stats.sessions : null), sessionLabel, 'https://digital.camarablu.sc.gov.br/sessoes'],
     [votes, 'registros de votação', 'https://digital.camarablu.sc.gov.br/sessoes']
   ];
   setHtml($('#stats'), stats.map(([n, t, u]) => `
