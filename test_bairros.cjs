@@ -24,6 +24,20 @@ const casos = [
   ['bairro Itoupavazinha', ['Itoupavazinha']],
   ['bairro Velhaco', []],
   ['melhorias em diversos bairros da cidade', []],
+  // Grafias erradas conhecidas dos textos oficiais vão para o nome oficial.
+  ['no bairro Vorsdadt.', ['Vorstadt']],
+  ['bairro Velhas Grande. Justificativa', ['Velha Grande']],
+  ['bairro Itoupava Centrral?', ['Itoupava Central']],
+  ['bairro Via Nova.', ['Vila Nova']],
+  ['Bairro Panso Manso, defronte ao', ['Passo Manso']],
+  // Pontuação ou palavra colada entre "bairro" e o nome.
+  ['nº 1060, noBairro Vila Nova. Justificativa', ['Vila Nova']],
+  ['localizado no bairro .Vila Nova.', ['Vila Nova']],
+  ['no bairro do Do Salto. Obs', ['Salto']],
+  // Localidade que não é bairro oficial continua de fora; grafia errada sem "bairro" também.
+  ['bairro Grande Garcia', []],
+  ['bairro Nova Rússia', []],
+  ['moradores da Vorsdadt', []],
   ['', []],
 ];
 for (const [texto, esperado] of casos) {
