@@ -1229,8 +1229,7 @@
   },
   "563110": {
     "sha256": "bf440bec5a5d5b1d067ee72b393629a81c891b9f8da63a38308e128545f548f9",
-    "issue": "A ata contém nome a confirmar, Adriano ou Ademir e Cristiano Loureiro. O portal lista três membros sem informar presença; não foi possível confirmar toda a lista nominal.",
-    "note": "Notícia oficial confirma Diego Nasato conduzindo a reunião de 18/08/2026. A fonte externa é apresentada como apoio, sem substituir silenciosamente os nomes ambíguos do PDF por uma lista de presentes.",
+    "note": "Lista complementada pela transcrição em português da gravação oficial de 18/08/2026 (32min04s), consultada via vidIQ. Aos 0:08, o presidente cumprimenta Adriano Pereira e anuncia data, horário e quórum; aos 2:39 informa que apenas dois vereadores estão presentes e cita a ausência de Cristiane Loureiro. Aos 30:29–31:00, informa que encaminhará posteriormente a agenda a Adriano e Cristiane e encerra a reunião, sem registro de ingresso posterior na transcrição. Diego Nasato é identificado como presidente pela notícia oficial da mesma reunião. Ausência sem classificação: não foi presumida falta injustificada. A ata original continua com nomes incompletos/incorretos; estes registros provêm da gravação e da notícia, não de uma correção do PDF.",
     "date": "2026-08-18",
     "dateReviewMode": "pdf-page-reviewed",
     "datePdfPage": 1,
@@ -1238,13 +1237,40 @@
     "sessionUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-de-acompanhamento-da-prestacao-dos-servicos-de-telefonia-no-municipio-de-blumenau-18-08-2026-9139",
     "dateSourceUrl": "https://digital.camarablu.sc.gov.br/sessao/reuniao-ordinaria-da-comissao-legislativa-temporaria-especial-de-acompanhamento-da-prestacao-dos-servicos-de-telefonia-no-municipio-de-blumenau-18-08-2026-9139",
     "dateEvidence": "Data lida visualmente na primeira página do PDF e conferida com a data do calendário oficial para a mesma comissão ou frente parlamentar.",
-    "nominalReviewState": "unresolved",
+    "nominalReviewState": "resolved",
     "corroboratingSources": [
       {
         "url": "https://camarablu.sc.gov.br/detalhe-noticia/15541/comissao-de-telefonia-define-proximos-passos-para-melhorar-cobertura-em-blumenau/",
         "label": "Notícia oficial da reunião de telefonia"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=CWVO5iIG7rg&t=8s",
+        "label": "Gravação oficial: abertura e Adriano (0:08)"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=CWVO5iIG7rg&t=159s",
+        "label": "Gravação oficial: dois presentes e ausência de Cristiane (2:39)"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=CWVO5iIG7rg&t=1829s",
+        "label": "Gravação oficial: encaminhamentos e encerramento (30:29)"
       }
-    ]
+    ],
+    "rows": [
+      {
+        "personId": "diego-nasato-1000941",
+        "status": "Presente"
+      },
+      {
+        "personId": "adriano-pereira-450",
+        "status": "Presente"
+      },
+      {
+        "personId": "cristiane-loureiro-1000667",
+        "status": "Ausência citada sem classificação"
+      }
+    ],
+    "nominalSource": "official-video-transcript"
   },
   "565371": {
     "sha256": "bf92d2eb2e40256791cd3a12b8db4f3657184a336e4762bdb1cb62311a1b2ec6",
@@ -1552,7 +1578,7 @@
   "537502": {
     "sha256": "ba376cc8e92b0a208269b1eb1abe8bd095f5063df6e1744045307336ffc91f8b",
     "issue": "Leitura parcial: Alexandre Matias conduz a reunião. A presença individual dos outros quatro membros não está discriminada; o portal lista nomes sem estado de presença.",
-    "note": "PDF e notícia oficial confirmam instalação e eleição da comissão em 26/08/2025. A composição e a concordância coletiva não foram tomadas como chamada nominal individual.",
+    "note": "PDF e notícia oficial confirmam instalação e eleição da comissão em 26/08/2025. A composição e a concordância coletiva não foram tomadas como chamada nominal individual. Busca no canal oficial TVL Blumenau em 14/11/2026: gravação específica de 26/08/2025 não localizada. A transcrição da sessão plenária desse dia termina no encerramento do plenário e não inclui a comissão. O telejornal de 27/08/2025 também não forneceu confirmação nominal. A reunião da comissão localizada em 09/10/2025 é de outra data e não comprova presenças de agosto.",
     "date": "2025-08-26",
     "dateReviewMode": "pdf-page-reviewed",
     "datePdfPage": 1,

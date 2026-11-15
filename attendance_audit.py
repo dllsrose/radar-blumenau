@@ -146,6 +146,7 @@ def build(data,downloaded,root):
         text=re.sub(r'Flavio\s+Linahres','Flávio Linhares',text) if a['id']=='531722' else text
         text=re.sub(r'Silmara\s+Silva\s+Siguel','Silmara Silva Miguel',text) if a['id']=='549930' else text
         date=date_of(text);rows,issue=extract(text,data['people']) if text else ([], 'PDF não obtido; conferência pendente')
+        original_rows=[dict(row) for row in rows]
         if a['id']=='530040':
             for row in rows:
                 if row['personId']=='almir-vieira-454':row['status']='Presente'
@@ -187,6 +188,9 @@ def build(data,downloaded,root):
         record.update(date=date,kind=k,rows=rows,issue=issue,sha256=a.get('sha256'),sessionUrl=match['url'] if match else None,comparison=comparisons,candidateSessions=[x['url'] for x in candidates],inPeriod=bool(date and data['start']<=date<=data['end']),committee=committee_key(text[:1000]) if k.startswith('Comissão') else None)
         record['meetingIdentity']=meeting_identity(text) if k.startswith('Plenário') else None
         if historical:record['historicalRows']=historical
+        if review.get('nominalSource'):
+            record['nominalSource']=review['nominalSource']
+            record['originalPdfRows']=original_rows
         if review.get('nominalReviewState'):record['nominalReviewState']=review['nominalReviewState']
         if review.get('corroboratingSources'):record['corroboratingSources']=review['corroboratingSources']
         if date!=source_date:
@@ -211,6 +215,7 @@ def build(data,downloaded,root):
     result['method']=[m for m in result['method'] if not m.startswith('Os resultados de comparação são contados')]
     result['method'].append('Reuniões de plenário no mesmo dia só são separadas quando número e horário de abertura são distintos. Republicações confirmadas contam uma vez; outras ambiguidades permanecem excluídas. Associações revisadas ficam vinculadas ao hash do PDF e são reavaliadas se ele mudar.')
     result['method'].append('Correções documentais de data preservam a data escrita na ata e indicam a pauta ou notícia oficial que fundamenta a data adotada. Listas revisadas individualmente também dependem da versão do PDF. Comparecimento posterior é sinalizado e não implica permanência integral; convidados em funções externas ao Legislativo não contam como presença parlamentar.')
+    result['method'].append('Complementações por gravação oficial são identificadas separadamente da ata, com notícia de apoio e links para os trechos. A contagem de identificação nominal inclui essas complementações e leituras parciais. Transcrições automáticas podem conter erros; ausência citada não é classificada como injustificada. Os registros originalmente extraídos do PDF são preservados.')
     result['counts']['withNominalReading']=sum(bool(a['rows'] or a.get('historicalRows')) for a in out)
     result['counts']['partialNominalReadings']=sum(a.get('nominalReviewState')=='partial' for a in out)
     result['counts']['unresolvedNominalReadings']=sum(a.get('nominalReviewState')=='unresolved' for a in out)
