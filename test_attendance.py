@@ -109,7 +109,16 @@ class AttendanceTests(unittest.TestCase):
   c=Mock();c.get.return_value=soup('<div id="materias-discussao-bloco"></div>')
   with patch.object(radar.time,'sleep'),patch('builtins.print'):
    detail=radar.session_detail(c,('https://digital.camarablu.sc.gov.br/sessao/a',{'date':'2026-03-05','title':'Reunião'}))
-  self.assertEqual(detail['attendance'],[]);self.assertEqual(c.get.call_count,4)
+  self.assertEqual(detail['attendance'],[]);self.assertEqual(c.get.call_count,3)
+ def test_session_known_to_have_attendance_waits_longer(self):
+  from unittest.mock import patch
+  import radar
+  half=soup('<div id="materias-discussao-bloco"></div>')
+  full=soup('<div class="wrap-presencas"><a class="item-full-people" href="/vereador/a"><span class="title">Ana</span><div class="info">Presente</div></a></div>')
+  c=Mock();c.get.side_effect=[half]*6+[full]
+  with patch.object(radar.time,'sleep'),patch('builtins.print'):
+   detail=radar.session_detail(c,('https://digital.camarablu.sc.gov.br/sessao/a',{'date':'2026-03-05','title':'Reunião'}),True)
+  self.assertEqual(len(detail['attendance']),1);self.assertEqual(c.get.call_count,7)
  def test_persistently_empty_session_listing_still_stops(self):
   from unittest.mock import patch
   import radar

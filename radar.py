@@ -154,19 +154,20 @@ def session_links(client,start,end):
         if max(dates)<start or not nxt:break
         url=urljoin(BASE,nxt['href'])
     return links
-def session_page(client,url):
+def session_page(client,url,expected=False):
     # O portal às vezes entrega a página da reunião pela metade (HTTP 200, sem o bloco de presenças):
     # reconsulta antes de aceitar. Poucas reuniões realmente não têm presença publicada; essas são
     # aceitas depois das reconsultas, e a validação final continua barrando qualquer perda de registro.
-    for delay in (0,5,15,30):
+    # expected=True: a base anterior já tinha presenças dessa reunião, então a espera é bem mais longa.
+    for delay in ((0,5,15,30,60,60,120,120) if expected else (0,5,15)):
         if delay:
             print(f'RECONSULTA de reunião sem presenças após {delay}s: {url}',flush=True)
             time.sleep(delay)
         s=client.get(url,fresh=bool(delay))
         if s.select_one('.wrap-presencas'): break
     return s
-def session_detail(client,item):
-    url,record=item; s=session_page(client,url); at=[];votes=[]
+def session_detail(client,item,expected=False):
+    url,record=item; s=session_page(client,url,expected); at=[];votes=[]
     if not s.select_one('.wrap-presencas') and not s.select_one('#materias-discussao-bloco'): raise RuntimeError('Formato da sessão não reconhecido')
     for p in s.select('.wrap-presencas .item-full-people'):
         info=p.select_one('.info')
@@ -265,7 +266,7 @@ def main():
     old_sessions={s['url']:s for s in baseline['sessions']} if incremental else {}
     links={u:r for u,r in session_links(client,args.start,args.end).items() if r['date']>=refresh_start or u not in old_sessions or history_group(u) in groups_due}; sessions=[]
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
-        futures=[pool.submit(session_detail,client,item) for item in links.items()]
+        futures=[pool.submit(session_detail,client,item,bool(old_sessions.get(item[0],{}).get('attendance'))) for item in links.items()]
         for f in concurrent.futures.as_completed(futures):
             sessions.append(f.result());print(f'SESSÕES {len(sessions)}/{len(links)}',flush=True)
     if incremental:

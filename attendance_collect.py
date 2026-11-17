@@ -29,7 +29,8 @@ def inventory(client, start, end):
         print('INVENTÁRIO DE ATAS',year,len(seen),'páginas',len(result),'atas',flush=True)
     return list(result.values())
 
-def calendar(client,start,end,people):
+def calendar(client,start,end,people,known=()):
+    # known: reuniões que já tinham presenças na conferência anterior; nelas a reconsulta espera mais.
     url=radar.BASE+'/sessoes'; seen=set(); links={}
     while url:
         if url in seen: raise RuntimeError('Ciclo no calendário')
@@ -46,7 +47,7 @@ def calendar(client,start,end,people):
         if max(dates)<start or not nxt: break
         url=urljoin(radar.BASE,nxt['href'])
     def one(item):
-        page=radar.session_page(client,item['url']); rows=[]
+        page=radar.session_page(client,item['url'],item['url'] in known); rows=[]
         if not page.select_one('.wrap-presencas') and not page.select_one('#materias-discussao-bloco'):
             raise RuntimeError('Página de reunião sem estrutura reconhecida')
         for p in page.select('.wrap-presencas .item-full-people'):
@@ -122,7 +123,12 @@ def main():
     last_full=baseline.get('automation',{}).get('lastFullPdfCheck',baseline['checkedAt'][:10])
     refresh=datetime.fromisoformat(data['end']).weekday()==6 or (datetime.fromisoformat(data['end'])-datetime.fromisoformat(last_full)).days>=7
     with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool: downloaded=list(pool.map(lambda item:pdf_record(item,client,root,refresh),items))
-    sessions=calendar(client,data['start'],data['end'],data['people'])
+    previous=root/'calendar-attendance.json'
+    known={s['url'] for s in json.loads(previous.read_text(encoding='utf-8')) if s['attendance']} if previous.exists() else set()
+    sessions=calendar(client,data['start'],data['end'],data['people'],known)
+    # Presenças que existiam ontem não podem sumir hoje: o portal entrega páginas pela metade.
+    lost=known-{s['url'] for s in sessions if s['attendance']}
+    if lost: raise RuntimeError(f'Presenças do calendário desapareceram em {len(lost)} reunião(ões); revisão necessária')
     radar.atomic(root/'calendar-attendance.json',sessions)
     candidate=build(data,downloaded,root)
     candidate['inventorySources']=[f'{radar.BASE}/documentos/tipo:legislativo-2/ano:{y}' for y in range(int(data['start'][:4]),int(data['end'][:4])+1)]

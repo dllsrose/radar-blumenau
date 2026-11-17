@@ -40,7 +40,7 @@ def run_main(base, weekday, listed=None, portal_documents=None, extra=()):
         asked_years.append((year, start))
         return [d for d in portal_documents if d['date'][:4] == str(year) and d['date'] >= start], {'year': year, 'complete': True}
 
-    def detail(client, item):
+    def detail(client, item, expected=False):
         fetched.append(item[0])
         return {**item[1], 'url': item[0], 'attendance': PRESENT, 'votes': []}
 
