@@ -46,7 +46,7 @@ def calendar(client,start,end,people):
         if max(dates)<start or not nxt: break
         url=urljoin(radar.BASE,nxt['href'])
     def one(item):
-        page=client.get(item['url']); rows=[]
+        page=radar.session_page(client,item['url']); rows=[]
         if not page.select_one('.wrap-presencas') and not page.select_one('#materias-discussao-bloco'):
             raise RuntimeError('Página de reunião sem estrutura reconhecida')
         for p in page.select('.wrap-presencas .item-full-people'):

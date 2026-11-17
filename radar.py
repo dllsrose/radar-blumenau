@@ -154,8 +154,19 @@ def session_links(client,start,end):
         if max(dates)<start or not nxt:break
         url=urljoin(BASE,nxt['href'])
     return links
+def session_page(client,url):
+    # O portal às vezes entrega a página da reunião pela metade (HTTP 200, sem o bloco de presenças):
+    # reconsulta antes de aceitar. Poucas reuniões realmente não têm presença publicada; essas são
+    # aceitas depois das reconsultas, e a validação final continua barrando qualquer perda de registro.
+    for delay in (0,5,15,30):
+        if delay:
+            print(f'RECONSULTA de reunião sem presenças após {delay}s: {url}',flush=True)
+            time.sleep(delay)
+        s=client.get(url,fresh=bool(delay))
+        if s.select_one('.wrap-presencas'): break
+    return s
 def session_detail(client,item):
-    url,record=item; s=client.get(url); at=[];votes=[]
+    url,record=item; s=session_page(client,url); at=[];votes=[]
     if not s.select_one('.wrap-presencas') and not s.select_one('#materias-discussao-bloco'): raise RuntimeError('Formato da sessão não reconhecido')
     for p in s.select('.wrap-presencas .item-full-people'):
         info=p.select_one('.info')

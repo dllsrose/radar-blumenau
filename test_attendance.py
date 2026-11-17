@@ -93,6 +93,23 @@ class AttendanceTests(unittest.TestCase):
   with patch.object(radar.time,'sleep'),patch('builtins.print'):
    self.assertEqual(len(session_links(c,'2025-01-01','2026-11-14')),1)
   self.assertEqual(c.get.call_args_list[1].kwargs,{'fresh':True})
+ def test_half_delivered_session_page_is_fetched_again(self):
+  # O portal às vezes entrega a reunião sem o bloco de presenças; a reconsulta traz a página inteira.
+  from unittest.mock import patch
+  import radar
+  half=soup('<div id="materias-discussao-bloco"></div>')
+  full=soup('<div class="wrap-presencas"><a class="item-full-people" href="/vereador/a"><span class="title">Ana</span><div class="info">Presente</div></a></div><div id="materias-discussao-bloco"></div>')
+  c=Mock();c.get.side_effect=[half,half,full]
+  with patch.object(radar.time,'sleep'),patch('builtins.print'):
+   detail=radar.session_detail(c,('https://digital.camarablu.sc.gov.br/sessao/a',{'date':'2026-03-05','title':'Reunião'}))
+  self.assertEqual([r['name'] for r in detail['attendance']],['Ana']);self.assertEqual(c.get.call_count,3)
+ def test_session_really_without_attendance_is_accepted_after_rechecks(self):
+  from unittest.mock import patch
+  import radar
+  c=Mock();c.get.return_value=soup('<div id="materias-discussao-bloco"></div>')
+  with patch.object(radar.time,'sleep'),patch('builtins.print'):
+   detail=radar.session_detail(c,('https://digital.camarablu.sc.gov.br/sessao/a',{'date':'2026-03-05','title':'Reunião'}))
+  self.assertEqual(detail['attendance'],[]);self.assertEqual(c.get.call_count,4)
  def test_persistently_empty_session_listing_still_stops(self):
   from unittest.mock import patch
   import radar
