@@ -34,12 +34,20 @@ class ProgressTests(unittest.TestCase):
     def test_calendar_keeps_other_meeting_types(self):
         class Client:
             pages={}
-            def get(self,url):
+            calls=0
+            def get(self,url,fresh=False):
                 self.pages[url]='2026-11-14'
-                if url.endswith('/sessoes'): return soup('<a href="/sessao/1">Audiência pública - 03/02/2025</a>')
+                if url.endswith('/sessoes'):
+                    # A primeira resposta vem sem nenhuma reunião, como o portal faz às vezes.
+                    Client.calls+=1
+                    return soup('<p>Sessões</p>' if Client.calls==1 else '<a href="/sessao/1">Audiência pública - 03/02/2025</a>')
                 return soup('<div class="wrap-presencas"><div class="item-full-people"><span class="title">Pessoa</span><div class="info">Presente</div></div></div>')
-        rows=calendar(Client(),'2025-01-01','2026-11-14',[{'id':'a','aliases':['pessoa']}])
+        from unittest.mock import patch
+        import radar
+        with patch.object(radar.time,'sleep'), patch('builtins.print'):
+            rows=calendar(Client(),'2025-01-01','2026-11-14',[{'id':'a','aliases':['pessoa']}])
         self.assertEqual(rows[0]['attendance'][0]['personIds'],['a'])
+        self.assertEqual(Client.calls,2)
 
 class PdfDownloadTests(unittest.TestCase):
     """Queda de conexão no servidor de PDFs é repetida; erro HTTP e falha persistente continuam interrompendo."""

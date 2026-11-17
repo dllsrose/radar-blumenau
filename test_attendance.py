@@ -85,4 +85,17 @@ class AttendanceTests(unittest.TestCase):
  def test_calendar_titles_ignore_letter_case(self):
   c=Mock();c.get.return_value=soup('<a href="/sessao/a">Reunião Ordinária - 05/03/2026</a><a href="/sessao/b">REUNIÃO EXTRAORDINÁRIA - 05/03/2026</a>')
   self.assertEqual(len(session_links(c,'2025-01-01','2026-11-14')),2)
+ def test_empty_session_listing_is_fetched_again(self):
+  # O portal às vezes devolve a lista de sessões sem nenhuma reunião; a segunda consulta traz a lista.
+  from unittest.mock import patch
+  import radar
+  c=Mock();c.get.side_effect=[soup('<p>Sessões</p>'),soup('<a href="/sessao/a">Reunião Ordinária - 05/03/2026</a>')]
+  with patch.object(radar.time,'sleep'),patch('builtins.print'):
+   self.assertEqual(len(session_links(c,'2025-01-01','2026-11-14')),1)
+  self.assertEqual(c.get.call_args_list[1].kwargs,{'fresh':True})
+ def test_persistently_empty_session_listing_still_stops(self):
+  from unittest.mock import patch
+  import radar
+  c=Mock();c.get.return_value=soup('<p>Sessões</p>')
+  with patch.object(radar.time,'sleep'),patch('builtins.print'),self.assertRaises(RuntimeError):session_links(c,'2025-01-01','2026-11-14')
 if __name__=='__main__':unittest.main()

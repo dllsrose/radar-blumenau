@@ -33,8 +33,9 @@ def calendar(client,start,end,people):
     url=radar.BASE+'/sessoes'; seen=set(); links={}
     while url:
         if url in seen: raise RuntimeError('Ciclo no calendário')
-        seen.add(url); page=client.get(url); dates=[]
-        for a in page.select('a[href^="/sessao/"]'):
+        # A lista de sessões às vezes volta vazia: reconsulta antes de desistir.
+        seen.add(url); page,anchors=radar.document_listing(client,url,'a[href^="/sessao/"]'); dates=[]
+        for a in anchors:
             title=radar.txt(a); date=radar.calendar_date(title)
             if not date: continue
             dates.append(date)

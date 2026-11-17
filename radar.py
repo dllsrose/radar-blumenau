@@ -136,8 +136,9 @@ def session_links(client,start,end):
     url=BASE+'/sessoes'; seen=set(); links={}
     while url:
         if url in seen: raise RuntimeError('Ciclo na paginação de sessões')
-        seen.add(url);s=client.get(url);dates=[]
-        for a in s.select('a[href^="/sessao/"]'):
+        # A lista de sessões também volta vazia de vez em quando: reconsulta antes de desistir.
+        seen.add(url);s,anchors=document_listing(client,url,'a[href^="/sessao/"]');dates=[]
+        for a in anchors:
             t=txt(a);d=calendar_date(t)
             if not d: continue
             dates.append(d)
