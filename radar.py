@@ -99,7 +99,9 @@ def match_people(names,persons):
 def document_listing(client,url,selector='li.list-item',allow_unavailable_vote=False):
     # O portal às vezes devolve uma página intermediária vazia com HTTP 200.
     # Não avançar nem tratar isso como fim da lista: aguardar e consultar novamente.
-    for delay in (0,5,15,30,60,60):
+    # Nas listagens a espera total chega a uns 15 minutos: o portal já ficou vários minutos devolvendo
+    # página vazia. Na página de votação, onde "nenhuma votação" pode ser a resposta real, fica em 3 minutos.
+    for delay in ((0,5,15,30,60,60) if allow_unavailable_vote else (0,5,15,30,60,60,120,120,240,240)):
         if delay:
             print(f'RECONSULTA de página vazia após {delay}s: {url}',flush=True)
             time.sleep(delay)
