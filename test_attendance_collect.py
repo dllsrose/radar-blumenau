@@ -101,8 +101,8 @@ class PortalBurstTests(unittest.TestCase):
 
     def test_persistent_404_still_stops(self):
         from urllib.error import HTTPError
-        result,calls=self.run_get([HTTPError('u',404,'Not Found',None,None)]*6)
-        self.assertIsInstance(result,HTTPError); self.assertEqual(calls,6)
+        result,calls=self.run_get([HTTPError('u',404,'Not Found',None,None)]*9)
+        self.assertIsInstance(result,HTTPError); self.assertEqual(calls,9)
 
     def test_security_check_is_never_retried(self):
         import radar

@@ -51,8 +51,8 @@ class Client:
         if p.exists() and not fresh:
             v=json.loads(p.read_text(encoding='utf-8')); self.pages[url]=v['at']; return soup(v['body'])
         # O portal falha em rajadas (404 ou sem resposta por dezenas de segundos em páginas que existem):
-        # as esperas crescem até cobrir cerca de três minutos antes de desistir.
-        waits=(5,15,30,60,60)
+        # as esperas crescem até cobrir cerca de onze minutos antes de desistir.
+        waits=(5,15,30,60,60,120,120,240)
         for attempt in range(len(waits)+1):
             try:
                 with slots:
