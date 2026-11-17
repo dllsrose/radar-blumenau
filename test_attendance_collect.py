@@ -78,4 +78,35 @@ class PdfDownloadTests(unittest.TestCase):
         result,calls=self.run_fetch([HTTPError('u',404,'Not Found',None,None)])
         self.assertIsInstance(result,HTTPError); self.assertEqual(calls,1)
 
+class PortalBurstTests(unittest.TestCase):
+    """O portal responde 404 em rajadas para páginas que existem; pedido de verificação nunca é repetido."""
+    class Response:
+        def __init__(self,body): self.body=body
+        def __enter__(self): return self
+        def __exit__(self,*a): return False
+        def read(self): return self.body.encode()
+
+    def run_get(self,effects):
+        import tempfile, radar
+        from pathlib import Path
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory() as tmp, patch.object(radar,'urlopen',side_effect=effects) as opened, patch.object(radar.time,'sleep'), patch('builtins.print'):
+            try: return radar.Client(Path(tmp)).get(radar.BASE+'/sessao/x'),opened.call_count
+            except Exception as exc: return exc,opened.call_count
+
+    def test_burst_of_404_is_waited_out(self):
+        from urllib.error import HTTPError
+        result,calls=self.run_get([HTTPError('u',404,'Not Found',None,None)]*4+[self.Response('<p>ok</p>')])
+        self.assertEqual((result.get_text(),calls),('ok',5))
+
+    def test_persistent_404_still_stops(self):
+        from urllib.error import HTTPError
+        result,calls=self.run_get([HTTPError('u',404,'Not Found',None,None)]*6)
+        self.assertIsInstance(result,HTTPError); self.assertEqual(calls,6)
+
+    def test_security_check_is_never_retried(self):
+        import radar
+        result,calls=self.run_get([self.Response('Confirme que você não é um robô')]*6)
+        self.assertIsInstance(result,radar.SecurityCheck); self.assertEqual(calls,1)
+
 if __name__=='__main__':unittest.main()

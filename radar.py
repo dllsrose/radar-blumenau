@@ -41,6 +41,7 @@ def public_text(text):
     text=re.sub(r'\b[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}\b',lambda m:m[0] if m[0].lower().endswith('@camarablu.sc.gov.br') else '[e-mail omitido]',text)
     return text
 
+class SecurityCheck(RuntimeError): pass
 class Client:
     def __init__(self,cache): self.cache=cache; cache.mkdir(parents=True,exist_ok=True); self.pages={}
     def get(self,url,fresh=False):
@@ -49,18 +50,23 @@ class Client:
         p=self.cache/(hashlib.sha256(url.encode()).hexdigest()+'.json')
         if p.exists() and not fresh:
             v=json.loads(p.read_text(encoding='utf-8')); self.pages[url]=v['at']; return soup(v['body'])
-        for attempt in range(4):
+        # O portal falha em rajadas (404 ou sem resposta por dezenas de segundos em páginas que existem):
+        # as esperas crescem até cobrir cerca de três minutos antes de desistir.
+        waits=(5,15,30,60,60)
+        for attempt in range(len(waits)+1):
             try:
                 with slots:
                     with gate:
                         time.sleep(max(0,.8-(time.monotonic()-last_request))); last_request=time.monotonic()
                     req=Request(url,headers={'User-Agent':'RadarBlumenau/1.0 (+https://github.com/dllsrose/radar-blumenau; civic transparency; max 2 connections)'})
                     with urlopen(req,timeout=50) as response: raw=response.read().decode('utf-8')
-                if any(w in norm(raw) for w in ['confirme que voce nao e um robo','verificacao de seguranca']): raise RuntimeError('Portal pediu verificação de segurança; coleta interrompida')
+                if any(w in norm(raw) for w in ['confirme que voce nao e um robo','verificacao de seguranca']): raise SecurityCheck('Portal pediu verificação de segurança; coleta interrompida')
                 v={'url':url,'at':stamp(),'body':raw}; atomic(p,v); self.pages[url]=v['at']; return soup(raw)
-            except Exception:
-                if attempt==3: raise
-                time.sleep(2**attempt*2)
+            except SecurityCheck: raise  # pedido de verificação não é repetido nem contornado
+            except Exception as exc:
+                if attempt==len(waits): raise
+                print(f'NOVA TENTATIVA em {waits[attempt]}s após {type(exc).__name__}: {url}',flush=True)
+                time.sleep(waits[attempt])
         raise RuntimeError('Unreachable')
 def classify(title,text):
     t=norm(title+' '+text)
